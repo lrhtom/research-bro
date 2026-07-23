@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="学术哥们 — 科研效率工具箱，聚合自建学术工具与精选免费在线服务，把繁琐的学术杂活一键搞定。">
+    <title>学术哥们 · 科研工具箱</title>
+    <!-- FontAwesome 图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 主页样式 -->
+    <link rel="stylesheet" href="assets/css/home.css">
+</head>
+<body>
+
+    <!-- 顶部品牌区 -->
+    <header class="site-header">
+        <div class="brand">
+            <div class="brand-badge"><i class="fas fa-graduation-cap"></i></div>
+            <div class="brand-text">
+                <h1>学术哥们</h1>
+                <p>科研效率工具箱 · Academic Toolbox</p>
+            </div>
+        </div>
+        <div class="header-tagline">
+            <i class="fas fa-bolt"></i> 帮你把繁琐的学术杂活一键搞定
+        </div>
+    </header>
+
+    <!-- 工具门户 -->
+    <main class="portal">
+        <div class="section-head">
+            <h2><i class="fas fa-toolbox"></i> 全部工具</h2>
+            <span class="count" id="tool-count"></span>
+        </div>
+        <div class="card-grid" id="card-grid">
+            <!-- 卡片由 home.js 根据 TOOLS 数据渲染 -->
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="site-footer">
+        <p>学术哥们 · 持续收录好用的科研工具　·　<span class="muted">自建工具本地运行，外部链接跳转第三方服务</span></p>
+    </footer>
+
+    <!-- 工具数据与渲染逻辑 -->
+    <script src="assets/js/home.js"></script>
+</body>
+</html>

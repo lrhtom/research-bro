@@ -9,8 +9,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <!-- 引入 FontAwesome 图标库以增强 UI -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- 引入提取出的外部样式表 -->
-    <link rel="stylesheet" href="styles.css">
+    <!-- 工具样式 -->
+    <link rel="stylesheet" href="css/table.css">
 </head>
 <body>
 
@@ -18,17 +18,17 @@
     <div id="toast" class="toast"><i class="fas fa-check-circle"></i> 保存成功</div>
 
     <div class="app-layout">
-        
+
         <!-- 左侧侧边栏 (可折叠) -->
         <aside class="sidebar-nav" id="sidebar">
             <div class="sidebar-header">
                 <h2>图表管理</h2>
-                <button class="icon-btn" onclick="toggleSidebar()" title="收起侧边栏">
+                <button class="icon-btn" onclick="App.toggleSidebar()" title="收起侧边栏">
                     <i class="fas fa-chevron-left"></i>
                 </button>
             </div>
             <div class="sidebar-actions">
-                <button class="primary" onclick="createNewTable('新图表')">
+                <button class="primary" onclick="App.createNewTable('新图表')">
                     <i class="fas fa-plus"></i> 新建图表
                 </button>
             </div>
@@ -39,12 +39,15 @@
 
         <!-- 右侧主内容区 -->
         <div class="main-content" id="main-content">
-            
+
             <header class="main-header">
-                <button class="icon-btn" onclick="toggleSidebar()" title="展开/收起侧边栏">
+                <a href="../../index.html" class="home-link" title="返回学术哥们主页">
+                    <i class="fas fa-arrow-left"></i> <span>学术哥们</span>
+                </a>
+                <button class="icon-btn" onclick="App.toggleSidebar()" title="展开/收起侧边栏">
                     <i class="fas fa-bars"></i>
                 </button>
-                <input type="text" id="current-table-name" class="table-name-input" value="未命名表格" onchange="renameCurrentTable()" />
+                <input type="text" id="current-table-name" class="table-name-input" value="未命名表格" onchange="App.renameCurrentTable()" />
                 <div class="header-title">学术三线表工具</div>
             </header>
 
@@ -54,21 +57,21 @@
                     <div class="control-section">
                         <h3><i class="fas fa-table"></i> 全局操作 (末尾)</h3>
                         <div class="button-row">
-                            <button onclick="addRow()"><i class="fas fa-plus"></i> 末尾加行</button>
-                            <button onclick="addColumn()"><i class="fas fa-plus"></i> 末尾加列</button>
-                            <button class="danger" onclick="removeRow()"><i class="fas fa-minus"></i> 删末尾行</button>
-                            <button class="danger" onclick="removeColumn()"><i class="fas fa-minus"></i> 删末尾列</button>
+                            <button onclick="App.addRow()"><i class="fas fa-plus"></i> 末尾加行</button>
+                            <button onclick="App.addColumn()"><i class="fas fa-plus"></i> 末尾加列</button>
+                            <button class="danger" onclick="App.removeRow()"><i class="fas fa-minus"></i> 删末尾行</button>
+                            <button class="danger" onclick="App.removeColumn()"><i class="fas fa-minus"></i> 删末尾列</button>
                         </div>
                         <h3 style="margin-top: 12px;"><i class="fas fa-mouse-pointer"></i> 基于选中单元格</h3>
                         <div class="button-row">
-                            <button onclick="insertRow('above')"><i class="fas fa-arrow-up"></i> 上加行</button>
-                            <button onclick="insertRow('below')"><i class="fas fa-arrow-down"></i> 下加行</button>
-                            <button class="danger" onclick="deleteTargetRow()"><i class="fas fa-trash-alt"></i> 删选中行</button>
+                            <button onclick="App.insertRow('above')"><i class="fas fa-arrow-up"></i> 上加行</button>
+                            <button onclick="App.insertRow('below')"><i class="fas fa-arrow-down"></i> 下加行</button>
+                            <button class="danger" onclick="App.deleteTargetRow()"><i class="fas fa-trash-alt"></i> 删选中行</button>
                         </div>
                         <div class="button-row" style="margin-top: 4px;">
-                            <button onclick="insertColumn('left')"><i class="fas fa-arrow-left"></i> 左加列</button>
-                            <button onclick="insertColumn('right')"><i class="fas fa-arrow-right"></i> 右加列</button>
-                            <button class="danger" onclick="deleteTargetColumn()"><i class="fas fa-trash-alt"></i> 删选中列</button>
+                            <button onclick="App.insertColumn('left')"><i class="fas fa-arrow-left"></i> 左加列</button>
+                            <button onclick="App.insertColumn('right')"><i class="fas fa-arrow-right"></i> 右加列</button>
+                            <button class="danger" onclick="App.deleteTargetColumn()"><i class="fas fa-trash-alt"></i> 删选中列</button>
                         </div>
                     </div>
 
@@ -76,11 +79,11 @@
                         <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid var(--border-color); padding-bottom: 8px; margin-bottom: 12px;">
                             <h3 style="margin: 0; border: none; padding: 0;"><i class="fas fa-paint-brush"></i> 元素样式 <span style="font-size: 11px; font-weight: normal; color: var(--text-secondary); text-transform: none;">(提示: 按住 Ctrl 可多选单元格进行批处理)</span></h3>
                         </div>
-                        
+
                         <div id="style-toolbar" class="style-toolbar">
                             <div class="input-group">
                                 <label for="font-family-input"><i class="fas fa-font"></i> 字体</label>
-                                <select id="font-family-input" onchange="applyFontFamily()">
+                                <select id="font-family-input" onchange="App.applyFontFamily()">
                                     <option value="'Times New Roman', Times, serif">Times New Roman</option>
                                     <option value="Calibri, sans-serif">Calibri</option>
                                     <option value="Arial, sans-serif">Arial</option>
@@ -89,37 +92,56 @@
 
                             <div class="input-group">
                                 <label for="font-size-input"><i class="fas fa-text-height"></i> 大小(px)</label>
-                                <input type="number" id="font-size-input" value="16" onchange="applyFontSize()" />
+                                <input type="number" id="font-size-input" value="16" onchange="App.applyFontSize()" />
                             </div>
 
                             <div class="input-group">
                                 <label for="padding-input"><i class="fas fa-arrows-alt-v"></i> 边距</label>
-                                <input type="number" id="padding-input" value="14" onchange="applyPadding()" title="调整单元格的上下内边距" />
+                                <input type="number" id="padding-input" value="14" onchange="App.applyPadding()" title="调整单元格的上下内边距" />
                             </div>
 
                             <div class="input-group">
                                 <label for="line-height-input"><i class="fas fa-ruler-vertical"></i> 行高</label>
-                                <input type="number" id="line-height-input" value="1.5" step="0.1" onchange="applyLineHeight()" title="调整多行文字之间的距离" />
+                                <input type="number" id="line-height-input" value="1.5" step="0.1" onchange="App.applyLineHeight()" title="调整多行文字之间的距离" />
                             </div>
 
                             <div class="button-row">
-                                <button onclick="toggleBold()" title="加粗"><i class="fas fa-bold"></i></button>
-                                <button onclick="toggleItalic()" title="斜体"><i class="fas fa-italic"></i></button>
+                                <button onclick="App.toggleBold()" title="加粗"><i class="fas fa-bold"></i></button>
+                                <button onclick="App.toggleItalic()" title="斜体"><i class="fas fa-italic"></i></button>
                                 <div style="width: 1px; background: var(--border-color); margin: 0 4px;"></div>
-                                <button onclick="alignText('left')" title="左对齐"><i class="fas fa-align-left"></i></button>
-                                <button onclick="alignText('center')" title="居中"><i class="fas fa-align-center"></i></button>
-                                <button onclick="alignText('right')" title="右对齐"><i class="fas fa-align-right"></i></button>
-                                <button onclick="alignText('justify')" title="两端对齐"><i class="fas fa-align-justify"></i></button>
+                                <button onclick="App.alignText('left')" title="左对齐"><i class="fas fa-align-left"></i></button>
+                                <button onclick="App.alignText('center')" title="居中"><i class="fas fa-align-center"></i></button>
+                                <button onclick="App.alignText('right')" title="右对齐"><i class="fas fa-align-right"></i></button>
+                                <button onclick="App.alignText('justify')" title="两端对齐"><i class="fas fa-align-justify"></i></button>
                             </div>
                         </div>
                     </div>
 
                     <div class="control-section export-section">
-                        <button id="export-btn" class="primary" onclick="exportToPNG()">
-                            <i class="fas fa-download"></i> 导出高清 PNG
+                        <button id="export-btn" class="primary" onclick="App.exportToPNG()" style="margin-bottom: 8px;">
+                            <i class="fas fa-image"></i> 导出高清 PNG
                         </button>
+                        <button id="export-md-btn" class="primary" onclick="App.exportToMarkdown()" style="background-color: var(--success-color); border-color: var(--success-color);">
+                            <i class="fas fa-file-code"></i> 导出 Markdown
+                        </button>
+                        <label class="export-toggle" title="导出 PNG 时是否包含表题（caption）">
+                            <input type="checkbox" id="export-caption" checked />
+                            <span>导出含表题</span>
+                        </label>
                     </div>
                 </nav>
+
+                <!-- Excel 式操作提示 -->
+                <div class="usage-hints">
+                    <i class="fas fa-lightbulb"></i>
+                    <span class="hint-label">像 Excel 一样：</span>
+                    <span><b>拖拽 / Shift+点</b> 框选</span>
+                    <span><b>Ctrl+V</b> 从 Excel 粘贴</span>
+                    <span><b>Tab / Enter / 方向键</b> 换格</span>
+                    <span><b>Delete</b> 清空所选</span>
+                    <span><b>右键</b> 插入 / 删除行列</span>
+                    <span><b>Ctrl+C</b> 复制为表格</span>
+                </div>
 
                 <!-- 下方居中预览区 -->
                 <main class="preview-area">
@@ -131,7 +153,13 @@
         </div>
     </div>
 
-    <!-- 引入外部逻辑脚本 -->
-    <script src="script.js"></script>
+    <!-- 逻辑脚本（按依赖顺序加载；普通 script、非 module，file:// 可用）-->
+    <script src="js/state.js"></script>
+    <script src="js/tables.js"></script>
+    <script src="js/selection.js"></script>
+    <script src="js/table-ops.js"></script>
+    <script src="js/clipboard.js"></script>
+    <script src="js/export.js"></script>
+    <script src="js/main.js"></script>
 </body>
-</html> 
+</html>
