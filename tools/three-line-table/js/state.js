@@ -112,3 +112,12 @@ App.notify = function (msg) {
     clearTimeout(App._toastTimer);
     App._toastTimer = setTimeout(() => t.classList.remove('show'), 1800);
 };
+
+/** 样式类输入连续调整时，防抖提交历史与存储（避免每次按键都记一次快照）*/
+App.commitStyleSoon = function () {
+    clearTimeout(App._styleCommitTimer);
+    App._styleCommitTimer = setTimeout(() => {
+        App.pushHistory();
+        App.saveToLocalStorage(false);
+    }, 500);
+};

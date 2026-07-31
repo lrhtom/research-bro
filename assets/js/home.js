@@ -1,5 +1,5 @@
 // ============================================================
-//  学术哥们 · 工具卡片数据
+//  工具箱 · 工具卡片数据
 //  想新增一个工具 / 链接？只需在下面的 TOOLS 数组里加一个对象。
 //
 //  字段说明：
@@ -24,6 +24,16 @@ const TOOLS = [
         badges: ['免费', '本地保存', 'PNG 导出'],
     },
     {
+        title: '八股文可视化演示',
+        subtitle: 'Algorithm Visualizations',
+        desc: '把面试八股里那些「名词会背、图画不出」的知识点一步步画出来：TCP 拥塞控制与滑动窗口、三次握手、HTTP 队头阻塞、TLS 握手、MVCC、B+ 树、缓存三兄弟、单飞锁等，可自己调参数点着走。',
+        icon: 'fa-wave-square',
+        href: 'tools/visualizations/index.html',
+        kind: 'self',
+        accent: 'blue',
+        badges: ['10 个演示', '交互可调', '面试速查'],
+    },
+    {
         title: 'Word 转 PNG',
         subtitle: 'Word to PNG Converter',
         desc: '上传 Word 文档，一键转换为高清 PNG 图片。无需注册登录，不限次数，免费使用。',
@@ -32,6 +42,26 @@ const TOOLS = [
         kind: 'link',
         accent: 'pink',
         badges: ['无限免费', '免注册'],
+    },
+    {
+        title: '图片切割',
+        subtitle: 'Split Image',
+        desc: '把一张图片按行、列或网格切成多张，可自定义数量或尺寸，支持逐张或打包下载。免注册、免费使用。',
+        icon: 'fa-scissors',
+        href: 'https://pinetools.com/split-image',
+        kind: 'link',
+        accent: 'teal',
+        badges: ['免费', '免注册'],
+    },
+    {
+        title: 'GIF 转换',
+        subtitle: 'GIF Converter',
+        desc: '视频转 GIF、GIF 转 MP4 / WebM、多图合成 GIF，还能裁剪、压缩、加字幕。免注册、免费在线使用。',
+        icon: 'fa-film',
+        href: 'https://ezgif.com/',
+        kind: 'link',
+        accent: 'amber',
+        badges: ['免费', '免注册'],
     },
 ];
 

@@ -6,6 +6,8 @@
 
 /** 拍摄当前 tableWrapper 的 HTML 快照并压入历史栈 */
 App.pushHistory = function () {
+    // 表格结构/样式一变，导出尺寸提示就得跟着变（放在 historyPaused 判断之前）
+    if (App.updateExportSizeHint) App.updateExportSizeHint();
     if (App.historyPaused) return;
     const { tableWrapper } = App.dom;
 
@@ -100,6 +102,8 @@ App.saveToLocalStorage = function (showToast = false) {
 
     localStorage.setItem(App.LOCAL_STORAGE_KEY, JSON.stringify(App.tableDataList));
     App.renderSidebarList();
+    // 覆盖撤销/重做（restoreSnapshot 不走 pushHistory）等路径
+    if (App.updateExportSizeHint) App.updateExportSizeHint();
 
     if (showToast) {
         toast.innerHTML = '<i class="fas fa-check-circle"></i> 保存成功';
@@ -158,8 +162,16 @@ App.switchTable = function (id) {
     App.pushHistory();
 };
 
+/** 用现成的表格 HTML 新建一张表并切过去（Markdown 导入等复用）*/
+App.createTableFromHtml = function (name, html) {
+    // 加随机后缀：同一毫秒内连续创建多张表也不会撞 id
+    const newId = 'table_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
+    App.tableDataList.unshift({ id: newId, name, html });
+    App.switchTable(newId);
+    return newId;
+};
+
 App.createNewTable = function (name = '新图表') {
-    const newId = 'table_' + Date.now();
     const defaultHTML = `
         <table class="academic-table" id="main-table">
             <caption contenteditable="true">${App.escapeHtml(name)}</caption>
@@ -185,8 +197,7 @@ App.createNewTable = function (name = '新图表') {
         </table>
     `;
 
-    App.tableDataList.unshift({ id: newId, name, html: defaultHTML });
-    App.switchTable(newId);
+    App.createTableFromHtml(name, defaultHTML);
 };
 
 App.deleteTable = function (id, event) {

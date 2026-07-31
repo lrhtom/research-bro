@@ -53,6 +53,57 @@ App.getCurrentCell = function () {
     return App.activeElements.find((el) => el.tagName === 'TD' || el.tagName === 'TH') || null;
 };
 
+/** 当前可编辑目标：单元格或表题（表题也允许格内换行）*/
+App.getCurrentEditable = function () {
+    const ae = document.activeElement;
+    if (ae && ae.tagName === 'CAPTION' && App.dom.tableWrapper.contains(ae)) return ae;
+    return App.getCurrentCell() || App.activeElements.find((el) => el.tagName === 'CAPTION') || null;
+};
+
+/**
+ * 在光标处插入一个换行（格内换行，不跳格）。
+ * contenteditable 里“末尾的 <br> 不显示”是老毛病，优先交给浏览器原生命令处理，
+ * 原生命令不认再手工插入并补一个 <br>，保证新起的这一行看得见。
+ */
+App.insertLineBreak = function () {
+    const target = App.getCurrentEditable();
+    if (!target) return false;
+
+    // 只选中还没进编辑态时，先把光标放进去（放到末尾）
+    const sel = window.getSelection();
+    if (!sel.rangeCount || !target.contains(sel.getRangeAt(0).commonAncestorContainer)) {
+        target.focus();
+        const r = document.createRange();
+        r.selectNodeContents(target);
+        r.collapse(false);
+        sel.removeAllRanges();
+        sel.addRange(r);
+    }
+
+    let ok = false;
+    try { ok = document.execCommand('insertLineBreak'); } catch (e) { ok = false; }
+    if (!ok) { try { ok = document.execCommand('insertHTML', false, '<br>'); } catch (e) { ok = false; } }
+
+    if (!ok) {
+        const s = window.getSelection();
+        if (!s.rangeCount) return false;
+        const range = s.getRangeAt(0);
+        range.deleteContents();
+        const br = document.createElement('br');
+        range.insertNode(br);
+        if (!br.nextSibling) br.parentNode.appendChild(document.createElement('br'));
+        range.setStartAfter(br);
+        range.collapse(true);
+        s.removeAllRanges();
+        s.addRange(range);
+    }
+
+    // 手工兜底不会触发 input 事件，这里显式记一次历史，保证能撤销、能存住
+    App.pushHistory();
+    App.saveToLocalStorage(false);
+    return true;
+};
+
 /** 聚焦某单元格并放置光标（selectAll=true 选中全部内容，便于覆盖输入）*/
 App.focusCell = function (cell, selectAll) {
     cell.focus();
@@ -89,21 +140,34 @@ App.gridNavigate = function (cell, dir) {
     return row.children[c];
 };
 
-/** 光标在单元格内的位置信息（判断是否到边界，用于方向键跨格）*/
+/**
+ * 光标在单元格内的位置信息（判断是否到边界，用于方向键跨格）。
+ * 注意：格内换行在 DOM 里是 <br>，而 Range.toString() 只拼文本节点、不会产出 \n，
+ * 所以判断“前面/后面有没有换行”必须额外查 <br>，否则多行单元格里按上下键会直接跳出格子。
+ */
 App.caretInfo = function (cell) {
     const sel = window.getSelection();
     if (!sel.rangeCount) return { collapsed: true, atStart: true, atEnd: true, beforeHasNL: false, afterHasNL: false };
     const range = sel.getRangeAt(0);
+
     const pre = range.cloneRange(); pre.selectNodeContents(cell); pre.setEnd(range.startContainer, range.startOffset);
-    const before = pre.toString();
     const post = range.cloneRange(); post.selectNodeContents(cell); post.setStart(range.endContainer, range.endOffset);
-    const after = post.toString();
+
+    const hasBreak = (r) => {
+        const frag = r.cloneContents();
+        if (frag && frag.querySelector && frag.querySelector('br')) return true;
+        return r.toString().includes('\n');
+    };
+
+    const beforeNL = hasBreak(pre);
+    const afterNL = hasBreak(post);
+
     return {
         collapsed: range.collapsed,
-        atStart: before.length === 0,
-        atEnd: after.length === 0,
-        beforeHasNL: before.includes('\n'),
-        afterHasNL: after.includes('\n'),
+        atStart: pre.toString().length === 0 && !beforeNL,
+        atEnd: post.toString().length === 0 && !afterNL,
+        beforeHasNL: beforeNL,
+        afterHasNL: afterNL,
     };
 };
 
@@ -230,25 +294,25 @@ App.initKeyboard = function () {
 
         const cell = App.getCurrentCell();
 
-        // Tab / Shift+Tab
+        // Tab / Shift+Tab 换格；在最后一格按 Tab 自动新增一行（与 Word 表格一致）
         if (event.key === 'Tab') {
             if (!cell) return;
             event.preventDefault();
-            const t = App.tabNavigate(cell, event.shiftKey);
+            let t = App.tabNavigate(cell, event.shiftKey);
+            if (!t && !event.shiftKey) {
+                App.appendEmptyRow();
+                t = App.tabNavigate(cell, false);
+            }
             if (t) App.focusCell(t, true);
             return;
         }
 
-        // Enter 下移；Shift+Enter 换行（放行默认）
-        if (event.key === 'Enter' && !event.shiftKey) {
-            if (!cell) return;
+        // Enter：格内换行 —— Word 里表格就是这个行为，本工具面向论文排版，跟 Word 对齐。
+        // 跨格移动请用 Tab / 方向键。（Alt+Enter、Shift+Enter 同样换行，照顾 Excel / 网页习惯）
+        if (event.key === 'Enter') {
+            if (!App.getCurrentEditable()) return;
             event.preventDefault();
-            let t = App.gridNavigate(cell, 'down');
-            if (!t && cell.parentElement.parentElement.tagName === 'TBODY') {
-                App.appendEmptyRow();
-                t = App.gridNavigate(cell, 'down');
-            }
-            if (t) App.focusCell(t, true);
+            App.insertLineBreak();
             return;
         }
 
@@ -293,6 +357,9 @@ App.initContextMenu = function () {
         <button type="button" data-action="insert-col-left"><i class="fas fa-arrow-left"></i> 左侧插入列</button>
         <button type="button" data-action="insert-col-right"><i class="fas fa-arrow-right"></i> 右侧插入列</button>
         <div class="context-sep"></div>
+        <div class="context-sep"></div>
+        <button type="button" data-action="line-break"><i class="fas fa-turn-down"></i> 格内换行 <span class="ctx-key">Enter</span></button>
+        <div class="context-sep"></div>
         <button type="button" data-action="delete-row" class="danger"><i class="fas fa-trash-alt"></i> 删除行</button>
         <button type="button" data-action="delete-col" class="danger"><i class="fas fa-trash-alt"></i> 删除列</button>
         <button type="button" data-action="clear"><i class="fas fa-eraser"></i> 清空内容</button>
@@ -329,6 +396,7 @@ App.initContextMenu = function () {
             case 'insert-row-below': App.insertRow('below'); break;
             case 'insert-col-left': App.insertColumn('left'); break;
             case 'insert-col-right': App.insertColumn('right'); break;
+            case 'line-break': App.insertLineBreak(); break;
             case 'delete-row': App.deleteTargetRow(); break;
             case 'delete-col': App.deleteTargetColumn(); break;
             case 'clear': App.clearCells(); break;

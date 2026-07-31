@@ -233,53 +233,119 @@ App.appendEmptyRow = function () {
 
 // ---------- 样式操作 ----------
 
+// 清除单元格内所有子元素自带的某项内联样式（及等价的老式属性），
+// 使整格文字统一继承单元格本身的样式——解决粘贴/富文本内容大小、字体不一的问题。
+App.unifyCellStyle = function (el, cssProp, legacyAttr) {
+    el.querySelectorAll('*').forEach((child) => {
+        if (child.style) child.style.removeProperty(cssProp);
+        if (legacyAttr && child.hasAttribute(legacyAttr)) child.removeAttribute(legacyAttr);
+    });
+};
+
 App.applyFontFamily = function () {
     const selectedFont = App.dom.fontFamilyInput.value;
-    App.activeElements.forEach((el) => { el.style.fontFamily = selectedFont; });
-    App.pushHistory();
-    App.saveToLocalStorage(false);
-};
-
-App.applyFontSize = function () {
-    const newSize = App.dom.fontSizeInput.value;
-    App.activeElements.forEach((el) => { el.style.fontSize = newSize + 'px'; });
-    App.pushHistory();
-    App.saveToLocalStorage(false);
-};
-
-App.applyPadding = function () {
-    const newPad = App.dom.paddingInput.value;
     App.activeElements.forEach((el) => {
-        el.style.paddingTop = newPad + 'px';
-        el.style.paddingBottom = newPad + 'px';
+        el.style.fontFamily = selectedFont;
+        App.unifyCellStyle(el, 'font-family', 'face'); // 清掉子元素自带字体，整格统一
     });
     App.pushHistory();
     App.saveToLocalStorage(false);
 };
 
+// 字号/边距/行高 走 oninput 实时应用（避免依赖 blur 提交，配合防抖记录历史）
+App.applyFontSize = function () {
+    const newSize = App.dom.fontSizeInput.value;
+    if (newSize === '') return;
+    App.activeElements.forEach((el) => {
+        el.style.fontSize = newSize + 'px';
+        App.unifyCellStyle(el, 'font-size', 'size'); // 清掉子元素自带字号，整格统一大小
+    });
+    App.commitStyleSoon();
+};
+
+App.applyPadding = function () {
+    const newPad = App.dom.paddingInput.value;
+    if (newPad === '') return;
+    App.activeElements.forEach((el) => {
+        el.style.paddingTop = newPad + 'px';
+        el.style.paddingBottom = newPad + 'px';
+    });
+    App.commitStyleSoon();
+};
+
 App.applyLineHeight = function () {
     const newLh = App.dom.lineHeightInput.value;
+    if (newLh === '') return;
     App.activeElements.forEach((el) => { el.style.lineHeight = newLh; });
-    App.pushHistory();
-    App.saveToLocalStorage(false);
+    App.commitStyleSoon();
+};
+
+// 判断单元格“看起来”是否加粗/倾斜：除单元格自身外，还要看粘贴进来的
+// <b>/<strong>/<em>/<i> 等标签——它们自带样式，会盖过单元格的设置。
+App.isRenderedBold = function (el) {
+    const w = window.getComputedStyle(el).fontWeight;
+    if (w === 'bold' || parseInt(w, 10) >= 600) return true;
+    return !!el.querySelector('b, strong');
+};
+
+App.isRenderedItalic = function (el) {
+    if (window.getComputedStyle(el).fontStyle === 'italic') return true;
+    return !!el.querySelector('em, i');
 };
 
 App.toggleBold = function () {
     if (App.activeElements.length === 0) return;
-    const firstStyle = window.getComputedStyle(App.activeElements[0]).fontWeight;
-    const shouldBold = !(firstStyle === 'bold' || parseInt(firstStyle) >= 600);
-    App.activeElements.forEach((el) => { el.style.fontWeight = shouldBold ? 'bold' : 'normal'; });
+    const shouldBold = !App.isRenderedBold(App.activeElements[0]);
+    App.activeElements.forEach((el) => {
+        el.style.fontWeight = shouldBold ? 'bold' : 'normal';
+        App.unifyCellStyle(el, 'font-weight');                    // 清掉子元素内联字重
+        el.querySelectorAll('b, strong').forEach((n) => {         // <b>/<strong> 自带加粗，需显式覆盖
+            n.style.fontWeight = shouldBold ? 'bold' : 'normal';
+        });
+    });
     App.pushHistory();
     App.saveToLocalStorage(false);
 };
 
 App.toggleItalic = function () {
     if (App.activeElements.length === 0) return;
-    const firstStyle = window.getComputedStyle(App.activeElements[0]).fontStyle;
-    const shouldItalic = (firstStyle !== 'italic');
-    App.activeElements.forEach((el) => { el.style.fontStyle = shouldItalic ? 'italic' : 'normal'; });
+    const shouldItalic = !App.isRenderedItalic(App.activeElements[0]);
+    App.activeElements.forEach((el) => {
+        el.style.fontStyle = shouldItalic ? 'italic' : 'normal';
+        App.unifyCellStyle(el, 'font-style');                     // 清掉子元素内联斜体
+        el.querySelectorAll('em, i').forEach((n) => {             // <em>/<i> 自带斜体，需显式覆盖
+            n.style.fontStyle = shouldItalic ? 'italic' : 'normal';
+        });
+    });
     App.pushHistory();
     App.saveToLocalStorage(false);
+};
+
+/**
+ * 清除格式：把选中单元格里从 Word / PDF / 网页粘进来的富文本还原成纯文本，
+ * 只保留文字与换行，并清掉字符级装饰（斜体/加粗/下划线/颜色/底色）。
+ * 字号、字体、对齐、边距、行高等你在工具栏里设的排版保持不变。
+ */
+App.clearFormatting = function () {
+    if (App.activeElements.length === 0) {
+        App.notify('请先选中要清除格式的单元格');
+        return;
+    }
+    App.activeElements.forEach((el) => {
+        // 1) 拆掉所有子元素，只留文字与换行
+        const lines = el.innerText.split('\n');
+        el.innerHTML = '';
+        lines.forEach((line, i) => {
+            if (i) el.appendChild(document.createElement('br'));
+            el.appendChild(document.createTextNode(line));
+        });
+        // 2) 清掉单元格自身的字符级装饰（排版设置保留）
+        ['font-style', 'font-weight', 'text-decoration', 'color', 'background-color']
+            .forEach((p) => el.style.removeProperty(p));
+    });
+    App.pushHistory();
+    App.saveToLocalStorage(false);
+    App.notify('已清除所选单元格的格式');
 };
 
 App.alignText = function (alignment) {

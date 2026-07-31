@@ -254,8 +254,9 @@ body {
 
 .control-section.export-section {
     flex: 0;
-    min-width: 180px;
+    min-width: 210px;
     align-self: center;
+    gap: 0;
 }
 
 .control-section h3 {
@@ -454,6 +455,12 @@ button.primary:hover {
     line-height: inherit;
 }
 
+/* 单元格内所有子元素继承单元格的字号与字体，避免粘贴/富文本内容出现大小不一 */
+.academic-table td *, .academic-table th *, .academic-table caption * {
+    font-size: inherit;
+    font-family: inherit;
+}
+
 .academic-table th:hover, .academic-table td:hover, .academic-table caption:hover {
     background-color: rgba(79, 70, 229, 0.05);
     cursor: text;
@@ -535,6 +542,56 @@ button.primary:hover {
     font-weight: 600;
 }
 
+/* ===== 导出分辨率选择 ===== */
+.export-scale {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 8px;
+    padding: 6px 10px;
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+}
+
+.export-scale label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    white-space: nowrap;
+}
+
+.export-scale select {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    background: #f3f4f6;
+    border-radius: 6px;
+    padding: 4px 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: var(--text-primary);
+    outline: none;
+    cursor: pointer;
+}
+
+.export-scale select:focus {
+    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.3);
+}
+
+.export-size-hint {
+    display: block;
+    margin-top: 4px;
+    font-size: 11px;
+    color: var(--text-secondary);
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}
+
 /* ===== “导出含表题” 开关 ===== */
 .export-toggle {
     display: flex;
@@ -553,6 +610,274 @@ button.primary:hover {
     cursor: pointer;
     width: 15px;
     height: 15px;
+}
+
+/* ===== 导入 Markdown 按钮 ===== */
+button.btn-import {
+    background-color: #0ea5e9;
+    border-color: #0ea5e9;
+    color: #fff;
+    margin-bottom: 8px;
+}
+
+button.btn-import:hover {
+    background-color: #0284c7;
+    border-color: #0284c7;
+    color: #fff;
+    box-shadow: 0 6px 16px rgba(14, 165, 233, 0.25);
+}
+
+/* ===== 弹窗（导入 Markdown） ===== */
+.modal-mask {
+    position: fixed;
+    inset: 0;
+    z-index: 12000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(17, 24, 39, 0.45);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+}
+
+.modal-mask.show {
+    display: flex;
+}
+
+.modal {
+    width: min(760px, 100%);
+    max-height: calc(100vh - 48px);
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.45);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.modal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-head h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.modal-head h3 i {
+    color: var(--primary-color);
+}
+
+.modal-body {
+    padding: 16px 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.modal-hint {
+    margin: 0;
+    padding: 10px 12px;
+    font-size: 12px;
+    line-height: 1.9;
+    color: var(--text-secondary);
+    background: #f9fafb;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+}
+
+.modal-hint code {
+    background: #eef2ff;
+    color: var(--primary-color);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 11px;
+}
+
+#md-import-text {
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 170px;
+    resize: vertical;
+    padding: 12px;
+    font-family: ui-monospace, SFMono-Regular, Consolas, 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text-primary);
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    outline: none;
+}
+
+#md-import-text:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+.modal-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.file-pick {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    border: 1px dashed var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.file-pick:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+/* 视觉上隐藏但仍可被键盘聚焦（display:none 会让 Tab 跳过它）*/
+.file-pick input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.file-pick:focus-within {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+.modal-modes {
+    display: flex;
+    gap: 16px;
+}
+
+.modal-modes label {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    user-select: none;
+}
+
+.modal-modes input {
+    accent-color: var(--primary-color);
+    cursor: pointer;
+}
+
+.modal-foot {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 14px 20px;
+    background: #f9fafb;
+    border-top: 1px solid var(--border-color);
+}
+
+.modal-foot button.primary {
+    width: auto;
+}
+
+.modal-foot button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* ---- 导入预览 ---- */
+.md-preview {
+    max-height: 260px;
+    overflow: auto;
+    padding: 12px;
+    background: #f9fafb;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+}
+
+.md-preview-empty {
+    margin: 0;
+    font-size: 12px;
+    color: #9ca3af;
+}
+
+.md-preview-ok {
+    margin: 0 0 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--success-color);
+}
+
+.md-preview-bad {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.8;
+    color: var(--danger-color);
+}
+
+.md-preview-bad code {
+    background: #fee2e2;
+    padding: 1px 5px;
+    border-radius: 4px;
+}
+
+.md-preview-item {
+    margin-bottom: 14px;
+}
+
+.md-preview-meta {
+    margin-bottom: 5px;
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+
+.md-preview-table {
+    border-collapse: collapse;
+    background: #fff;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 12px;
+    color: #000;
+    text-align: center;
+    border-top: 2px solid #000;
+    border-bottom: 2px solid #000;
+}
+
+.md-preview-table thead th {
+    border-bottom: 1px solid #000;
+    font-weight: bold;
+}
+
+.md-preview-table th,
+.md-preview-table td {
+    padding: 5px 12px;
+}
+
+.md-preview-more {
+    margin: 4px 0 0;
+    font-size: 11px;
+    color: var(--text-secondary);
 }
 
 /* ===== 右键上下文菜单 ===== */
@@ -625,4 +950,12 @@ button.primary:hover {
     height: 1px;
     background: var(--border-color);
     margin: 4px 2px;
+}
+
+/* 右键菜单里的快捷键提示 */
+.context-menu .ctx-key {
+    margin-left: auto;
+    padding-left: 12px;
+    font-size: 11px;
+    color: #9ca3af;
 }

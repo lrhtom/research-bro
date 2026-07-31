@@ -88,6 +88,10 @@ App.handlePaste = function (event) {
 };
 
 App.handleCopy = function (event) {
+    // 焦点在输入框/文本域里（如导入弹窗）时不劫持，走原生复制
+    const ae = document.activeElement;
+    if (ae && (ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA')) return;
+
     // 单格或未选区域时走浏览器默认复制（复制格内文字）
     if (App.activeElements.length < 2) return;
 
