@@ -880,6 +880,111 @@ button.btn-import:hover {
     color: var(--text-secondary);
 }
 
+/* ===== 侧边栏底部：数据备份入口 ===== */
+.sidebar-foot {
+    padding: 12px 16px 16px;
+    border-top: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+.ghost-btn {
+    width: 100%;
+    justify-content: center;
+    font-size: 12.5px;
+    padding: 9px 12px;
+    background: rgba(79, 70, 229, 0.06);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+}
+
+.ghost-btn:hover {
+    background: rgba(79, 70, 229, 0.12);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.sidebar-tip {
+    margin: 9px 0 0;
+    font-size: 10.5px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    white-space: normal;
+}
+
+/* ===== 备份弹窗内部 ===== */
+.bk-section {
+    padding: 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 11px;
+    background: #fff;
+}
+
+/* 两个 section 是 .modal-body 的直接子元素，间距由它的 gap 负责，这里不再加 margin */
+
+.bk-section h4 {
+    margin: 0 0 10px;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.bk-section h4 i { color: var(--primary-color); }
+
+.bk-summary { font-size: 12.5px; color: var(--text-secondary); margin-bottom: 10px; }
+.bk-summary b { color: var(--text-primary); }
+.bk-quota { font-size: 11px; color: #9ca3af; }
+
+.bk-bar {
+    height: 6px;
+    background: #eef0f3;
+    border-radius: 3px;
+    margin-top: 7px;
+    overflow: hidden;
+}
+
+.bk-bar-fill {
+    height: 100%;
+    /* 占用极小时百分比会算到接近 0，给个下限，否则条子完全看不见 */
+    min-width: 4px;
+    background: linear-gradient(to right, var(--primary-color), #ec4899);
+    border-radius: 3px;
+    transition: width 0.3s;
+}
+
+.bk-list { max-height: 190px; overflow-y: auto; }
+
+.bk-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+
+.bk-table th {
+    text-align: left;
+    padding: 6px 8px;
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    border-bottom: 1.5px solid var(--border-color);
+}
+
+.bk-table td { padding: 6px 8px; border-bottom: 1px solid #f1f3f6; }
+.bk-table td:nth-child(2), .bk-table td:nth-child(3) { color: var(--text-secondary); white-space: nowrap; }
+.bk-table tr.cur { background: rgba(79, 70, 229, 0.06); }
+
+.bk-cur {
+    font-size: 10px;
+    background: var(--primary-color);
+    color: #fff;
+    padding: 1px 6px;
+    border-radius: 8px;
+    margin-left: 4px;
+}
+
+.bk-export { margin-top: 12px; }
+.bk-hint { margin: 6px 0 0; font-size: 11.5px; color: #9ca3af; }
+.bk-ok { margin: 0 0 8px; font-size: 12px; font-weight: 600; color: var(--success-color); }
+.bk-bad { margin: 0; font-size: 12px; color: var(--danger-color); line-height: 1.8; }
+.bk-warn { margin: 8px 0 0; font-size: 11.5px; color: #b45309; line-height: 1.7; }
+
 /* ===== 右键上下文菜单 ===== */
 .context-menu {
     position: absolute;

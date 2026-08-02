@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="计算机网络、数据库、缓存并发等八股知识点的交互式可视化演示合集。">
-    <title>算法可视化演示 | Algorithm Visualizations</title>
+    <meta name="description" content="计算机网络、操作系统、数据库、缓存并发、系统设计等知识点的交互式可视化演示合集。">
+    <title>知识可视化 | Knowledge Visualizations</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- ?v 版本号用于强制刷新缓存，改动后自增即可 -->
-    <link rel="stylesheet" href="css/viz.css?v=9">
+    <link rel="stylesheet" href="css/viz.css?v=11">
 </head>
 <body>
 
@@ -34,10 +34,10 @@
                     <i class="fas fa-bars"></i>
                 </button>
                 <div class="header-titles">
-                    <h1 id="stage-title">算法可视化演示</h1>
+                    <h1 id="stage-title">知识可视化</h1>
                     <p id="stage-blurb"></p>
                 </div>
-                <div class="brand">可视化演示</div>
+                <div class="brand">知识可视化</div>
             </header>
 
             <main class="stage" id="stage"></main>
@@ -45,21 +45,44 @@
     </div>
 
     <!-- 按依赖顺序加载；普通 script、非 module，file:// 可用 -->
-    <script src="js/core.js?v=9"></script>
+    <script src="js/core.js?v=11"></script>
     <!-- 计算机网络 -->
-    <script src="js/tcp-congestion.js?v=9"></script>
-    <script src="js/tcp-window.js?v=9"></script>
-    <script src="js/tcp-handshake.js?v=9"></script>
-    <script src="js/http-evolution.js?v=9"></script>
-    <script src="js/tls-handshake.js?v=9"></script>
+    <script src="js/tcp-congestion.js?v=11"></script>
+    <script src="js/tcp-window.js?v=11"></script>
+    <script src="js/tcp-handshake.js?v=11"></script>
+    <script src="js/http-evolution.js?v=11"></script>
+    <script src="js/tls-handshake.js?v=11"></script>
+    <script src="js/dns.js?v=11"></script>
+    <script src="js/http-cache.js?v=11"></script>
+    <!-- 操作系统 -->
+    <script src="js/scheduling.js?v=11"></script>
+    <script src="js/virtual-memory.js?v=11"></script>
+    <script src="js/gc.js?v=11"></script>
+    <script src="js/deadlock.js?v=11"></script>
     <!-- 数据库 -->
-    <script src="js/mvcc.js?v=9"></script>
-    <script src="js/bplus-tree.js?v=9"></script>
+    <script src="js/mvcc.js?v=11"></script>
+    <script src="js/bplus-tree.js?v=11"></script>
+    <script src="js/join-algorithms.js?v=11"></script>
+    <script src="js/buffer-pool.js?v=11"></script>
+    <script src="js/wal.js?v=11"></script>
     <!-- 缓存与并发 -->
-    <script src="js/cache-problems.js?v=9"></script>
-    <script src="js/singleflight.js?v=9"></script>
+    <script src="js/cache-problems.js?v=11"></script>
+    <script src="js/singleflight.js?v=11"></script>
+    <script src="js/cache-eviction.js?v=11"></script>
+    <!-- 系统设计 -->
+    <script src="js/rate-limit.js?v=11"></script>
+    <script src="js/consistent-hash.js?v=11"></script>
+    <script src="js/bloom-filter.js?v=11"></script>
+    <!-- AI 与大模型 -->
+    <script src="js/attention.js?v=11"></script>
+    <script src="js/bpe.js?v=11"></script>
     <!-- 算法与其它 -->
-    <script src="js/fsrs.js?v=9"></script>
-    <script src="js/main.js?v=9"></script>
+    <script src="js/fsrs.js?v=11"></script>
+    <script src="js/kmp.js?v=11"></script>
+    <script src="js/skip-list.js?v=11"></script>
+    <script src="js/pathfinding.js?v=11"></script>
+    <script src="js/union-find.js?v=11"></script>
+    <script src="js/hashmap.js?v=11"></script>
+    <script src="js/main.js?v=11"></script>
 </body>
 </html>

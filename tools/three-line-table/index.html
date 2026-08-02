@@ -10,7 +10,7 @@
     <!-- 引入 FontAwesome 图标库以增强 UI -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- 工具样式（?v 版本号用于强制刷新缓存，改动后自增即可）-->
-    <link rel="stylesheet" href="css/table.css?v=13">
+    <link rel="stylesheet" href="css/table.css?v=15">
 </head>
 <body>
 
@@ -35,6 +35,12 @@
             <ul class="table-list" id="table-list">
                 <!-- 列表项将由 JS 动态生成 -->
             </ul>
+            <div class="sidebar-foot">
+                <button class="ghost-btn" onclick="App.openBackup()" title="查看存了什么 / 导出备份 / 从备份恢复">
+                    <i class="fas fa-database"></i> 数据备份与迁移
+                </button>
+                <p class="sidebar-tip">表格存在本浏览器里，换设备或清缓存会丢，建议定期导出备份。</p>
+            </div>
         </aside>
 
         <!-- 右侧主内容区 -->
@@ -208,14 +214,62 @@
         </div>
     </div>
 
+    <!-- 数据备份与迁移弹窗 -->
+    <div class="modal-mask" id="backup-mask">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="backup-title">
+            <div class="modal-head">
+                <h3 id="backup-title"><i class="fas fa-database"></i> 数据备份与迁移</h3>
+                <button class="icon-btn" onclick="App.closeBackup()" title="关闭"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-hint">
+                    表格保存在<b>这个浏览器的 localStorage</b> 里。它按「网址来源」隔离 ——
+                    换浏览器、换电脑，甚至从双击文件打开（<code>file://</code>）改成用本地服务器打开（<code>http://</code>），
+                    数据都<b>带不过去</b>；清理浏览数据也会一并抹掉。<br>
+                    要长期保存或换设备，请导出成 JSON 文件。
+                </p>
+
+                <div class="bk-section">
+                    <h4><i class="fas fa-box-archive"></i> 现在存了什么</h4>
+                    <div id="backup-list" class="bk-list"></div>
+                    <button class="primary bk-export" onclick="App.exportAllTables()">
+                        <i class="fas fa-download"></i> 导出全部表格为 JSON
+                    </button>
+                </div>
+
+                <div class="bk-section">
+                    <h4><i class="fas fa-upload"></i> 从备份文件恢复</h4>
+                    <div class="modal-row">
+                        <label class="file-pick">
+                            <input type="file" id="backup-file" accept=".json,application/json" />
+                            <i class="fas fa-folder-open"></i> 选择备份 .json
+                        </label>
+                        <div class="modal-modes">
+                            <label><input type="radio" name="backup-mode" value="merge" checked /> 追加到现有表后面</label>
+                            <label><input type="radio" name="backup-mode" value="replace" /> 覆盖全部</label>
+                        </div>
+                    </div>
+                    <div id="backup-preview" class="bk-list"></div>
+                </div>
+            </div>
+            <div class="modal-foot">
+                <button onclick="App.closeBackup()">关闭</button>
+                <button class="primary" id="backup-confirm" onclick="App.confirmBackupRestore()" disabled>
+                    <i class="fas fa-check"></i> 恢复
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- 逻辑脚本（按依赖顺序加载；普通 script、非 module，file:// 可用）-->
-    <script src="js/state.js?v=13"></script>
-    <script src="js/tables.js?v=13"></script>
-    <script src="js/selection.js?v=13"></script>
-    <script src="js/table-ops.js?v=13"></script>
-    <script src="js/clipboard.js?v=13"></script>
-    <script src="js/export.js?v=13"></script>
-    <script src="js/md-import.js?v=13"></script>
-    <script src="js/main.js?v=13"></script>
+    <script src="js/state.js?v=15"></script>
+    <script src="js/tables.js?v=15"></script>
+    <script src="js/selection.js?v=15"></script>
+    <script src="js/table-ops.js?v=15"></script>
+    <script src="js/clipboard.js?v=15"></script>
+    <script src="js/export.js?v=15"></script>
+    <script src="js/md-import.js?v=15"></script>
+    <script src="js/backup.js?v=15"></script>
+    <script src="js/main.js?v=15"></script>
 </body>
 </html>

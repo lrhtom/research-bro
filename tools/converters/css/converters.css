@@ -1,0 +1,47 @@
+/* ============================================================
+   格式转换 · 专属样式
+   卡片本体完全复用 ../../assets/css/home.css 的 .card 那一套，
+   这里只补返回按钮和顶部说明条。
+   ============================================================ */
+
+.back-badge {
+    width: 56px;
+    height: 56px;
+    border-radius: 18px;
+    display: grid;
+    place-items: center;
+    font-size: 20px;
+    color: #fff;
+    text-decoration: none;
+    background: linear-gradient(135deg, #ec4899, #db2777);
+    box-shadow: 0 14px 30px -12px rgba(219, 39, 119, 0.7);
+    flex-shrink: 0;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.back-badge:hover {
+    transform: translateX(-3px);
+    box-shadow: 0 18px 34px -12px rgba(219, 39, 119, 0.85);
+}
+
+/* 顶部提示条 —— 用橙色边而不是主题粉，因为这是一条「注意事项」不是介绍 */
+.page-lead {
+    margin: 6px 4px 22px;
+    padding: 14px 18px;
+    font-size: 13.5px;
+    line-height: 1.85;
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid var(--border);
+    border-left: 3px solid #f59e0b;
+    border-radius: 12px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+.page-lead i { color: #d97706; margin-right: 6px; }
+.page-lead b { color: var(--text-primary); }
+
+@media (max-width: 640px) {
+    .back-badge { width: 46px; height: 46px; font-size: 17px; border-radius: 14px; }
+    .site-header { gap: 16px; }
+    #site-search { width: 100%; }
+}

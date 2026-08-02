@@ -1,5 +1,5 @@
 // ============================================================
-//  可视化演示 · 外壳
+//  知识可视化 · 外壳
 //  演示模块往 Viz 上注册自己；外壳负责「分类折叠导航」与挂载/卸载。
 //  这里还放了各演示共用的 UI 构件（卡片/流程/滑块/对比格），
 //  这样每个演示文件只需要专心写它自己的模型和图。
@@ -16,8 +16,11 @@ window.Viz = {
 // 侧边栏分类（顺序即显示顺序）
 Viz.categories = [
     { id: 'net', name: '计算机网络', icon: 'fa-network-wired' },
+    { id: 'os', name: '操作系统', icon: 'fa-microchip' },
     { id: 'db', name: '数据库', icon: 'fa-database' },
     { id: 'cache', name: '缓存与并发', icon: 'fa-bolt' },
+    { id: 'sys', name: '系统设计', icon: 'fa-sitemap' },
+    { id: 'ai', name: 'AI 与大模型', icon: 'fa-brain' },
     { id: 'algo', name: '算法与其它', icon: 'fa-shapes' },
 ];
 
@@ -124,6 +127,12 @@ Viz.activate = function (id) {
     if (Viz.dom.stageTitle) Viz.dom.stageTitle.textContent = demo.title;
     if (Viz.dom.stageBlurb) Viz.dom.stageBlurb.textContent = demo.blurb || '';
     try { localStorage.setItem('viz_last_demo', id); } catch (e) { /* 忽略 */ }
+
+    // 同步到地址栏，这样某个演示可以被直接收藏/分享，首页搜索也是靠这个跳进来的。
+    // 用 replaceState 而不是改 location.hash：后者会触发 hashchange，绕回来再 activate 一次。
+    try {
+        if (location.hash !== '#demo=' + id) history.replaceState(null, '', '#demo=' + id);
+    } catch (e) { /* file:// 下部分浏览器禁用 replaceState，忽略即可 */ }
 };
 
 // ---------- 基础构件 ----------

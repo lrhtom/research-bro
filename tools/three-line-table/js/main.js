@@ -25,6 +25,12 @@ document.addEventListener('DOMContentLoaded', () => {
         mdFile: document.getElementById('md-import-file'),
         mdPreview: document.getElementById('md-import-preview'),
         mdConfirm: document.getElementById('md-import-confirm'),
+        // 数据备份与迁移弹窗
+        backupMask: document.getElementById('backup-mask'),
+        backupFile: document.getElementById('backup-file'),
+        backupList: document.getElementById('backup-list'),
+        backupPreview: document.getElementById('backup-preview'),
+        backupConfirm: document.getElementById('backup-confirm'),
     };
 
     // 交互装配
@@ -33,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     App.initClipboard();
     App.initContextMenu();
     App.initMdImport();
+    App.initBackup();
 
     // 文字编辑防抖记录快照
     App.dom.tableWrapper.addEventListener('input', () => {
