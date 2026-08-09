@@ -1,0 +1,140 @@
+/* ============================================================
+   首页：工具索引
+   ============================================================ */
+
+.home-lead { margin-top: 0; }
+
+/* ---------------- 工具列表 ---------------- */
+
+.tool-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border: 1px solid var(--rule);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    background: var(--surface);
+}
+.tool-list li + li { border-top: 1px solid var(--hairline); }
+
+.tool-row {
+    display: grid;
+    grid-template-columns: 34px 40px minmax(0, 1fr) 32px;
+    align-items: start;
+    gap: 0 var(--sp-3);
+    padding: var(--sp-4) var(--sp-5);
+    color: inherit;
+    text-decoration: none;
+    transition: background var(--dur) var(--ease);
+}
+.tool-row:hover { background: var(--accent-tint); }
+
+/* 编号：等宽、淡，像目录页的页码 */
+.tool-index {
+    padding-top: 2px;
+    font-size: var(--fs-sm);
+    color: var(--ink-4);
+    letter-spacing: 0.04em;
+}
+.tool-row:hover .tool-index { color: var(--accent); }
+
+.tool-icon {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    font-size: 14px;
+    color: var(--ink-2);
+    background: var(--paper-2);
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-md);
+    transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.tool-row:hover .tool-icon { color: var(--accent); border-color: var(--accent-tint-2); }
+
+.tool-main { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+
+.tool-titles { display: flex; align-items: baseline; gap: var(--sp-2); flex-wrap: wrap; }
+.tool-titles b {
+    font-family: var(--font-display);
+    font-size: var(--fs-lg);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+.tool-titles em {
+    font-family: var(--font-mono);
+    font-style: normal;
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+}
+
+.tool-desc {
+    font-size: var(--fs-sm);
+    line-height: 1.8;
+    color: var(--ink-2);
+}
+
+.tool-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
+.tool-badge {
+    padding: 1px 8px;
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--ink-3);
+    background: var(--paper-2);
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-pill);
+}
+
+.tool-go {
+    display: grid;
+    place-items: center;
+    align-self: center;
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+    color: var(--ink-4);
+    border-radius: var(--r-sm);
+    transition: color var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.tool-row:hover .tool-go { color: var(--accent); transform: translateX(3px); }
+
+/* ---------------- 收录统计 ---------------- */
+
+.home-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: var(--sp-3);
+    margin: 0;
+}
+.home-stats > div {
+    padding: var(--sp-4) var(--sp-4) var(--sp-3);
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--r-lg);
+}
+.home-stats dt {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--ink-3);
+}
+.home-stats dd {
+    margin: 2px 0 0;
+    font-size: var(--fs-2xl);
+    font-weight: 500;
+    line-height: 1.1;
+    color: var(--data);
+    letter-spacing: -0.02em;
+}
+
+/* ---------------- 窄屏 ---------------- */
+
+@media (max-width: 620px) {
+    .tool-row {
+        grid-template-columns: 26px minmax(0, 1fr);
+        gap: 0 var(--sp-3);
+        padding: var(--sp-4);
+    }
+    .tool-icon, .tool-go { display: none; }
+}

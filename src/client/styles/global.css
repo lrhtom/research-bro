@@ -1,0 +1,61 @@
+/* ============================================================
+   全站唯一的全局样式表 —— 只放真正全局的东西。
+
+   配色、字体、间距这些设计变量全在 theme.css，这里只管重置。
+
+   站里有几种完全不同的页面外观：套骨架的（左栏 + 右台）、
+   沉浸式全屏的（背卡片 / 口语对话）、三线表编辑器、知识可视化。
+   为了让它们互不干扰，规矩是：**除本文件与 theme.css 外，
+   任何样式表都不许写 body / html 选择器**，
+   页面级的整屏样式一律挂在自己的容器类上
+   （.shell / .focus / .tt-shell / .viz-shell）。
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    /* 字体与配色见 theme.css */
+    text-rendering: optimizeLegibility;
+}
+
+img,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+/* html2canvas 的字体基线探针必须留在行内流里 —— 否则导出的 PNG 整体偏下。
+
+   它量基线的办法是：往 <body> 底下挂一个 visibility:hidden 的 div，
+   里面并排放一行文字和一张 1×1 的 <img style="vertical-align:baseline">，
+   再拿 img.offsetTop - span.offsetTop 当作这个字号的 ascent。
+   上面那条 img{display:block} 会把探针挤到下一行去，量出来的不是 ascent
+   而是整整一个行高。三线表正文 20px 实测：真实 ascent 18，探针给 30；
+   而渲染时每个文字块都是 fillText(text, bounds.top + ascent) ——
+   于是全表文字统一往下掉 12px，最后一行直接压在底线上。
+   改回行内后探针给 19（多出的 1px 是 html2canvas 自己写死的 +2 余量）。
+
+   只命中这张探针：body 直下的隐藏容器里、1×1 的图。
+   页面和导出台里任何一张真实图片都不满足这三个条件，行为一点不变。 */
+body > div[style*="visibility: hidden"] img[width="1"][height="1"] {
+    display: inline;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+    color: inherit;
+}

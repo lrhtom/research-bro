@@ -1,0 +1,617 @@
+/* ============================================================
+   工具箱 · 设计基元「案头」
+   ============================================================
+
+   这一版的定位是**案头工具**，不是 SaaS 落地页：
+   一天要盯好几个小时，所以底色是暖白的纸而不是刺眼的纯白，
+   正文是墨色而不是灰蓝，装饰一律做成 1px 的界线而不是大面积渐变。
+
+   三条贯穿全站的规矩：
+     1. 标题走衬线，正文走无衬线，**所有数字走等宽** ——
+        数字对齐是这个站的功能（表格行列数、复习张数、留存率、到期日），
+        比例字体下同一列的数字会长短不齐，读起来要费一次眼。
+     2. 只有一支强调色（松绿）。它只出现在「当前在哪儿」和「主操作」上，
+        用得越省，它指示的东西越显眼。
+     3. 圆角只有 4 / 8 / 10 三档，阴影只有两级。
+        以前那套 20px 圆角 + 毛玻璃 + 大投影的卡片，堆多了整页发糊。
+
+   字体没有走网络字体：这个站断网也要能用（README 里写了），
+   所以用的是各平台自带、但**有性格**的那几款衬线（Constantia / Palatino /
+   宋体），而不是再引一套 Inter。
+   ============================================================ */
+
+:root {
+    /* ---------- 字体 ---------- */
+    --font-display:
+        Constantia, 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua',
+        Georgia, 'Songti SC', STSong, 'Noto Serif CJK SC', serif;
+    --font-body:
+        'Segoe UI Variable Text', 'Segoe UI', -apple-system, BlinkMacSystemFont,
+        'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    /* 数字、代码、日期、DOI —— 一切需要对齐或逐字核对的东西 */
+    --font-mono:
+        ui-monospace, 'Cascadia Mono', 'SF Mono', 'JetBrains Mono', Consolas,
+        'Liberation Mono', monospace;
+
+    /* ---------- 字号 ---------- */
+    --fs-xs: 11.5px;
+    --fs-sm: 12.5px;
+    --fs-base: 14px;
+    --fs-md: 15px;
+    --fs-lg: 17px;
+    --fs-xl: 21px;
+    --fs-2xl: 27px;
+    --fs-3xl: 34px;
+
+    /* ---------- 间距（4 的倍数） ---------- */
+    --sp-1: 4px;
+    --sp-2: 8px;
+    --sp-3: 12px;
+    --sp-4: 16px;
+    --sp-5: 20px;
+    --sp-6: 24px;
+    --sp-8: 32px;
+    --sp-10: 40px;
+    --sp-12: 48px;
+
+    /* ---------- 形状 ---------- */
+    --r-sm: 4px;
+    --r-md: 8px;
+    --r-lg: 10px;
+    --r-pill: 999px;
+
+    /* ---------- 动效 ---------- */
+    --ease: cubic-bezier(0.32, 0.72, 0, 1);
+    --dur: 160ms;
+
+    /* ---------- 尺寸 ---------- */
+    --rail-w: 236px;
+    --rail-w-collapsed: 60px;
+    /* 正文轨道的宽度上限。再宽一行字就太长了读着累，
+       再窄宽屏上两边空得太多 —— 统计页的图表和三线表的宽表格都按它排。 */
+    --stage-max: 1240px;
+
+    /* ---------- 亮色（默认） ---------- */
+    color-scheme: light;
+
+    /* 纸：整页底色比卡片略深一点，卡片才「浮」得起来，
+       又都是暖调，长时间看不刺眼 */
+    --paper: #f4f2ed;
+    --paper-2: #eceae4;          /* 凹陷区域：轨道、代码块底 */
+    --surface: #fffefb;          /* 抬起的卡片 */
+    --surface-2: #faf8f4;        /* 表头、次级面板 */
+
+    /* 墨。四档都要能读：--ink-4 是最淡的一档（编号、全大写小标签），
+       但它仍然要压过 3:1 的对比线 —— 「装饰性文字」不等于「可以看不见」。 */
+    --ink: #1a1917;
+    --ink-2: #55524d;
+    --ink-3: #7c7871;
+    --ink-4: #948f87;
+
+    /* 界线。hairline 用于大面积分隔，rule 用于卡片边框 */
+    --hairline: rgba(26, 25, 23, 0.09);
+    --rule: rgba(26, 25, 23, 0.14);
+    --rule-strong: rgba(26, 25, 23, 0.26);
+
+    /* 强调：松绿。只给「当前位置」和「主操作」 */
+    --accent: #12605e;
+    --accent-hover: #0d7370;
+    --accent-ink: #0b4a48;       /* 浅底上的强调文字 */
+    --accent-tint: rgba(18, 96, 94, 0.08);
+    --accent-tint-2: rgba(18, 96, 94, 0.16);
+    --on-accent: #fffefb;
+
+    /* 数据强调：赭石。给数字、计数、进度 —— 跟松绿分工，不抢「当前位置」 */
+    --data: #a1571c;
+    --data-tint: rgba(161, 87, 28, 0.10);
+
+    /* 语义。刻意跟强调色拉开，免得「主操作」和「出错了」撞色 */
+    --ok: #2c6a41;
+    --ok-tint: rgba(44, 106, 65, 0.10);
+    --warn: #8a5a00;
+    --warn-tint: rgba(138, 90, 0, 0.11);
+    --danger: #9b2c2c;
+    --danger-tint: rgba(155, 44, 44, 0.09);
+
+    /* 阴影只有两级 */
+    --shadow-1: 0 1px 2px rgba(26, 25, 23, 0.06);
+    --shadow-2: 0 10px 28px -16px rgba(26, 25, 23, 0.40);
+
+    --focus-ring: 0 0 0 3px var(--accent-tint-2);
+}
+
+/* ---------- 暗色 ---------- */
+/* 所有组件只认变量，所以暗色就是把这一组换掉。
+   底色不用纯黑：暖灰的深色跟亮色那张暖纸是同一个调子，
+   切换时不会有「换了个站」的割裂感。 */
+@media (prefers-color-scheme: dark) {
+    :root {
+        color-scheme: dark;
+
+        --paper: #16181a;
+        --paper-2: #101214;
+        --surface: #1d2023;
+        --surface-2: #212528;
+
+        --ink: #eceae5;
+        --ink-2: #b0aca6;
+        --ink-3: #928d86;
+        --ink-4: #7e7972;
+
+        --hairline: rgba(236, 234, 229, 0.09);
+        --rule: rgba(236, 234, 229, 0.14);
+        --rule-strong: rgba(236, 234, 229, 0.28);
+
+        --accent: #4bb3a8;
+        --accent-hover: #63c9be;
+        --accent-ink: #7fd6cb;
+        --accent-tint: rgba(75, 179, 168, 0.12);
+        --accent-tint-2: rgba(75, 179, 168, 0.22);
+        --on-accent: #0d1a1a;
+
+        --data: #d99a5b;
+        --data-tint: rgba(217, 154, 91, 0.14);
+
+        --ok: #6cc08a;
+        --ok-tint: rgba(108, 192, 138, 0.13);
+        --warn: #d9a441;
+        --warn-tint: rgba(217, 164, 65, 0.13);
+        --danger: #e08585;
+        --danger-tint: rgba(224, 133, 133, 0.13);
+
+        --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+        --shadow-2: 0 12px 30px -16px rgba(0, 0, 0, 0.8);
+    }
+}
+
+/* ============================================================
+   旧变量名的兼容层
+   ============================================================
+
+   记忆卡 / 口语 / 三线表三份样式表里有两百多处在用上一版的变量名。
+   语义是一一对得上的（primary 就是现在的 accent，border 就是 rule…），
+   所以在这里搭一层别名，比把三个文件逐行翻一遍稳妥得多 ——
+   翻的过程中漏掉一处，那一处就会变成透明或纯黑，还很难发现。
+
+   新写的样式一律用新名字；这一层只服务存量代码。
+   ============================================================ */
+:root {
+    --primary: var(--accent);
+    --primary-hover: var(--accent-hover);
+    --primary-color: var(--accent);
+    --accent-pink: var(--data);
+
+    --text-primary: var(--ink);
+    --text-secondary: var(--ink-2);
+    --text-muted: var(--ink-3);
+
+    --border: var(--rule);
+    --border-color: var(--rule);
+    --surface-color: var(--surface);
+
+    --danger-color: var(--danger);
+    --success-color: var(--ok);
+
+    --bg-gradient-start: var(--paper);
+    --bg-gradient-end: var(--paper-2);
+
+    /* 四档评分的色阶（重来 / 困难 / 良好 / 简单）。
+       这是一组**有序**的语义色，不是随手取的四个颜色，所以单独定义。 */
+    --rate-1: var(--danger);
+    --rate-2: var(--warn);
+    --rate-3: var(--ok);
+    --rate-4: #2b6cb0;
+    --rate-1-tint: var(--danger-tint);
+    --rate-2-tint: var(--warn-tint);
+    --rate-3-tint: var(--ok-tint);
+    --rate-4-tint: rgba(43, 108, 176, 0.11);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --rate-4: #7aa8dd;
+        --rate-4-tint: rgba(122, 168, 221, 0.14);
+    }
+}
+
+/* ============================================================
+   基础元素
+   ============================================================ */
+
+body {
+    font-family: var(--font-body);
+    font-size: var(--fs-base);
+    line-height: 1.65;
+    color: var(--ink);
+    background: var(--paper);
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+}
+
+/* 数字一律等宽 + 表格数字对齐 */
+b, strong { font-weight: 650; }
+
+code, kbd, samp, pre { font-family: var(--font-mono); }
+
+a { color: var(--accent-ink); text-underline-offset: 3px; }
+
+::selection { background: var(--accent-tint-2); }
+
+:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: var(--r-sm);
+}
+
+/* 滚动条也换成纸的调子，默认那条亮蓝在暖底上很跳 */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--rule-strong) transparent;
+}
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-thumb {
+    background: var(--rule-strong);
+    border: 3px solid transparent;
+    background-clip: content-box;
+    border-radius: var(--r-pill);
+}
+*::-webkit-scrollbar-thumb:hover { background-clip: content-box; background-color: var(--ink-4); }
+
+/* ============================================================
+   通用基元（u- 前缀 = universal，全站可用）
+   ============================================================ */
+
+/* ---------- 数字 ---------- */
+/* 凡是数字都套这个：等宽 + tabular-nums，同一列永远对得齐 */
+.u-num {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum' 1;
+}
+
+/* ---------- 区块标题 ---------- */
+/* .section-head 是旧名字，页面里还有不少地方在用；
+   两个名字同一套样式，不必为了改名把每个页面都翻一遍 */
+.u-head,
+.section-head {
+    display: flex;
+    align-items: baseline;
+    gap: var(--sp-3);
+    margin: var(--sp-8) 0 var(--sp-4);
+    padding-bottom: var(--sp-2);
+    border-bottom: 1px solid var(--hairline);
+}
+.u-head:first-child,
+.section-head:first-child { margin-top: 0; }
+.u-head h2,
+.section-head h2 {
+    margin: 0;
+    font-size: var(--fs-lg);
+    font-weight: 600;
+    display: flex;
+    align-items: baseline;
+    gap: var(--sp-2);
+}
+.u-head h2 i,
+.section-head h2 i { font-size: 0.8em; color: var(--accent); }
+.u-head .count,
+.section-head .count {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    color: var(--ink-3);
+    letter-spacing: 0.02em;
+}
+/* 靠右的操作按钮 */
+.u-head-act { margin-left: auto; align-self: center; }
+
+/* ---------- 说明文字 ---------- */
+.u-muted { color: var(--ink-3); }
+.u-note {
+    margin: calc(var(--sp-2) * -1) 0 var(--sp-4);
+    font-size: var(--fs-sm);
+    line-height: 1.85;
+    color: var(--ink-3);
+}
+/* 需要读者停一下的注解：左边一条强调色细线 */
+.u-aside {
+    margin: var(--sp-3) 0 var(--sp-6);
+    padding: var(--sp-3) var(--sp-4);
+    font-size: var(--fs-sm);
+    line-height: 1.85;
+    color: var(--ink-2);
+    background: var(--accent-tint);
+    border-left: 2px solid var(--accent);
+    border-radius: 0 var(--r-md) var(--r-md) 0;
+}
+.u-aside i { color: var(--accent); }
+.u-aside b { color: var(--ink); }
+
+/* ---------- 卡片 ---------- */
+.u-card {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-1);
+}
+
+/* ---------- 按钮 ---------- */
+.u-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-2);
+    padding: 8px 14px;
+    font: inherit;
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--ink-2);
+    text-decoration: none;
+    white-space: nowrap;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--r-md);
+    cursor: pointer;
+    transition: color var(--dur) var(--ease),
+                border-color var(--dur) var(--ease),
+                background var(--dur) var(--ease);
+}
+.u-btn:hover:not(:disabled) { color: var(--accent-ink); border-color: var(--accent); }
+.u-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.u-btn-primary {
+    color: var(--on-accent);
+    background: var(--accent);
+    border-color: var(--accent);
+}
+.u-btn-primary:hover:not(:disabled) {
+    color: var(--on-accent);
+    background: var(--accent-hover);
+    border-color: var(--accent-hover);
+}
+
+.u-btn-quiet { background: transparent; border-color: transparent; }
+.u-btn-quiet:hover:not(:disabled) { background: var(--accent-tint); border-color: transparent; }
+
+.u-btn-danger:hover:not(:disabled) { color: var(--danger); border-color: var(--danger); }
+
+.u-btn-lg { padding: 11px 20px; font-size: var(--fs-base); }
+
+/* 图标按钮 */
+.u-icon-btn {
+    display: inline-grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    font-size: var(--fs-sm);
+    color: var(--ink-3);
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: var(--r-md);
+    cursor: pointer;
+    transition: color var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+.u-icon-btn:hover { color: var(--accent-ink); background: var(--accent-tint); }
+.u-icon-btn.is-danger:hover { color: var(--danger); background: var(--danger-tint); }
+
+/* ---------- 标签 / 筹码 ---------- */
+.u-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 11px;
+    font: inherit;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--ink-2);
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--r-pill);
+    cursor: pointer;
+    transition: all var(--dur) var(--ease);
+}
+.u-chip:hover:not(:disabled) { color: var(--accent-ink); border-color: var(--accent); }
+.u-chip.is-on {
+    color: var(--on-accent);
+    background: var(--accent);
+    border-color: var(--accent);
+}
+.u-chip:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.u-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 2px 8px;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    border-radius: var(--r-sm);
+}
+
+/* ---------- 表单 ---------- */
+.u-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.u-field > span {
+    font-size: var(--fs-xs);
+    font-weight: 650;
+    letter-spacing: 0.02em;
+    color: var(--ink-3);
+}
+
+.u-input,
+.u-textarea,
+.u-select {
+    font: inherit;
+    font-size: var(--fs-sm);
+    padding: 8px 11px;
+    color: var(--ink);
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--r-md);
+    outline: none;
+    transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.u-input:focus, .u-textarea:focus, .u-select:focus {
+    border-color: var(--accent);
+    box-shadow: var(--focus-ring);
+}
+.u-textarea { line-height: 1.7; resize: vertical; }
+.u-input[type='number'] { font-family: var(--font-mono); }
+
+/* ---------- 提示条 ---------- */
+.u-msg {
+    display: flex;
+    align-items: baseline;
+    gap: var(--sp-2);
+    margin: var(--sp-3) 0;
+    padding: 9px 13px;
+    font-size: var(--fs-sm);
+    line-height: 1.75;
+    border: 1px solid;
+    border-radius: var(--r-md);
+}
+.u-msg-error { color: var(--danger); background: var(--danger-tint); border-color: var(--danger-tint); }
+.u-msg-warn  { color: var(--warn);   background: var(--warn-tint);   border-color: var(--warn-tint); }
+.u-msg-ok    { color: var(--ok);     background: var(--ok-tint);     border-color: var(--ok-tint); }
+
+/* ---------- 加载态 ---------- */
+/* 见 components/Loading.tsx：一行转圈用 .u-loading，占位块用 .u-skeleton */
+
+.u-loading {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+    margin: var(--sp-4) 0;
+    font-size: var(--fs-sm);
+    color: var(--ink-3);
+}
+.u-loading i { color: var(--accent); }
+
+/* 整页级：给一块虚线区域占住位置，别让内容到位时页面猛跳一下 */
+.u-loading.is-block {
+    justify-content: center;
+    padding: var(--sp-8) var(--sp-4);
+    background: var(--paper-2);
+    border: 1px dashed var(--rule);
+    border-radius: var(--r-lg);
+}
+
+.u-skeleton { display: flex; flex-direction: column; gap: var(--sp-3); margin: var(--sp-4) 0; }
+.u-skeleton-row {
+    height: 58px;
+    border-radius: var(--r-lg);
+    background: linear-gradient(
+        90deg,
+        var(--paper-2) 0%,
+        var(--surface) 40%,
+        var(--paper-2) 80%
+    );
+    background-size: 300% 100%;
+    animation: u-shimmer 1.4s ease-in-out infinite;
+}
+/* 每一条错开一点，看起来是一片在动，而不是几条一起闪 */
+.u-skeleton-row:nth-child(2) { animation-delay: 0.12s; }
+.u-skeleton-row:nth-child(3) { animation-delay: 0.24s; }
+.u-skeleton-row:nth-child(4) { animation-delay: 0.36s; }
+.u-skeleton-row:nth-child(5) { animation-delay: 0.48s; }
+
+@keyframes u-shimmer {
+    0%   { background-position: 100% 0; }
+    100% { background-position: 0 0; }
+}
+
+/* 关掉动画偏好下就是静静一块灰，不闪 */
+@media (prefers-reduced-motion: reduce) {
+    .u-skeleton-row { animation: none; background: var(--paper-2); }
+    .u-loading .fa-spin { animation: none; }
+}
+
+/* ---------- 空状态 ---------- */
+.u-empty {
+    padding: var(--sp-8) var(--sp-4);
+    font-size: var(--fs-sm);
+    line-height: 1.85;
+    text-align: center;
+    color: var(--ink-3);
+    background: var(--paper-2);
+    border: 1px dashed var(--rule);
+    border-radius: var(--r-lg);
+}
+
+/* ---------- 表格 ---------- */
+.u-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--fs-sm);
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+}
+.u-table th,
+.u-table td {
+    padding: 9px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--hairline);
+}
+.u-table th {
+    font-size: var(--fs-xs);
+    font-weight: 650;
+    letter-spacing: 0.03em;
+    color: var(--ink-3);
+    background: var(--surface-2);
+    white-space: nowrap;
+}
+.u-table tr:last-child td { border-bottom: none; }
+.u-table tbody tr:hover { background: var(--accent-tint); }
+/* 数字列自动等宽右对齐 */
+.u-table td.num, .u-table th.num {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+}
+
+/* ---------- 分隔 ---------- */
+.u-rule { height: 1px; margin: var(--sp-6) 0; background: var(--hairline); border: none; }
+
+/* ---------- 进度条 ---------- */
+.u-bar {
+    height: 5px;
+    background: var(--paper-2);
+    border-radius: var(--r-pill);
+    overflow: hidden;
+}
+.u-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: var(--r-pill);
+    transition: width 320ms var(--ease);
+}
+
+/* ---------- 键位提示 ---------- */
+kbd {
+    padding: 1px 6px;
+    font-size: var(--fs-xs);
+    color: var(--ink-3);
+    background: var(--paper-2);
+    border: 1px solid var(--rule);
+    border-bottom-width: 2px;
+    border-radius: var(--r-sm);
+}
+
+/* ---------- 载入时的错开出场 ---------- */
+/* 只在首屏用一次：整齐地依次浮现比每个元素各自乱动更像「一件东西」 */
+@keyframes u-rise {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: none; }
+}
+.u-rise { opacity: 0; animation: u-rise 380ms var(--ease) forwards; }
+
+@media (prefers-reduced-motion: reduce) {
+    .u-rise { animation: none; opacity: 1; }
+    * { transition-duration: 1ms !important; }
+}

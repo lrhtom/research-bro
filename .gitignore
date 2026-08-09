@@ -1,0 +1,15 @@
+node_modules/
+build/
+*.tsbuildinfo
+
+# E: 盘（FAT32）卷损坏留下的、删不掉也改不了名的残留产物目录。
+# chkdsk E: /f 修完之后可以手工删掉，届时这一行也能去掉。
+dist/
+
+# SQLite 数据库（本机数据，不进版本库；要备份走「数据备份与迁移」导出 JSON）
+data/*.db
+data/*.db-shm
+data/*.db-wal
+
+.env*.local
+.DS_Store

@@ -1,0 +1,166 @@
+/* ============================================================
+   网课大全：分类过滤条 + 课程卡片
+   ============================================================ */
+
+.cat-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+    margin-bottom: var(--sp-2);
+}
+.cat-n {
+    margin-left: 2px;
+    font-size: 10px;
+    color: var(--ink-4);
+}
+.u-chip.is-on .cat-n { color: var(--on-accent); opacity: 0.75; }
+
+/* ---------------- 课程卡片 ---------------- */
+
+.course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: var(--sp-4);
+}
+
+.course {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+    padding: var(--sp-5);
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-1);
+    transition: border-color var(--dur) var(--ease);
+}
+.course:hover { border-color: var(--accent-tint-2); }
+
+.course-top { display: flex; align-items: center; gap: var(--sp-2); }
+
+/* 课程编号：等宽，像书脊上的索书号 */
+.code {
+    padding: 1px 8px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--ink-2);
+    background: var(--paper-2);
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-sm);
+}
+
+/* 来源：官方 vs 搬运。这个区别决定链接能活多久，必须一眼看到 */
+.src {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: auto;
+    font-size: 10.5px;
+    font-weight: 600;
+}
+.src i { font-size: 9px; }
+.src-off { color: var(--ok); }
+.src-mir { color: var(--warn); }
+
+.course-t {
+    margin: 2px 0 0;
+    font-size: var(--fs-md);
+    font-weight: 600;
+    line-height: 1.4;
+}
+.course-en {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.03em;
+    color: var(--ink-4);
+}
+
+.meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px var(--sp-3);
+    margin: var(--sp-1) 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--fs-xs);
+    color: var(--ink-3);
+}
+.meta li { display: inline-flex; align-items: center; gap: 5px; }
+.meta i { font-size: 10px; color: var(--ink-4); width: 12px; }
+
+.course-d {
+    margin: 0;
+    font-size: var(--fs-sm);
+    line-height: 1.8;
+    color: var(--ink-2);
+}
+
+/* 配套演示 */
+.pairs {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: var(--sp-1);
+    padding: var(--sp-2) var(--sp-3);
+    background: var(--paper-2);
+    border-radius: var(--r-md);
+}
+.pairs-h {
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--ink-3);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+.pairs-h i { color: var(--accent); }
+.pairs-list { display: flex; flex-wrap: wrap; gap: 5px; }
+.pair {
+    padding: 2px 8px;
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--accent-ink);
+    text-decoration: none;
+    background: var(--accent-tint);
+    border: 1px solid var(--accent-tint-2);
+    border-radius: var(--r-pill);
+}
+.pair:hover { background: var(--accent-tint-2); }
+
+.course-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-3);
+    margin-top: auto;
+    padding-top: var(--sp-3);
+    border-top: 1px solid var(--hairline);
+}
+.verified {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink-4);
+}
+.verified i { color: var(--ok); }
+
+.go {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--accent-ink);
+    text-decoration: none;
+}
+.go i { font-size: 10px; transition: transform var(--dur) var(--ease); }
+.go:hover i { transform: translate(2px, -2px); }
+
+@media (max-width: 620px) {
+    .course-grid { grid-template-columns: 1fr; }
+}

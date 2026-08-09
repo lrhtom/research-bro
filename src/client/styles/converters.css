@@ -1,0 +1,126 @@
+/* ============================================================
+   外链列表（格式转换 / 论文检查 / 编程比赛三页共用；
+   网课页的分类列表在 courses.css）
+
+   跟首页的工具列表同一套骨架，区别只在多一行标注 —— 每一页最该先看清的
+   那件事都不一样：格式转换是文件出不出这台电脑，论文检查是要不要账号要不要钱，
+   编程比赛是多久开一场、下场要什么门槛。
+   文件末尾是编程比赛页多出来的那两块。
+   ============================================================ */
+
+.link-list {
+    margin: 0 0 var(--sp-6);
+    padding: 0;
+    list-style: none;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+}
+.link-list li + li { border-top: 1px solid var(--hairline); }
+
+.link-row {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr) 28px;
+    align-items: start;
+    gap: 0 var(--sp-3);
+    padding: var(--sp-4) var(--sp-5);
+    color: inherit;
+    text-decoration: none;
+    transition: background var(--dur) var(--ease);
+}
+.link-row:hover { background: var(--accent-tint); }
+
+.link-icon {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    font-size: 14px;
+    color: var(--ink-2);
+    background: var(--paper-2);
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-md);
+}
+.link-row:hover .link-icon { color: var(--accent); border-color: var(--accent-tint-2); }
+
+.link-main { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+
+.link-titles { display: flex; align-items: baseline; gap: var(--sp-2); flex-wrap: wrap; }
+.link-titles b {
+    font-family: var(--font-display);
+    font-size: var(--fs-md);
+    font-weight: 600;
+}
+.link-titles em {
+    font-family: var(--font-mono);
+    font-style: normal;
+    font-size: 10.5px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+}
+
+.link-desc { font-size: var(--fs-sm); line-height: 1.8; color: var(--ink-2); }
+
+.link-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 2px; }
+
+/* 域名标签：本地运行的用强调色，上传的用数据色 —— 一眼分得出两组 */
+.link-host {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 1px 8px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--data);
+    background: var(--data-tint);
+    border-radius: var(--r-pill);
+}
+.link-host.is-safe { color: var(--accent-ink); background: var(--accent-tint-2); }
+.link-host i { font-size: 9px; }
+
+.link-go {
+    display: grid;
+    place-items: center;
+    align-self: center;
+    width: 26px;
+    height: 26px;
+    font-size: 11px;
+    color: var(--ink-4);
+    transition: color var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.link-row:hover .link-go { color: var(--accent); transform: translate(2px, -2px); }
+
+@media (max-width: 620px) {
+    .link-row { grid-template-columns: minmax(0, 1fr); padding: var(--sp-4); }
+    .link-icon, .link-go { display: none; }
+}
+
+/* ---------------- 编程比赛页专用 ---------------- */
+
+/* 开赛节奏 / 语言 / 参赛门槛：三件事都是「点之前想知道」，
+   所以单独拎一行出来，不塞进那一堆 badge 里 */
+.contest-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px var(--sp-4);
+    font-size: var(--fs-xs);
+    color: var(--ink-3);
+}
+.contest-facts > span { display: inline-flex; align-items: center; gap: 6px; }
+.contest-facts i { width: 11px; font-size: 10px; color: var(--ink-4); text-align: center; }
+
+/* 已停办的提示条：摆在描述之前，因为它决定还要不要往下读 */
+.contest-paused {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    padding: 6px 10px;
+    font-size: var(--fs-xs);
+    line-height: 1.7;
+    color: var(--warn);
+    background: var(--warn-tint);
+    border-radius: var(--r-md);
+}
+.contest-paused i { margin-top: 4px; font-size: 9px; }
