@@ -124,3 +124,42 @@
     border-radius: var(--r-md);
 }
 .contest-paused i { margin-top: 4px; font-size: 9px; }
+
+/* 一个比赛两个官方入口（力扣的国际站 / 中国站）。
+   这种卡整块不再可点，靠下面这两个按钮各自跳 —— 见 ContestsPage 的说明。
+   .is-multi 只是把整卡链接的悬停反馈去掉，布局仍走 .link-row 那一套。 */
+.link-row.is-multi { cursor: default; }
+.link-row.is-multi:hover { border-color: var(--rule); box-shadow: var(--shadow-1); }
+
+.contest-entries {
+    grid-column: 2;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+    margin-top: var(--sp-1);
+}
+
+.contest-entry {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--sp-2);
+    padding: 7px var(--sp-3);
+    border: 1px solid var(--rule);
+    border-radius: var(--r-md);
+    background: var(--surface-2);
+    color: var(--ink);
+    text-decoration: none;
+    transition: border-color var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+
+.contest-entry:hover { border-color: var(--accent); background: var(--accent-tint); }
+.contest-entry b { font-size: var(--fs-sm); }
+.contest-entry em { font-style: normal; font-size: var(--fs-xs); color: var(--ink-3); }
+.contest-entry i { font-size: 9px; color: var(--ink-4); }
+.contest-entry:hover em,
+.contest-entry:hover i { color: var(--accent-ink); }
+
+@media (max-width: 720px) {
+    /* 窄屏下 .link-row 塌成单列，入口按钮跟着回到第一列 */
+    .contest-entries { grid-column: 1; }
+}

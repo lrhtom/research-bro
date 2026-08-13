@@ -22,8 +22,8 @@ import {
     checkScenarioPrompt, openingPrompt, randomScenarioPrompt, turnPrompt, unusedWordsNudge,
 } from './speaking-prompts.js';
 import {
-    chat, chatStream, extractJson, llmStatus, saveLlmConfig, testLlmConnection,
-    LLM_PRESETS, LlmError,
+    chat, chatNonEmpty, chatStream, extractJson, llmStatus, saveLlmConfig, testLlmConnection,
+    shouldRetryLlm, sleepBeforeRetry, LLM_ATTEMPTS, LLM_PRESETS, LlmError,
 } from './llm.js';
 import type { ChatMessage } from './llm.js';
 import type { SpeakingTurn } from '../shared/types.js';
@@ -106,15 +106,27 @@ speakingRouter.post('/speaking/check-scenario', async (req, res, next) => {
 /** 随便来一个场景，避开最近用过的 */
 speakingRouter.post('/speaking/random-scenario', async (_req, res, next) => {
     try {
-        const text = await chat([
-            { role: 'system', content: randomScenarioPrompt(recentScenarioLabels()) },
-        ], { temperature: 0.9, maxTokens: 400 });
+        // 空回复由 chatNonEmpty 兜；这里还要多兜一层「回了字但抠不出 scenario」——
+        // 温度 0.9 下模型偶尔会把 JSON 写崩，同样是再来一次就好的事
+        let scenario = '';
+        let label = '';
 
-        const parsed = extractJson<{ scenario?: unknown; label?: unknown }>(text);
-        const scenario = String(parsed?.scenario ?? '').trim();
-        if (!scenario) throw new LlmError('没能生成场景，请重试');
+        for (let attempt = 1; attempt <= LLM_ATTEMPTS; attempt += 1) {
+            const text = await chatNonEmpty([
+                { role: 'system', content: randomScenarioPrompt(recentScenarioLabels()) },
+            ], { temperature: 0.9, maxTokens: 400 });
 
-        const label = String(parsed?.label ?? '').trim() || scenario.slice(0, 20);
+            const parsed = extractJson<{ scenario?: unknown; label?: unknown }>(text);
+            scenario = String(parsed?.scenario ?? '').trim();
+            if (scenario) {
+                label = String(parsed?.label ?? '').trim() || scenario.slice(0, 20);
+                break;
+            }
+            if (attempt < LLM_ATTEMPTS) await sleepBeforeRetry(attempt);
+        }
+
+        if (!scenario) throw new LlmError('没能生成场景，稍后再试一次');
+
         rememberScenario(label);
         res.json({ scenario, label });
     } catch (e) { next(e); }
@@ -167,7 +179,9 @@ speakingRouter.post('/speaking/sessions/:id/opening', async (req, res, next) => 
         const existing = listTurns(id);
         if (existing.length > 0) { res.json({ turn: existing[0], reused: true }); return; }
 
-        const text = await chat([
+        // 开场白空掉最要命：一进房间对方就是哑的，整场练习根本起不来。
+        // chatNonEmpty 会自己重试，实在拿不到才抛错让页面显示「重新开场」。
+        const text = await chatNonEmpty([
             {
                 role: 'system',
                 content: openingPrompt(session.scenario, session.modifiers, session.targetWords),
@@ -175,7 +189,10 @@ speakingRouter.post('/speaking/sessions/:id/opening', async (req, res, next) => 
             { role: 'user', content: 'Please start the conversation.' },
         ], { temperature: 0.85, maxTokens: 300 });
 
+        // 去掉模型爱加的那层引号之后可能又空了，这时候宁可报错也不要存一条空开场
         const opening = text.replace(/^["'\s]+|["'\s]+$/g, '');
+        if (!opening) throw new LlmError('开场白生成失败，刷新页面再试一次');
+
         res.json({ turn: addTurn(id, 'assistant', opening, 'ai'), reused: false });
     } catch (e) { next(e); }
 });
@@ -237,19 +254,49 @@ speakingRouter.post('/speaking/sessions/:id/turn', async (req, res, next) => {
         const ac = new AbortController();
         res.on('close', () => { if (!res.writableEnded) ac.abort(); });
 
-        let full = '';
-        for await (const piece of chatStream(messages, { temperature: 0.8, maxTokens: 400, signal: ac.signal })) {
-            full += piece;
-            res.write(`data: ${JSON.stringify({ delta: piece })}\n\n`);
+        // 一句都没吐出来就再来一次。
+        //
+        // 对话里空回复比别处更难受：练到一半对方突然哑了，这一轮就断了。
+        // 而空回复几乎都是一次性的抖动，同样的消息再发一遍通常就有了，
+        // 所以这里自己重试，而不是把「AI 没有返回内容」摔给用户。
+        //
+        // 重试前要给客户端一条 retry 事件：上一次可能已经吐了几个空白字符
+        // 过去，客户端得把那半截清掉，否则重试的正文会接在空白后面，
+        // 逐句朗读也会把那半截当成一句念出来。
+        let reply = '';
+        let lastError: unknown = null;
+
+        for (let attempt = 1; attempt <= LLM_ATTEMPTS; attempt += 1) {
+            let full = '';
+            try {
+                for await (const piece of chatStream(messages, {
+                    temperature: 0.8, maxTokens: 400, signal: ac.signal,
+                })) {
+                    full += piece;
+                    res.write(`data: ${JSON.stringify({ delta: piece })}\n\n`);
+                }
+            } catch (e) {
+                if (!shouldRetryLlm(e, ac.signal)) throw e;
+                lastError = e;
+            }
+
+            reply = full.trim();
+            if (reply) break;
+
+            if (attempt < LLM_ATTEMPTS) {
+                res.write(`data: ${JSON.stringify({ retry: attempt })}\n\n`);
+                await sleepBeforeRetry(attempt, ac.signal);
+            }
         }
 
-        const reply = full.trim();
-        if (reply) {
-            const turn = addTurn(id, 'assistant', reply, 'ai');
-            res.write(`data: ${JSON.stringify({ done: true, turn })}\n\n`);
-        } else {
-            res.write(`data: ${JSON.stringify({ done: true, error: 'AI 没有返回内容' })}\n\n`);
+        if (!reply) {
+            throw lastError instanceof Error
+                ? lastError
+                : new LlmError(`AI 连续 ${LLM_ATTEMPTS} 次都没出声，稍后再说一遍，或者换一个模型`);
         }
+
+        const turn = addTurn(id, 'assistant', reply, 'ai');
+        res.write(`data: ${JSON.stringify({ done: true, turn })}\n\n`);
         res.end();
     } catch (e) {
         // 头已经发出去了就没法再改状态码，只能把错误当成一条 SSE 事件推下去

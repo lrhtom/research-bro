@@ -5,6 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="工具箱 — 聚合自建在线工具与精选免费服务：学术三线表、记忆卡、知识可视化、名校网课大全、格式转换，全站可搜索。">
     <title>工具箱 · 在线工具与可视化演示</title>
+    <!-- Inter 是这套视觉的一部分（见 styles/theme.css 开头）。
+         preconnect 两条是 Google Fonts 的标准写法：css 在 fonts.googleapis.com，
+         字体文件在 fonts.gstatic.com，提前握手能省掉一个来回。
+
+         注意这跟 README 里「断网也要能用」那条并不冲突：字体栈后面跟着
+         -apple-system / Segoe UI / 苹方 / 微软雅黑，拿不到 Inter 时页面照常
+         渲染，只是字形换成系统那一支，布局一点不变。 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+    >
     <!-- 内联 SVG 图标：省掉一个单独的 favicon 文件，也省掉每次加载都报的那条 404 -->
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%234f46e5'/%3E%3Cpath d='M26 40h48a4 4 0 0 1 4 4v28a4 4 0 0 1-4 4H26a4 4 0 0 1-4-4V44a4 4 0 0 1 4-4Z' fill='%23fff'/%3E%3Cpath d='M38 40V32a6 6 0 0 1 6-6h12a6 6 0 0 1 6 6v8' fill='none' stroke='%23fff' stroke-width='7' stroke-linecap='round'/%3E%3Crect x='44' y='52' width='12' height='9' rx='2' fill='%234f46e5'/%3E%3C/svg%3E">
 </head>

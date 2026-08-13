@@ -7,7 +7,7 @@
 import { Router } from 'express';
 import {
     createCard, createPlan, deleteCard, deletePlan, getPlan, importCards,
-    listCards, listPlans, planStats, rateCard, resetCard, sessionResult,
+    listCards, listPlans, planStats, rateCard, resetCard, sessionResult, toggleCardFavorite,
     studyState, StudyError, timeZone, toggleFavorite, updateCard, updatePlan,
 } from './study.js';
 import { statsOverview } from './stats.js';
@@ -99,6 +99,18 @@ cardsRouter.delete('/cards/:cardId', (req, res) => {
 /** 把一张卡的学习进度清零，重新当新卡（历史流水保留） */
 cardsRouter.post('/cards/:cardId/reset', (req, res) => {
     const card = resetCard(Number(req.params.cardId));
+    if (!card) { res.status(404).json({ error: '卡片不存在' }); return; }
+    res.json({ card });
+});
+
+/**
+ * 切换收藏。
+ *
+ * 收藏只改管理页的排序和筛选，**不动任何调度字段** ——
+ * 所以这里不像评分那样要重算 due/stability，就是翻一个 0/1。
+ */
+cardsRouter.post('/cards/:cardId/favorite', (req, res) => {
+    const card = toggleCardFavorite(Number(req.params.cardId));
     if (!card) { res.status(404).json({ error: '卡片不存在' }); return; }
     res.json({ card });
 });

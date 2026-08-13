@@ -10,8 +10,10 @@ import { converters, courses, demos, tools, topTools } from '@/lib/site-data';
 export default function HomePage() {
     useEffect(() => { document.title = '工具箱 · 在线工具与可视化演示'; }, []);
 
+    // flatNav：首页的顶栏融进页面底色。首页本身就是一张长列表，
+    // 顶栏再画一条边会把它切成两截
     return (
-        <AppShell title="工具箱" subtitle="Toolbox · 在线工具与可视化演示">
+        <AppShell title="工具箱" subtitle="Toolbox · 在线工具与可视化演示" flatNav>
             <p className="u-aside home-lead">
                 自建的几件工具都跑在本机，数据存本地 SQLite，不经过任何服务器；
                 收录的外部链接<b>逐条打开验证过</b>，默认都是<b>免登录、免费</b>的，

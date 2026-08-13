@@ -17,7 +17,7 @@
 // ============================================================
 
 import { db, nowIso } from './db.js';
-import { chat, extractJson, LlmError } from './llm.js';
+import { chatNonEmpty, extractJson, sleepBeforeRetry, LLM_ATTEMPTS, LlmError } from './llm.js';
 import { reportPrompt, transcriptForReport } from './speaking-prompts.js';
 import {
     normalizeModifiers, parseTargetWords, tallyTargetWords,
@@ -427,19 +427,29 @@ export async function generateReport(sessionId: number): Promise<SpeakingReport>
         return empty;
     }
 
-    const text = await chat([
-        { role: 'system', content: reportPrompt() },
-        {
-            role: 'user',
-            content: transcriptForReport(
-                session.scenario,
-                turns.map((t) => ({ role: t.role, content: t.content, source: t.source })),
-            ),
-        },
-    ], { temperature: 0.3, maxTokens: 2500 });
+    // 报告是整场练习的收尾，重来一次的代价是把 2500 token 再烧一遍 ——
+    // 但让用户对着「请重试」按钮自己点，烧的是同样多的 token 外加一次挫败。
+    // 空回复由 chatNonEmpty 兜，抠不出 JSON 的再自己转一圈。
+    let parsed: unknown = null;
 
-    const parsed = extractJson<unknown>(text);
-    if (parsed === null) throw new LlmError('报告没能解析成 JSON，请重试');
+    for (let attempt = 1; attempt <= LLM_ATTEMPTS; attempt += 1) {
+        const text = await chatNonEmpty([
+            { role: 'system', content: reportPrompt() },
+            {
+                role: 'user',
+                content: transcriptForReport(
+                    session.scenario,
+                    turns.map((t) => ({ role: t.role, content: t.content, source: t.source })),
+                ),
+            },
+        ], { temperature: 0.3, maxTokens: 2500 });
+
+        parsed = extractJson<unknown>(text);
+        if (parsed !== null) break;
+        if (attempt < LLM_ATTEMPTS) await sleepBeforeRetry(attempt);
+    }
+
+    if (parsed === null) throw new LlmError('报告没能解析成 JSON，稍后再生成一次');
 
     const report = sanitizeReport(parsed, session, turns);
     saveReport(sessionId, report);

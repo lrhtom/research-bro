@@ -431,6 +431,22 @@
     border-radius: var(--r-lg) 14px 14px 4px;
 }
 
+/* AI 空回复、服务端正在重来。刻意用中性的静音色而不是报错红：
+   这时候没出任何问题，用户也不需要做任何事，只是要等一下。 */
+.sp-retry-note {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    align-self: flex-start;
+    margin: 0;
+    padding: 8px 14px;
+    font-size: 13px;
+    color: var(--text-muted);
+    background: var(--paper-2);
+    border: 1px dashed var(--border);
+    border-radius: var(--r-lg);
+}
+
 .sp-caret {
     display: inline-block;
     width: 2px;
@@ -514,7 +530,6 @@
 
 .sp-mode { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
 .sp-mode-note { font-size: 11.5px; }
-.fc-chip:disabled { opacity: 0.45; cursor: not-allowed; }
 
 .sp-mic-row { display: flex; align-items: flex-end; gap: 12px; }
 .sp-heard-wrap { flex: 1; min-width: 0; }

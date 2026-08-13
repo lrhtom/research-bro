@@ -1,0 +1,5063 @@
+{
+ "test_dev": {
+  "cat": "测试主线",
+  "label": "测试开发",
+  "url": "https://www.xiaolincoding.com/interview/test_dev.html",
+  "items": [
+   {
+    "level": 2,
+    "text": "业务测试：地基不牢，地动山摇",
+    "anchor": "https://www.xiaolincoding.com/interview/test_dev.html#业务测试-地基不牢-地动山摇"
+   },
+   {
+    "level": 2,
+    "text": "Java 自动化测试：企业级框架的硬核考察",
+    "anchor": "https://www.xiaolincoding.com/interview/test_dev.html#java-自动化测试-企业级框架的硬核考察"
+   },
+   {
+    "level": 2,
+    "text": "Python 自动化测试：上手快、生态好，但要答得深",
+    "anchor": "https://www.xiaolincoding.com/interview/test_dev.html#python-自动化测试-上手快、生态好-但要答得深"
+   },
+   {
+    "level": 2,
+    "text": "性能测试：有体系有深度，才能说服面试官",
+    "anchor": "https://www.xiaolincoding.com/interview/test_dev.html#性能测试-有体系有深度-才能说服面试官"
+   },
+   {
+    "level": 2,
+    "text": "最后说几句",
+    "anchor": "https://www.xiaolincoding.com/interview/test_dev.html#最后说几句"
+   }
+  ]
+ },
+ "business_testing": {
+  "cat": "测试主线",
+  "label": "业务测试",
+  "url": "https://www.xiaolincoding.com/interview/business_testing.html",
+  "items": [
+   {
+    "level": 2,
+    "text": "一.测试基础",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#一-测试基础"
+   },
+   {
+    "level": 3,
+    "text": "1. 什么是软件测试？软件测试的主要目的是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_1-什么是软件测试-软件测试的主要目的是什么"
+   },
+   {
+    "level": 3,
+    "text": "2. 黑盒测试和白盒测试有什么区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_2-黑盒测试和白盒测试有什么区别"
+   },
+   {
+    "level": 3,
+    "text": "3. 什么是测试用例？一个好的测试用例应包含哪些元素？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_3-什么是测试用例-一个好的测试用例应包含哪些元素"
+   },
+   {
+    "level": 3,
+    "text": "4. 解释等价类划分和边界值分析的概念",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_4-解释等价类划分和边界值分析的概念"
+   },
+   {
+    "level": 3,
+    "text": "5. 什么是回归测试？何时进行回归测试？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_5-什么是回归测试-何时进行回归测试"
+   },
+   {
+    "level": 3,
+    "text": "6. 解释敏捷测试和传统瀑布模型测试的区别",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_6-解释敏捷测试和传统瀑布模型测试的区别"
+   },
+   {
+    "level": 3,
+    "text": "7. 什么是冒烟测试和健全测试？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_7-什么是冒烟测试和健全测试"
+   },
+   {
+    "level": 3,
+    "text": "8. 什么是探索性测试？它有什么优点和缺点？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_8-什么是探索性测试-它有什么优点和缺点"
+   },
+   {
+    "level": 3,
+    "text": "9. 缺陷生命周期包括哪些状态？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_9-缺陷生命周期包括哪些状态"
+   },
+   {
+    "level": 3,
+    "text": "10. 如何编写有效的缺陷报告？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_10-如何编写有效的缺陷报告"
+   },
+   {
+    "level": 3,
+    "text": "11. 什么是测试计划？测试计划应包含哪些内容？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_11-什么是测试计划-测试计划应包含哪些内容"
+   },
+   {
+    "level": 3,
+    "text": "12. 如何确定测试的优先级？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_12-如何确定测试的优先级"
+   },
+   {
+    "level": 3,
+    "text": "13. 请解释什么是测试用例的优先级，通常如何划分？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_13-请解释什么是测试用例的优先级-通常如何划分"
+   },
+   {
+    "level": 3,
+    "text": "14. 什么是冒烟测试（Smoke Test）？它的目的是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_14-什么是冒烟测试-smoke-test-它的目的是什么"
+   },
+   {
+    "level": 3,
+    "text": "15. 什么是回归测试（Regression Test）？如何确定回归测试的范围？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_15-什么是回归测试-regression-test-如何确定回归测试的范围"
+   },
+   {
+    "level": 3,
+    "text": "16. 缺陷报告中应包含哪些关键信息？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_16-缺陷报告中应包含哪些关键信息"
+   },
+   {
+    "level": 3,
+    "text": "17. 缺陷的严重程度（Severity）和优先级（Priority）有什么区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_17-缺陷的严重程度-severity-和优先级-priority-有什么区别"
+   },
+   {
+    "level": 3,
+    "text": "18. 当你发现一个Bug但开发人员无法复现时，你会怎么做？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_18-当你发现一个bug但开发人员无法复现时-你会怎么做"
+   },
+   {
+    "level": 3,
+    "text": "19. 你如何评估你的测试是否足够充分（Test Coverage）?",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_19-你如何评估你的测试是否足够充分-test-coverage"
+   },
+   {
+    "level": 3,
+    "text": "20. 测试的准入准则（Entry Criteria）和准出准则（Exit Criteria）是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_20-测试的准入准则-entry-criteria-和准出准则-exit-criteria-是什么"
+   },
+   {
+    "level": 3,
+    "text": "21. 什么是持续集成（CI）？它在测试中有什么好处？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_21-什么是持续集成-ci-它在测试中有什么好处"
+   },
+   {
+    "level": 3,
+    "text": "22. 你如何保证自动化测试的稳定性和可维护性？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_22-你如何保证自动化测试的稳定性和可维护性"
+   },
+   {
+    "level": 3,
+    "text": "23. 除了功能，你认为还可以从哪些角度去测试一个产品？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_23-除了功能-你认为还可以从哪些角度去测试一个产品"
+   },
+   {
+    "level": 3,
+    "text": "24. 当测试时间非常紧张时，你会如何应对？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_24-当测试时间非常紧张时-你会如何应对"
+   },
+   {
+    "level": 3,
+    "text": "25. 你平时如何提升自己的测试技能？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_25-你平时如何提升自己的测试技能"
+   },
+   {
+    "level": 3,
+    "text": "26. 你为什么选择软件测试这个职业？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_26-你为什么选择软件测试这个职业"
+   },
+   {
+    "level": 3,
+    "text": "27. 你认为一个好的软件测试工程师最重要的素质是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_27-你认为一个好的软件测试工程师最重要的素质是什么"
+   },
+   {
+    "level": 3,
+    "text": "28. 你对我们公司有什么了解？为什么想来这里做测试？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_28-你对我们公司有什么了解-为什么想来这里做测试"
+   },
+   {
+    "level": 3,
+    "text": "29. 你有什么问题想问我的吗？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_29-你有什么问题想问我的吗"
+   },
+   {
+    "level": 3,
+    "text": "30. 什么是“端到端测试”（End-to-End Testing）？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_30-什么是-端到端测试-end-to-end-testing"
+   },
+   {
+    "level": 3,
+    "text": "31. 你如何管理你的测试用例？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_31-你如何管理你的测试用例"
+   },
+   {
+    "level": 3,
+    "text": "32. 请简述你对“大数据测试”的理解。",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_32-请简述你对-大数据测试-的理解。"
+   },
+   {
+    "level": 3,
+    "text": "33. 你对测试左移和测试右移是怎么理解的？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_33-你对测试左移和测试右移是怎么理解的"
+   },
+   {
+    "level": 3,
+    "text": "34. 在敏捷开发中，你是如何适应快速迭代的测试节奏的？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_34-在敏捷开发中-你是如何适应快速迭代的测试节奏的"
+   },
+   {
+    "level": 2,
+    "text": "二.web测试",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#二-web测试"
+   },
+   {
+    "level": 3,
+    "text": "1. Web测试与App测试、桌面应用测试的主要区别是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_1-web测试与app测试、桌面应用测试的主要区别是什么"
+   },
+   {
+    "level": 3,
+    "text": "2. 描述一下你在Web项目中的测试流程。",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_2-描述一下你在web项目中的测试流程。"
+   },
+   {
+    "level": 3,
+    "text": "3. 什么是冒烟测试（Smoke Test）？针对一个Web首页，你会设计哪些冒烟测试用例？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_3-什么是冒烟测试-smoke-test-针对一个web首页-你会设计哪些冒烟测试用例"
+   },
+   {
+    "level": 3,
+    "text": "4. 什么是回归测试？如何确定Web项目的回归测试范围？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_4-什么是回归测试-如何确定web项目的回归测试范围"
+   },
+   {
+    "level": 3,
+    "text": "5. 什么是探索性测试？它在Web测试中如何应用？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_5-什么是探索性测试-它在web测试中如何应用"
+   },
+   {
+    "level": 3,
+    "text": "6. 如何对一个用户登录功能进行测试？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_6-如何对一个用户登录功能进行测试"
+   },
+   {
+    "level": 3,
+    "text": "7. 如何测试一个电子商务网站的“加入购物车”功能？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_7-如何测试一个电子商务网站的-加入购物车-功能"
+   },
+   {
+    "level": 3,
+    "text": "8. 如何测试网站的搜索功能？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_8-如何测试网站的搜索功能"
+   },
+   {
+    "level": 3,
+    "text": "10. 如何测试文件上传功能？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_10-如何测试文件上传功能"
+   },
+   {
+    "level": 3,
+    "text": "11. 如何测试支付流程？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_11-如何测试支付流程"
+   },
+   {
+    "level": 3,
+    "text": "12. 什么是跨浏览器测试？你最关注哪些方面？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_12-什么是跨浏览器测试-你最关注哪些方面"
+   },
+   {
+    "level": 3,
+    "text": "13. 你使用哪些工具进行跨浏览器测试？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_13-你使用哪些工具进行跨浏览器测试"
+   },
+   {
+    "level": 3,
+    "text": "14. Web性能测试关注哪些核心指标？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_14-web性能测试关注哪些核心指标"
+   },
+   {
+    "level": 3,
+    "text": "15. 你如何分析一个Web页面的性能瓶颈？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_15-你如何分析一个web页面的性能瓶颈"
+   },
+   {
+    "level": 3,
+    "text": "17. 描述一个你发现的最复杂的Web Bug，以及你是如何排查定位的。",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_17-描述一个你发现的最复杂的web-bug-以及你是如何排查定位的。"
+   },
+   {
+    "level": 2,
+    "text": "三.App测试",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#三-app测试"
+   },
+   {
+    "level": 3,
+    "text": "1. APP测试与Web测试的主要区别是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_1-app测试与web测试的主要区别是什么"
+   },
+   {
+    "level": 3,
+    "text": "2. 描述一下APP的测试流程。",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_2-描述一下app的测试流程。"
+   },
+   {
+    "level": 3,
+    "text": "3. 什么是冒烟测试？针对一个APP新版本，你的冒烟测试用例会包含哪些？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_3-什么是冒烟测试-针对一个app新版本-你的冒烟测试用例会包含哪些"
+   },
+   {
+    "level": 3,
+    "text": "4. 如何制定APP的兼容性测试策略？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_4-如何制定app的兼容性测试策略"
+   },
+   {
+    "level": 3,
+    "text": "5. APP的灰度发布（Gray Release）是什么？测试如何配合？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_5-app的灰度发布-gray-release-是什么-测试如何配合"
+   },
+   {
+    "level": 3,
+    "text": "6. 什么是Monkey测试？它在APP测试中有什么作用？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_6-什么是monkey测试-它在app测试中有什么作用"
+   },
+   {
+    "level": 3,
+    "text": "7. 如何查看和分析Android设备的日志？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_7-如何查看和分析android设备的日志"
+   },
+   {
+    "level": 3,
+    "text": "8. 什么是ANR？导致ANR的原因有哪些？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_8-什么是anr-导致anr的原因有哪些"
+   },
+   {
+    "level": 3,
+    "text": "9. 什么是Crash？如何收集和分析Crash信息？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_9-什么是crash-如何收集和分析crash信息"
+   },
+   {
+    "level": 3,
+    "text": "10. 如何测试APP的安装、卸载和升级？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_10-如何测试app的安装、卸载和升级"
+   },
+   {
+    "level": 3,
+    "text": "11. 如何测试APP的中断事件？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_11-如何测试app的中断事件"
+   },
+   {
+    "level": 3,
+    "text": "12. APP的性能测试主要关注哪些指标？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_12-app的性能测试主要关注哪些指标"
+   },
+   {
+    "level": 3,
+    "text": "13. 如何测试APP的耗电量？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_13-如何测试app的耗电量"
+   },
+   {
+    "level": 3,
+    "text": "14. 如何测试APP的流量消耗？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_14-如何测试app的流量消耗"
+   },
+   {
+    "level": 3,
+    "text": "15. 如何测试APP的启动时间？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_15-如何测试app的启动时间"
+   },
+   {
+    "level": 3,
+    "text": "16. 如何测试APP在不同网络环境下的表现？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_16-如何测试app在不同网络环境下的表现"
+   },
+   {
+    "level": 3,
+    "text": "17. 弱网测试的关注点是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_17-弱网测试的关注点是什么"
+   },
+   {
+    "level": 3,
+    "text": "18. 如何模拟弱网环境进行测试？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_18-如何模拟弱网环境进行测试"
+   },
+   {
+    "level": 3,
+    "text": "19. APP的权限测试主要测试哪些内容？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_19-app的权限测试主要测试哪些内容"
+   },
+   {
+    "level": 3,
+    "text": "20. 如何测试APP的推送通知（Push Notification）？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_20-如何测试app的推送通知-push-notification"
+   },
+   {
+    "level": 3,
+    "text": "21. APP的升级测试有哪些测试点？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_21-app的升级测试有哪些测试点"
+   },
+   {
+    "level": 3,
+    "text": "22. 如何对APP进行安全测试？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_22-如何对app进行安全测试"
+   },
+   {
+    "level": 3,
+    "text": "23. 如何抓取和分析APP的网络数据包？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_23-如何抓取和分析app的网络数据包"
+   },
+   {
+    "level": 3,
+    "text": "24. 除了Charles，你还了解哪些移动端测试工具？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_24-除了charles-你还了解哪些移动端测试工具"
+   },
+   {
+    "level": 3,
+    "text": "25. 什么是Monkey和MonkeyRunner？它们有什么区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_25-什么是monkey和monkeyrunner-它们有什么区别"
+   },
+   {
+    "level": 3,
+    "text": "26. 如何测试APP的离线功能？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_26-如何测试app的离线功能"
+   },
+   {
+    "level": 3,
+    "text": "27. 如何测试APP与手机其他应用的交互？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_27-如何测试app与手机其他应用的交互"
+   },
+   {
+    "level": 3,
+    "text": "28. 描述一个你遇到的最复杂的APP Bug及其排查过程。",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_28-描述一个你遇到的最复杂的app-bug及其排查过程。"
+   },
+   {
+    "level": 3,
+    "text": "29. APP上线后，如何进行质量监控？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_29-app上线后-如何进行质量监控"
+   },
+   {
+    "level": 2,
+    "text": "四.H5测试",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#四-h5测试"
+   },
+   {
+    "level": 3,
+    "text": "1. H5页面测试与Native App页面测试的主要区别是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_1-h5页面测试与native-app页面测试的主要区别是什么"
+   },
+   {
+    "level": 3,
+    "text": "2. 什么是Hybrid App？如何对它进行测试？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_2-什么是hybrid-app-如何对它进行测试"
+   },
+   {
+    "level": 3,
+    "text": "3. 在Hybrid App中，如何测试H5页面与Native之间的交互（JS Bridge）？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_3-在hybrid-app中-如何测试h5页面与native之间的交互-js-bridge"
+   },
+   {
+    "level": 3,
+    "text": "4. H5页面性能测试关注哪些核心指标？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_4-h5页面性能测试关注哪些核心指标"
+   },
+   {
+    "level": 3,
+    "text": "5. 如何分析并优化一个加载缓慢的H5页面？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_5-如何分析并优化一个加载缓慢的h5页面"
+   },
+   {
+    "level": 3,
+    "text": "6. H5兼容性测试主要覆盖哪些方面？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_6-h5兼容性测试主要覆盖哪些方面"
+   },
+   {
+    "level": 3,
+    "text": "7. 如何高效地进行H5页面的兼容性测试？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_7-如何高效地进行h5页面的兼容性测试"
+   },
+   {
+    "level": 3,
+    "text": "8. 如何测试H5页面的离线功能？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_8-如何测试h5页面的离线功能"
+   },
+   {
+    "level": 3,
+    "text": "9. 在移动端测试H5页面，有哪些特有的测试点？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_9-在移动端测试h5页面-有哪些特有的测试点"
+   },
+   {
+    "level": 3,
+    "text": "10. 如何抓取和分析H5页面的网络请求？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_10-如何抓取和分析h5页面的网络请求"
+   },
+   {
+    "level": 3,
+    "text": "11. 什么是PWA（渐进式Web应用）？它的测试重点是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_11-什么是pwa-渐进式web应用-它的测试重点是什么"
+   },
+   {
+    "level": 3,
+    "text": "12. H5安全测试需要关注哪些常见漏洞？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_12-h5安全测试需要关注哪些常见漏洞"
+   },
+   {
+    "level": 3,
+    "text": "13. 如何测试H5页面的响应式布局？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_13-如何测试h5页面的响应式布局"
+   },
+   {
+    "level": 3,
+    "text": "14. 解释一下WebView，并说明测试时需要注意什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_14-解释一下webview-并说明测试时需要注意什么"
+   },
+   {
+    "level": 3,
+    "text": "15. 如何模拟H5页面在弱网环境下的表现？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_15-如何模拟h5页面在弱网环境下的表现"
+   },
+   {
+    "level": 3,
+    "text": "16. 什么是“白屏”问题？可能的原因有哪些？如何排查？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_16-什么是-白屏-问题-可能的原因有哪些-如何排查"
+   },
+   {
+    "level": 3,
+    "text": "17. H5页面的缓存机制有哪些？测试时如何清理？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_17-h5页面的缓存机制有哪些-测试时如何清理"
+   },
+   {
+    "level": 3,
+    "text": "18. 如何测试H5页面在微信浏览器中的兼容性？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_18-如何测试h5页面在微信浏览器中的兼容性"
+   },
+   {
+    "level": 3,
+    "text": "19. 在设计H5页面的测试用例时，与Native用例设计最大的不同是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_19-在设计h5页面的测试用例时-与native用例设计最大的不同是什么"
+   },
+   {
+    "level": 3,
+    "text": "20. 描述一个你遇到的印象最深刻的H5相关Bug及其排查过程。",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_20-描述一个你遇到的印象最深刻的h5相关bug及其排查过程。"
+   },
+   {
+    "level": 2,
+    "text": "五.小程序测试",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#五-小程序测试"
+   },
+   {
+    "level": 3,
+    "text": "1. 小程序测试与原生App测试、H5测试的主要区别是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_1-小程序测试与原生app测试、h5测试的主要区别是什么"
+   },
+   {
+    "level": 3,
+    "text": "2. 小程序的“双线程架构”是什么？它对测试有什么影响？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_2-小程序的-双线程架构-是什么-它对测试有什么影响"
+   },
+   {
+    "level": 3,
+    "text": "3. 小程序测试需要覆盖哪些主要的业务场景？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_3-小程序测试需要覆盖哪些主要的业务场景"
+   },
+   {
+    "level": 3,
+    "text": "4. 如何测试小程序的授权登录功能？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_4-如何测试小程序的授权登录功能"
+   },
+   {
+    "level": 3,
+    "text": "5. 小程序兼容性测试需要关注哪些维度？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_5-小程序兼容性测试需要关注哪些维度"
+   },
+   {
+    "level": 3,
+    "text": "6. 如何测试小程序的网络兼容性与弱网体验？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_6-如何测试小程序的网络兼容性与弱网体验"
+   },
+   {
+    "level": 3,
+    "text": "7. 小程序性能测试关注哪些核心指标？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_7-小程序性能测试关注哪些核心指标"
+   },
+   {
+    "level": 3,
+    "text": "8. 如何分析并优化小程序的启动速度？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_8-如何分析并优化小程序的启动速度"
+   },
+   {
+    "level": 3,
+    "text": "9. 小程序的安全测试需要关注哪些方面？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_9-小程序的安全测试需要关注哪些方面"
+   },
+   {
+    "level": 3,
+    "text": "10. 如何测试小程序与微信原生功能的交互？例如分享功能。",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_10-如何测试小程序与微信原生功能的交互-例如分享功能。"
+   },
+   {
+    "level": 3,
+    "text": "11. 解释一下小程序的分包加载机制，测试时需要注意什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_11-解释一下小程序的分包加载机制-测试时需要注意什么"
+   },
+   {
+    "level": 3,
+    "text": "12. 小程序有哪些常见的数据存储方式？如何测试？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_12-小程序有哪些常见的数据存储方式-如何测试"
+   },
+   {
+    "level": 3,
+    "text": "13. 如何测试小程序的后台运行和前台唤醒？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_13-如何测试小程序的后台运行和前台唤醒"
+   },
+   {
+    "level": 3,
+    "text": "14. 小程序云开发（TCB）测试与传统后端测试有何不同？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_14-小程序云开发-tcb-测试与传统后端测试有何不同"
+   },
+   {
+    "level": 3,
+    "text": "15. 你使用哪些工具进行小程序测试和调试？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_15-你使用哪些工具进行小程序测试和调试"
+   },
+   {
+    "level": 3,
+    "text": "16. 什么是Minium？它有什么特点？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_16-什么是minium-它有什么特点"
+   },
+   {
+    "level": 3,
+    "text": "17. 如何对小程序进行线上监控与异常排查？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_17-如何对小程序进行线上监控与异常排查"
+   },
+   {
+    "level": 3,
+    "text": "18. 测试小程序时，如何管理多个测试环境（开发/测试/生产）？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_18-测试小程序时-如何管理多个测试环境-开发-测试-生产"
+   },
+   {
+    "level": 3,
+    "text": "19. 小程序提审和发布前，需要进行哪些检查？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_19-小程序提审和发布前-需要进行哪些检查"
+   },
+   {
+    "level": 3,
+    "text": "20. 描述一个你在小程序测试中遇到的最复杂/最有成就感的Bug。",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_20-描述一个你在小程序测试中遇到的最复杂-最有成就感的bug。"
+   },
+   {
+    "level": 2,
+    "text": "六.接口测试",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#六-接口测试"
+   },
+   {
+    "level": 3,
+    "text": "1. 什么是接口测试？为什么要做接口测试？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_1-什么是接口测试-为什么要做接口测试"
+   },
+   {
+    "level": 3,
+    "text": "2. 请列举常见的接口类型。",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_2-请列举常见的接口类型。"
+   },
+   {
+    "level": 3,
+    "text": "3. 什么是RESTful API？它的核心原则是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_3-什么是restful-api-它的核心原则是什么"
+   },
+   {
+    "level": 3,
+    "text": "4. 请解释HTTP请求的组成。",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_4-请解释http请求的组成。"
+   },
+   {
+    "level": 3,
+    "text": "5. 请解释HTTP响应的组成。",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_5-请解释http响应的组成。"
+   },
+   {
+    "level": 3,
+    "text": "6. 请列出常见的HTTP方法及其用途。",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_6-请列出常见的http方法及其用途。"
+   },
+   {
+    "level": 3,
+    "text": "7. 什么是幂等性（Idempotence）？哪些HTTP方法是幂等的？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_7-什么是幂等性-idempotence-哪些http方法是幂等的"
+   },
+   {
+    "level": 3,
+    "text": "8. 请解释常见的HTTP状态码及其含义。",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_8-请解释常见的http状态码及其含义。"
+   },
+   {
+    "level": 3,
+    "text": "9. 请列举常见的接口参数类型。",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_9-请列举常见的接口参数类型。"
+   },
+   {
+    "level": 3,
+    "text": "10. 什么是Cookie和Session？它们在接口测试中如何体现？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_10-什么是cookie和session-它们在接口测试中如何体现"
+   },
+   {
+    "level": 3,
+    "text": "11. 什么是Token（常用于JWT）？它与Session的区别是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_11-什么是token-常用于jwt-它与session的区别是什么"
+   },
+   {
+    "level": 3,
+    "text": "12. 接口测试的常用工具有哪些？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_12-接口测试的常用工具有哪些"
+   },
+   {
+    "level": 3,
+    "text": "13. 你更倾向于用Postman还是代码做接口测试？为什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_13-你更倾向于用postman还是代码做接口测试-为什么"
+   },
+   {
+    "level": 3,
+    "text": "14. 什么是Mock？它在接口测试中有什么作用？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_14-什么是mock-它在接口测试中有什么作用"
+   },
+   {
+    "level": 3,
+    "text": "15. 如何设计一个好的接口测试用例？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_15-如何设计一个好的接口测试用例"
+   },
+   {
+    "level": 3,
+    "text": "16. 在Postman中，如何管理测试环境变量和环境？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_16-在postman中-如何管理测试环境变量和环境"
+   },
+   {
+    "level": 3,
+    "text": "17. 在Postman中，如何编写自动化测试脚本？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_17-在postman中-如何编写自动化测试脚本"
+   },
+   {
+    "level": 3,
+    "text": "18. 在Postman中，如何使用Collection Runner？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_18-在postman中-如何使用collection-runner"
+   },
+   {
+    "level": 3,
+    "text": "19. 如何使用cURL命令发送一个带JSON体的POST请求？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_19-如何使用curl命令发送一个带json体的post请求"
+   },
+   {
+    "level": 3,
+    "text": "20. 什么是JSON Schema？它在接口测试中有什么用？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_20-什么是json-schema-它在接口测试中有什么用"
+   },
+   {
+    "level": 3,
+    "text": "21. 如何在Postman或RestAssured中使用JSON Schema进行验证？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_21-如何在postman或restassured中使用json-schema进行验证"
+   },
+   {
+    "level": 3,
+    "text": "22. 请简述如何使用RestAssured编写一个基本的接口测试用例。",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_22-请简述如何使用restassured编写一个基本的接口测试用例。"
+   },
+   {
+    "level": 3,
+    "text": "24. 如何测试文件上传接口？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_24-如何测试文件上传接口"
+   },
+   {
+    "level": 3,
+    "text": "25. 如何测试文件下载接口？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_25-如何测试文件下载接口"
+   },
+   {
+    "level": 3,
+    "text": "26. 接口测试中发现一个Bug，如何定位是前端还是后端的问题？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_26-接口测试中发现一个bug-如何定位是前端还是后端的问题"
+   },
+   {
+    "level": 3,
+    "text": "27. 什么是Swagger/OpenAPI？它对你做接口测试有什么帮助？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_27-什么是swagger-openapi-它对你做接口测试有什么帮助"
+   },
+   {
+    "level": 3,
+    "text": "28. 什么是GraphQL？它与RESTful API测试有何不同？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_28-什么是graphql-它与restful-api测试有何不同"
+   },
+   {
+    "level": 3,
+    "text": "29. 如何测试一个需要鉴权的接口？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_29-如何测试一个需要鉴权的接口"
+   },
+   {
+    "level": 3,
+    "text": "30. 如何设计用例来测试接口的幂等性？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_30-如何设计用例来测试接口的幂等性"
+   },
+   {
+    "level": 3,
+    "text": "31. 在微服务架构下，接口测试面临哪些挑战？如何应对？",
+    "anchor": "https://www.xiaolincoding.com/interview/business_testing.html#_31-在微服务架构下-接口测试面临哪些挑战-如何应对"
+   }
+  ]
+ },
+ "performance_testing": {
+  "cat": "测试主线",
+  "label": "性能测试",
+  "url": "https://www.xiaolincoding.com/interview/performance_testing.html",
+  "items": [
+   {
+    "level": 2,
+    "text": "一、Jmeter工具使用",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#一、jmeter工具使用"
+   },
+   {
+    "level": 3,
+    "text": "1. JMeter中如何实现参数关联？比如登录token传递给下一个接口？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_1-jmeter中如何实现参数关联-比如登录token传递给下一个接口"
+   },
+   {
+    "level": 3,
+    "text": "2. JMeter如何模拟多用户并发登录？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_2-jmeter如何模拟多用户并发登录"
+   },
+   {
+    "level": 3,
+    "text": "3. JMeter中的断言有哪几种？你常用哪种？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_3-jmeter中的断言有哪几种-你常用哪种"
+   },
+   {
+    "level": 3,
+    "text": "4. JMeter如何实现集合点（并发集合）？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_4-jmeter如何实现集合点-并发集合"
+   },
+   {
+    "level": 3,
+    "text": "5. JMeter中的线程组有哪几种？有什么区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_5-jmeter中的线程组有哪几种-有什么区别"
+   },
+   {
+    "level": 3,
+    "text": "6. JMeter如何实现阶梯式加压？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_6-jmeter如何实现阶梯式加压"
+   },
+   {
+    "level": 3,
+    "text": "7. JMeter如何查看实时压测结果？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_7-jmeter如何查看实时压测结果"
+   },
+   {
+    "level": 3,
+    "text": "8. JMeter命令行模式怎么用？有什么优势？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_8-jmeter命令行模式怎么用-有什么优势"
+   },
+   {
+    "level": 3,
+    "text": "9. JMeter如何模拟弱网环境？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_9-jmeter如何模拟弱网环境"
+   },
+   {
+    "level": 3,
+    "text": "10. JMeter如何处理Cookie和Session？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_10-jmeter如何处理cookie和session"
+   },
+   {
+    "level": 3,
+    "text": "11. JMeter如何实现动态参数，比如随机生成手机号？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_11-jmeter如何实现动态参数-比如随机生成手机号"
+   },
+   {
+    "level": 3,
+    "text": "12. JMeter的聚合报告中各项指标含义是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_12-jmeter的聚合报告中各项指标含义是什么"
+   },
+   {
+    "level": 3,
+    "text": "13. JMeter如何实现接口加密？比如MD5签名？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_13-jmeter如何实现接口加密-比如md5签名"
+   },
+   {
+    "level": 3,
+    "text": "14. JMeter分布式压测中Controller和Agent的区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_14-jmeter分布式压测中controller和agent的区别"
+   },
+   {
+    "level": 3,
+    "text": "15. JMeter如何限制每秒请求数TPS？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_15-jmeter如何限制每秒请求数tps"
+   },
+   {
+    "level": 3,
+    "text": "16. JMeter中如何处理HTTPS请求？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_16-jmeter中如何处理https请求"
+   },
+   {
+    "level": 3,
+    "text": "17. JMeter如何实现数据库压测？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_17-jmeter如何实现数据库压测"
+   },
+   {
+    "level": 3,
+    "text": "18. JMeter的Debug Sampler和View Results Tree有什么用？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_18-jmeter的debug-sampler和view-results-tree有什么用"
+   },
+   {
+    "level": 3,
+    "text": "19. JMeter如何处理返回的乱码问题？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_19-jmeter如何处理返回的乱码问题"
+   },
+   {
+    "level": 3,
+    "text": "20. JMeter压测时发现TPS上不去，响应时间很长，如何排查？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_20-jmeter压测时发现tps上不去-响应时间很长-如何排查"
+   },
+   {
+    "level": 2,
+    "text": "二、性能测试基础理论",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#二、性能测试基础理论"
+   },
+   {
+    "level": 3,
+    "text": "1. 什么是性能测试？性能测试的目的是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_1-什么是性能测试-性能测试的目的是什么"
+   },
+   {
+    "level": 3,
+    "text": "2. 性能测试和功能测试有什么区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_2-性能测试和功能测试有什么区别"
+   },
+   {
+    "level": 3,
+    "text": "3. 性能测试的主要类型有哪些？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_3-性能测试的主要类型有哪些"
+   },
+   {
+    "level": 3,
+    "text": "4. 什么是TPS？什么是QPS？有什么区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_4-什么是tps-什么是qps-有什么区别"
+   },
+   {
+    "level": 3,
+    "text": "5. 什么是响应时间？90%响应时间是什么意思？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_5-什么是响应时间-90-响应时间是什么意思"
+   },
+   {
+    "level": 3,
+    "text": "6. 什么是并发用户数？和线程数是一个概念吗？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_6-什么是并发用户数-和线程数是一个概念吗"
+   },
+   {
+    "level": 3,
+    "text": "7. 什么是性能瓶颈？常见的性能瓶颈有哪些？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_7-什么是性能瓶颈-常见的性能瓶颈有哪些"
+   },
+   {
+    "level": 3,
+    "text": "8. 什么是思考时间？为什么要设置思考时间？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_8-什么是思考时间-为什么要设置思考时间"
+   },
+   {
+    "level": 3,
+    "text": "9. 什么是吞吐量？吞吐量和TPS有什么关系？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_9-什么是吞吐量-吞吐量和tps有什么关系"
+   },
+   {
+    "level": 3,
+    "text": "10. 什么是性能拐点？如何找到性能拐点？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_10-什么是性能拐点-如何找到性能拐点"
+   },
+   {
+    "level": 3,
+    "text": "11. 什么是容量规划？如何进行容量规划？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_11-什么是容量规划-如何进行容量规划"
+   },
+   {
+    "level": 3,
+    "text": "12. 什么是性能基线？为什么要建立性能基线？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_12-什么是性能基线-为什么要建立性能基线"
+   },
+   {
+    "level": 3,
+    "text": "13. 什么是混合场景压测？和单接口压测有什么区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_13-什么是混合场景压测-和单接口压测有什么区别"
+   },
+   {
+    "level": 3,
+    "text": "14. 性能测试报告应该包含哪些内容？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_14-性能测试报告应该包含哪些内容"
+   },
+   {
+    "level": 3,
+    "text": "15. 什么是长尾请求？长尾请求对系统有什么影响？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_15-什么是长尾请求-长尾请求对系统有什么影响"
+   },
+   {
+    "level": 3,
+    "text": "16. 什么是全链路压测？和普通压测有什么区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_16-什么是全链路压测-和普通压测有什么区别"
+   },
+   {
+    "level": 3,
+    "text": "17. 性能测试中如何准备测试数据？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_17-性能测试中如何准备测试数据"
+   },
+   {
+    "level": 3,
+    "text": "18. 什么是预热？为什么性能测试需要预热？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_18-什么是预热-为什么性能测试需要预热"
+   },
+   {
+    "level": 3,
+    "text": "19. 性能测试什么时候做？是在功能测试之前还是之后？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_19-性能测试什么时候做-是在功能测试之前还是之后"
+   },
+   {
+    "level": 3,
+    "text": "20. 性能测试和压力测试是一回事吗？有什么区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_20-性能测试和压力测试是一回事吗-有什么区别"
+   },
+   {
+    "level": 2,
+    "text": "三、性能测试监控",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#三、性能测试监控"
+   },
+   {
+    "level": 3,
+    "text": "1. 性能测试中主要监控哪些指标？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_1-性能测试中主要监控哪些指标"
+   },
+   {
+    "level": 3,
+    "text": "2. Grafana+Prometheus+Exporter监控原理是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_2-grafana-prometheus-exporter监控原理是什么"
+   },
+   {
+    "level": 3,
+    "text": "3. Linux中常用的性能监控命令有哪些？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_3-linux中常用的性能监控命令有哪些"
+   },
+   {
+    "level": 3,
+    "text": "4. 如何监控Java应用的JVM性能？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_4-如何监控java应用的jvm性能"
+   },
+   {
+    "level": 3,
+    "text": "5. 如何判断CPU使用率是否正常？多少算高？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_5-如何判断cpu使用率是否正常-多少算高"
+   },
+   {
+    "level": 3,
+    "text": "6. 如何监控数据库的性能指标？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_6-如何监控数据库的性能指标"
+   },
+   {
+    "level": 3,
+    "text": "7. 什么是慢查询？如何定位慢查询？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_7-什么是慢查询-如何定位慢查询"
+   },
+   {
+    "level": 3,
+    "text": "8. 如何监控Redis的性能？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_8-如何监控redis的性能"
+   },
+   {
+    "level": 3,
+    "text": "9. 压测时发现数据库CPU很高，如何排查？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_9-压测时发现数据库cpu很高-如何排查"
+   },
+   {
+    "level": 3,
+    "text": "10. 如何监控线程状态？什么是线程阻塞？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_10-如何监控线程状态-什么是线程阻塞"
+   },
+   {
+    "level": 3,
+    "text": "11. 什么是GC？如何监控GC情况？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_11-什么是gc-如何监控gc情况"
+   },
+   {
+    "level": 3,
+    "text": "12. 如何判断是否发生了内存泄漏？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_12-如何判断是否发生了内存泄漏"
+   },
+   {
+    "level": 3,
+    "text": "13. 压测时如何实时查看应用日志？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_13-压测时如何实时查看应用日志"
+   },
+   {
+    "level": 3,
+    "text": "14. 什么是线程池？如何监控线程池状态？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_14-什么是线程池-如何监控线程池状态"
+   },
+   {
+    "level": 3,
+    "text": "15. 如何监控网络带宽使用情况？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_15-如何监控网络带宽使用情况"
+   },
+   {
+    "level": 3,
+    "text": "16. 压测时发现磁盘IO很高，如何排查？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_16-压测时发现磁盘io很高-如何排查"
+   },
+   {
+    "level": 3,
+    "text": "17. 什么是负载均衡？如何监控负载均衡效果？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_17-什么是负载均衡-如何监控负载均衡效果"
+   },
+   {
+    "level": 3,
+    "text": "18. 如何监控消息队列MQ的性能？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_18-如何监控消息队列mq的性能"
+   },
+   {
+    "level": 3,
+    "text": "19. 压测过程中如何设置监控告警？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_19-压测过程中如何设置监控告警"
+   },
+   {
+    "level": 3,
+    "text": "20. 如何生成性能监控报告？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_20-如何生成性能监控报告"
+   },
+   {
+    "level": 2,
+    "text": "四、性能测试瓶颈分析",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#四、性能测试瓶颈分析"
+   },
+   {
+    "level": 3,
+    "text": "1. 压测时TPS上不去可能是什么原因？如何排查？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_1-压测时tps上不去可能是什么原因-如何排查"
+   },
+   {
+    "level": 3,
+    "text": "2. 压测时CPU使用率很高怎么办？如何定位分析？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_2-压测时cpu使用率很高怎么办-如何定位分析"
+   },
+   {
+    "level": 3,
+    "text": "3. 压测时响应时间很长怎么分析？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_3-压测时响应时间很长怎么分析"
+   },
+   {
+    "level": 3,
+    "text": "4. 如何定位线程阻塞问题？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_4-如何定位线程阻塞问题"
+   },
+   {
+    "level": 3,
+    "text": "5. 如何定位数据库慢查询问题？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_5-如何定位数据库慢查询问题"
+   },
+   {
+    "level": 3,
+    "text": "6. 什么是性能拐点？如何找到性能拐点？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_6-什么是性能拐点-如何找到性能拐点"
+   },
+   {
+    "level": 3,
+    "text": "7. 压测时发现内存持续增长怎么办？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_7-压测时发现内存持续增长怎么办"
+   },
+   {
+    "level": 3,
+    "text": "8. 如何分析Full GC频繁的问题？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_8-如何分析full-gc频繁的问题"
+   },
+   {
+    "level": 3,
+    "text": "9. 如何定位接口响应慢的具体代码位置？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_9-如何定位接口响应慢的具体代码位置"
+   },
+   {
+    "level": 3,
+    "text": "10. 压测时错误率突然升高怎么分析？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_10-压测时错误率突然升高怎么分析"
+   },
+   {
+    "level": 3,
+    "text": "11. 如何分析数据库连接池不够的问题？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_11-如何分析数据库连接池不够的问题"
+   },
+   {
+    "level": 3,
+    "text": "12. 如何判断是前端问题还是后端问题？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_12-如何判断是前端问题还是后端问题"
+   },
+   {
+    "level": 3,
+    "text": "13. Redis缓存命中率低怎么优化？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_13-redis缓存命中率低怎么优化"
+   },
+   {
+    "level": 3,
+    "text": "14. 如何定位网络瓶颈问题？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_14-如何定位网络瓶颈问题"
+   },
+   {
+    "level": 3,
+    "text": "15. 消息队列MQ堆积怎么处理？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_15-消息队列mq堆积怎么处理"
+   },
+   {
+    "level": 3,
+    "text": "16. 如何分析线程池配置不合理的问题？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_16-如何分析线程池配置不合理的问题"
+   },
+   {
+    "level": 3,
+    "text": "17. 如何排查磁盘IO瓶颈？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_17-如何排查磁盘io瓶颈"
+   },
+   {
+    "level": 3,
+    "text": "18. 压测时如何定位是哪个系统的瓶颈？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_18-压测时如何定位是哪个系统的瓶颈"
+   },
+   {
+    "level": 3,
+    "text": "19. 如何分析JVM参数配置不合理的问题？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_19-如何分析jvm参数配置不合理的问题"
+   },
+   {
+    "level": 3,
+    "text": "20. 如何综合分析定位性能瓶颈？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_20-如何综合分析定位性能瓶颈"
+   },
+   {
+    "level": 2,
+    "text": "五、性能测试调优",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#五、性能测试调优"
+   },
+   {
+    "level": 3,
+    "text": "1. 数据库慢查询如何优化？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_1-数据库慢查询如何优化"
+   },
+   {
+    "level": 3,
+    "text": "2. 如何优化线程阻塞问题？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_2-如何优化线程阻塞问题"
+   },
+   {
+    "level": 3,
+    "text": "3. Redis缓存如何优化提高命中率？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_3-redis缓存如何优化提高命中率"
+   },
+   {
+    "level": 3,
+    "text": "4. 如何优化JVM参数提升性能？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_4-如何优化jvm参数提升性能"
+   },
+   {
+    "level": 3,
+    "text": "5. 数据库连接池如何优化？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_5-数据库连接池如何优化"
+   },
+   {
+    "level": 3,
+    "text": "6. 如何优化Tomcat性能？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_6-如何优化tomcat性能"
+   },
+   {
+    "level": 3,
+    "text": "7. 如何优化MySQL数据库性能？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_7-如何优化mysql数据库性能"
+   },
+   {
+    "level": 3,
+    "text": "8. 如何优化网络性能？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_8-如何优化网络性能"
+   },
+   {
+    "level": 3,
+    "text": "9. 如何优化接口响应时间？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_9-如何优化接口响应时间"
+   },
+   {
+    "level": 3,
+    "text": "10. 消息队列如何优化提升吞吐量？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_10-消息队列如何优化提升吞吐量"
+   },
+   {
+    "level": 3,
+    "text": "11. 如何优化Full GC频繁的问题？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_11-如何优化full-gc频繁的问题"
+   },
+   {
+    "level": 3,
+    "text": "12. 如何优化高并发下的库存扣减问题？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_12-如何优化高并发下的库存扣减问题"
+   },
+   {
+    "level": 3,
+    "text": "13. 如何优化日志打印对性能的影响？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_13-如何优化日志打印对性能的影响"
+   },
+   {
+    "level": 3,
+    "text": "14. 如何优化大数据量分页查询？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_14-如何优化大数据量分页查询"
+   },
+   {
+    "level": 3,
+    "text": "15. 如何优化接口加解密性能？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_15-如何优化接口加解密性能"
+   },
+   {
+    "level": 3,
+    "text": "16. 如何优化线程池配置？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_16-如何优化线程池配置"
+   },
+   {
+    "level": 3,
+    "text": "17. 如何优化静态资源加载性能？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_17-如何优化静态资源加载性能"
+   },
+   {
+    "level": 3,
+    "text": "18. 如何优化代码层面的性能问题？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_18-如何优化代码层面的性能问题"
+   },
+   {
+    "level": 3,
+    "text": "19. 如何优化服务间调用性能？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_19-如何优化服务间调用性能"
+   },
+   {
+    "level": 3,
+    "text": "20. 性能优化的整体思路和优先级是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html#_20-性能优化的整体思路和优先级是什么"
+   }
+  ]
+ },
+ "java_automation": {
+  "cat": "测试主线",
+  "label": "Java 自动化",
+  "url": "https://www.xiaolincoding.com/interview/java_automation.html",
+  "items": [
+   {
+    "level": 2,
+    "text": "一、接口自动化（高优）",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#一、接口自动化-高优"
+   },
+   {
+    "level": 3,
+    "text": "1. Java接口自动化框架是如何搭建的？用了哪些技术栈？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_1-java接口自动化框架是如何搭建的-用了哪些技术栈"
+   },
+   {
+    "level": 3,
+    "text": "2. Java接口自动化相比Python有什么优势？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_2-java接口自动化相比python有什么优势"
+   },
+   {
+    "level": 3,
+    "text": "3. RestAssured和HttpClient有什么区别？为什么选RestAssured？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_3-restassured和httpclient有什么区别-为什么选restassured"
+   },
+   {
+    "level": 3,
+    "text": "4. TestNG和JUnit的区别是什么？为什么用TestNG？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_4-testng和junit的区别是什么-为什么用testng"
+   },
+   {
+    "level": 3,
+    "text": "5. 如何实现接口关联？从订单接口提取订单号传给支付接口？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_5-如何实现接口关联-从订单接口提取订单号传给支付接口"
+   },
+   {
+    "level": 3,
+    "text": "6. 数据驱动怎么实现？用Excel还是代码？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_6-数据驱动怎么实现-用excel还是代码"
+   },
+   {
+    "level": 3,
+    "text": "7. 接口鉴权如何处理？Token怎么管理？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_7-接口鉴权如何处理-token怎么管理"
+   },
+   {
+    "level": 3,
+    "text": "8. 如何做接口Mock测试？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_8-如何做接口mock测试"
+   },
+   {
+    "level": 3,
+    "text": "9. 断言怎么写？用什么工具？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_9-断言怎么写-用什么工具"
+   },
+   {
+    "level": 3,
+    "text": "10. 如何处理接口加密和签名？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_10-如何处理接口加密和签名"
+   },
+   {
+    "level": 3,
+    "text": "11. 并发测试怎么做？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_11-并发测试怎么做"
+   },
+   {
+    "level": 3,
+    "text": "12. 测试数据如何准备和清理？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_12-测试数据如何准备和清理"
+   },
+   {
+    "level": 3,
+    "text": "13. 如何统计代码覆盖率？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_13-如何统计代码覆盖率"
+   },
+   {
+    "level": 3,
+    "text": "14. 持续集成怎么做？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_14-持续集成怎么做"
+   },
+   {
+    "level": 3,
+    "text": "15. 如何提高框架的稳定性？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_15-如何提高框架的稳定性"
+   },
+   {
+    "level": 3,
+    "text": "16. 性能测试数据怎么准备？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_16-性能测试数据怎么准备"
+   },
+   {
+    "level": 3,
+    "text": "17. 遇到过哪些技术难点？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_17-遇到过哪些技术难点"
+   },
+   {
+    "level": 3,
+    "text": "18. 为什么选Java而不是Python做接口自动化？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_18-为什么选java而不是python做接口自动化"
+   },
+   {
+    "level": 3,
+    "text": "19. 如何做接口性能测试？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_19-如何做接口性能测试"
+   },
+   {
+    "level": 3,
+    "text": "20. 框架还有哪些可以优化的地方？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_20-框架还有哪些可以优化的地方"
+   },
+   {
+    "level": 2,
+    "text": "二、Web自动化（中等）",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#二、web自动化-中等"
+   },
+   {
+    "level": 3,
+    "text": "1. Java Web自动化框架是如何搭建的？用了哪些技术？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_1-java-web自动化框架是如何搭建的-用了哪些技术"
+   },
+   {
+    "level": 3,
+    "text": "2. 什么是POM（页面对象模型）？为什么要用POM？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_2-什么是pom-页面对象模型-为什么要用pom"
+   },
+   {
+    "level": 3,
+    "text": "3. 如何处理元素定位？优先使用哪种定位方式？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_3-如何处理元素定位-优先使用哪种定位方式"
+   },
+   {
+    "level": 3,
+    "text": "4. 如何处理动态元素？元素加载慢怎么办？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_4-如何处理动态元素-元素加载慢怎么办"
+   },
+   {
+    "level": 3,
+    "text": "5. 如何处理弹窗、Alert、iframe？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_5-如何处理弹窗、alert、iframe"
+   },
+   {
+    "level": 3,
+    "text": "6. 浏览器兼容性测试怎么做？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_6-浏览器兼容性测试怎么做"
+   },
+   {
+    "level": 3,
+    "text": "7. 如何截图？什么时候截图？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_7-如何截图-什么时候截图"
+   },
+   {
+    "level": 3,
+    "text": "8. 数据驱动怎么实现？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_8-数据驱动怎么实现"
+   },
+   {
+    "level": 3,
+    "text": "9. 如何处理验证码？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_9-如何处理验证码"
+   },
+   {
+    "level": 3,
+    "text": "10. 如何做断言？断言失败后是否继续执行？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_10-如何做断言-断言失败后是否继续执行"
+   },
+   {
+    "level": 3,
+    "text": "11. PageFactory和普通Page类有什么区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_11-pagefactory和普通page类有什么区别"
+   },
+   {
+    "level": 3,
+    "text": "12. 如何执行JavaScript代码？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_12-如何执行javascript代码"
+   },
+   {
+    "level": 3,
+    "text": "13. 如何处理文件上传和下载？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_13-如何处理文件上传和下载"
+   },
+   {
+    "level": 3,
+    "text": "14. 多窗口、多Tab页怎么处理？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_14-多窗口、多tab页怎么处理"
+   },
+   {
+    "level": 3,
+    "text": "15. 如何处理富文本编辑器？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_15-如何处理富文本编辑器"
+   },
+   {
+    "level": 3,
+    "text": "16. 测试数据如何管理？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_16-测试数据如何管理"
+   },
+   {
+    "level": 3,
+    "text": "17. 失败重试机制怎么实现？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_17-失败重试机制怎么实现"
+   },
+   {
+    "level": 3,
+    "text": "18. 如何生成测试报告？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_18-如何生成测试报告"
+   },
+   {
+    "level": 3,
+    "text": "19. 持续集成怎么做？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_19-持续集成怎么做"
+   },
+   {
+    "level": 3,
+    "text": "20. 框架还有哪些可以优化的地方？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_20-框架还有哪些可以优化的地方-2"
+   },
+   {
+    "level": 2,
+    "text": "三、App自动化（低优）",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#三、app自动化-低优"
+   },
+   {
+    "level": 3,
+    "text": "1. 你们公司App自动化是怎么做的？用什么框架？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_1-你们公司app自动化是怎么做的-用什么框架"
+   },
+   {
+    "level": 3,
+    "text": "2. 为什么选择Appium而不是其他框架？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_2-为什么选择appium而不是其他框架"
+   },
+   {
+    "level": 3,
+    "text": "3. Appium的工作原理是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_3-appium的工作原理是什么"
+   },
+   {
+    "level": 3,
+    "text": "4. 如何定位App元素？常用哪些定位方式？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_4-如何定位app元素-常用哪些定位方式"
+   },
+   {
+    "level": 3,
+    "text": "5. 如何获取App元素的定位信息？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_5-如何获取app元素的定位信息"
+   },
+   {
+    "level": 3,
+    "text": "6. 遇到元素定位不到怎么办？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_6-遇到元素定位不到怎么办"
+   },
+   {
+    "level": 3,
+    "text": "7. 如何处理Toast提示框？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_7-如何处理toast提示框"
+   },
+   {
+    "level": 3,
+    "text": "8. 如何实现App的滑动操作？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_8-如何实现app的滑动操作"
+   },
+   {
+    "level": 3,
+    "text": "9. PageObject模式是什么？为什么要用它？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_9-pageobject模式是什么-为什么要用它"
+   },
+   {
+    "level": 3,
+    "text": "10. 如何处理App的权限弹窗？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_10-如何处理app的权限弹窗"
+   },
+   {
+    "level": 3,
+    "text": "11. 如何实现多设备并行测试？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_11-如何实现多设备并行测试"
+   },
+   {
+    "level": 3,
+    "text": "12. 如何处理WebView混合页面？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_12-如何处理webview混合页面"
+   },
+   {
+    "level": 3,
+    "text": "13. 如何实现截图功能？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_13-如何实现截图功能"
+   },
+   {
+    "level": 3,
+    "text": "14. 如何生成测试报告？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_14-如何生成测试报告"
+   },
+   {
+    "level": 3,
+    "text": "15. 如何处理App启动慢的问题？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_15-如何处理app启动慢的问题"
+   },
+   {
+    "level": 3,
+    "text": "16. 自动化框架是如何分层的？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_16-自动化框架是如何分层的"
+   },
+   {
+    "level": 3,
+    "text": "17. 如何实现数据驱动测试？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_17-如何实现数据驱动测试"
+   },
+   {
+    "level": 3,
+    "text": "18. 遇到过什么难点问题？如何解决的？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_18-遇到过什么难点问题-如何解决的"
+   },
+   {
+    "level": 3,
+    "text": "19. 如何做持续集成？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_19-如何做持续集成"
+   },
+   {
+    "level": 3,
+    "text": "20. App自动化相比手工测试有什么优势和局限性？",
+    "anchor": "https://www.xiaolincoding.com/interview/java_automation.html#_20-app自动化相比手工测试有什么优势和局限性"
+   }
+  ]
+ },
+ "python_automation": {
+  "cat": "测试主线",
+  "label": "Python 自动化",
+  "url": "https://www.xiaolincoding.com/interview/python_automation.html",
+  "items": [
+   {
+    "level": 2,
+    "text": "一、接口自动化(高优)",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#一、接口自动化-高优"
+   },
+   {
+    "level": 3,
+    "text": "1. 你在项目中使用的接口自动化测试框架是什么？为什么选择它？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_1-你在项目中使用的接口自动化测试框架是什么-为什么选择它"
+   },
+   {
+    "level": 3,
+    "text": "2. 请描述你设计的接口自动化测试框架的整体架构",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_2-请描述你设计的接口自动化测试框架的整体架构"
+   },
+   {
+    "level": 3,
+    "text": "3. 如何实现接口请求的二次封装？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_3-如何实现接口请求的二次封装"
+   },
+   {
+    "level": 3,
+    "text": "4. 如何设计API层实现接口的统一管理？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_4-如何设计api层实现接口的统一管理"
+   },
+   {
+    "level": 3,
+    "text": "5. 如何实现多环境配置管理？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_5-如何实现多环境配置管理"
+   },
+   {
+    "level": 3,
+    "text": "6. 如何实现测试数据的参数化？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_6-如何实现测试数据的参数化"
+   },
+   {
+    "level": 3,
+    "text": "7. 如何实现统一的断言机制？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_7-如何实现统一的断言机制"
+   },
+   {
+    "level": 3,
+    "text": "8. Pytest的fixture在框架中如何应用？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_8-pytest的fixture在框架中如何应用"
+   },
+   {
+    "level": 3,
+    "text": "9. 如何在框架中实现日志管理？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_9-如何在框架中实现日志管理"
+   },
+   {
+    "level": 3,
+    "text": "10. 如何处理接口的依赖关系？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_10-如何处理接口的依赖关系"
+   },
+   {
+    "level": 3,
+    "text": "11. 如何实现接口测试报告？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_11-如何实现接口测试报告"
+   },
+   {
+    "level": 3,
+    "text": "12. 如何实现接口的数据库校验？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_12-如何实现接口的数据库校验"
+   },
+   {
+    "level": 3,
+    "text": "13. 如何处理接口的加密和签名？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_13-如何处理接口的加密和签名"
+   },
+   {
+    "level": 3,
+    "text": "14. 如何实现接口的Mock测试？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_14-如何实现接口的mock测试"
+   },
+   {
+    "level": 3,
+    "text": "15. 如何实现失败重试机制？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_15-如何实现失败重试机制"
+   },
+   {
+    "level": 3,
+    "text": "16. 如何实现并发测试？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_16-如何实现并发测试"
+   },
+   {
+    "level": 3,
+    "text": "17. 如何实现持续集成CI/CD？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_17-如何实现持续集成ci-cd"
+   },
+   {
+    "level": 3,
+    "text": "18. 如何实现接口性能测试？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_18-如何实现接口性能测试"
+   },
+   {
+    "level": 3,
+    "text": "19. 如何管理和维护测试用例？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_19-如何管理和维护测试用例"
+   },
+   {
+    "level": 3,
+    "text": "20. 框架优化有哪些经验？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_20-框架优化有哪些经验"
+   },
+   {
+    "level": 2,
+    "text": "二、Web自动化(中等)",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#二、web自动化-中等"
+   },
+   {
+    "level": 3,
+    "text": "1. 你在项目中使用的Web自动化测试框架是什么？为什么选择它？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_1-你在项目中使用的web自动化测试框架是什么-为什么选择它"
+   },
+   {
+    "level": 3,
+    "text": "2. 请描述你设计的Web自动化测试框架的整体架构",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_2-请描述你设计的web自动化测试框架的整体架构"
+   },
+   {
+    "level": 3,
+    "text": "3. 什么是POM模式？如何实现？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_3-什么是pom模式-如何实现"
+   },
+   {
+    "level": 3,
+    "text": "4. Selenium中有哪些元素定位方式？你常用哪些？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_4-selenium中有哪些元素定位方式-你常用哪些"
+   },
+   {
+    "level": 3,
+    "text": "5. 如何处理页面元素定位不到的问题？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_5-如何处理页面元素定位不到的问题"
+   },
+   {
+    "level": 3,
+    "text": "6. Selenium中的等待机制有哪些？如何选择？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_6-selenium中的等待机制有哪些-如何选择"
+   },
+   {
+    "level": 3,
+    "text": "7. 如何封装BasePage基类？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_7-如何封装basepage基类"
+   },
+   {
+    "level": 3,
+    "text": "8. 如何处理浏览器驱动的管理？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_8-如何处理浏览器驱动的管理"
+   },
+   {
+    "level": 3,
+    "text": "9. 如何处理弹窗（alert、confirm、prompt）？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_9-如何处理弹窗-alert、confirm、prompt"
+   },
+   {
+    "level": 3,
+    "text": "10. 如何处理文件上传和下载？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_10-如何处理文件上传和下载"
+   },
+   {
+    "level": 3,
+    "text": "11. 如何处理动态元素（元素属性动态变化）？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_11-如何处理动态元素-元素属性动态变化"
+   },
+   {
+    "level": 3,
+    "text": "12. 如何处理表格数据的验证？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_12-如何处理表格数据的验证"
+   },
+   {
+    "level": 3,
+    "text": "13. 如何实现数据驱动测试？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_13-如何实现数据驱动测试"
+   },
+   {
+    "level": 3,
+    "text": "14. 如何处理滑动验证码？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_14-如何处理滑动验证码"
+   },
+   {
+    "level": 3,
+    "text": "15. 如何实现失败截图和录屏？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_15-如何实现失败截图和录屏"
+   },
+   {
+    "level": 3,
+    "text": "16. 如何实现多浏览器兼容性测试？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_16-如何实现多浏览器兼容性测试"
+   },
+   {
+    "level": 3,
+    "text": "17. 如何处理页面跳转和新窗口切换？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_17-如何处理页面跳转和新窗口切换"
+   },
+   {
+    "level": 3,
+    "text": "18. 如何提高用例执行速度？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_18-如何提高用例执行速度"
+   },
+   {
+    "level": 3,
+    "text": "19. Selenium和Playwright有什么区别？如何选择？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_19-selenium和playwright有什么区别-如何选择"
+   },
+   {
+    "level": 3,
+    "text": "20. Web自动化测试的最佳实践有哪些？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_20-web自动化测试的最佳实践有哪些"
+   },
+   {
+    "level": 2,
+    "text": "三、App自动化(低)",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#三、app自动化-低"
+   },
+   {
+    "level": 3,
+    "text": "1. 你在项目中使用的App自动化测试框架是什么？为什么选择它？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_1-你在项目中使用的app自动化测试框架是什么-为什么选择它"
+   },
+   {
+    "level": 3,
+    "text": "2. 请描述你设计的App自动化测试框架的整体架构",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_2-请描述你设计的app自动化测试框架的整体架构"
+   },
+   {
+    "level": 3,
+    "text": "3. Appium的核心原理是什么？如何与App交互？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_3-appium的核心原理是什么-如何与app交互"
+   },
+   {
+    "level": 3,
+    "text": "4. Android和iOS的元素定位方式有哪些？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_4-android和ios的元素定位方式有哪些"
+   },
+   {
+    "level": 3,
+    "text": "5. 如何获取App的包名和启动Activity？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_5-如何获取app的包名和启动activity"
+   },
+   {
+    "level": 3,
+    "text": "6. 如何设计BasePage类封装公共操作？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_6-如何设计basepage类封装公共操作"
+   },
+   {
+    "level": 3,
+    "text": "7. 如何处理Toast提示信息的获取？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_7-如何处理toast提示信息的获取"
+   },
+   {
+    "level": 3,
+    "text": "8. 如何实现滑动操作（上下左右滑动）？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_8-如何实现滑动操作-上下左右滑动"
+   },
+   {
+    "level": 3,
+    "text": "9. 如何处理WebView和Native切换？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_9-如何处理webview和native切换"
+   },
+   {
+    "level": 3,
+    "text": "10. 如何实现App的安装、卸载和启动？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_10-如何实现app的安装、卸载和启动"
+   },
+   {
+    "level": 3,
+    "text": "11. 如何处理权限弹窗（定位、相机、通知等）？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_11-如何处理权限弹窗-定位、相机、通知等"
+   },
+   {
+    "level": 3,
+    "text": "12. 如何实现列表滑动查找元素？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_12-如何实现列表滑动查找元素"
+   },
+   {
+    "level": 3,
+    "text": "13. 如何实现多设备并发测试？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_13-如何实现多设备并发测试"
+   },
+   {
+    "level": 3,
+    "text": "14. 如何处理图片验证码？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_14-如何处理图片验证码"
+   },
+   {
+    "level": 3,
+    "text": "15. 如何实现Android和iOS双平台兼容？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_15-如何实现android和ios双平台兼容"
+   },
+   {
+    "level": 3,
+    "text": "16. 如何实现失败重跑和失败截图？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_16-如何实现失败重跑和失败截图"
+   },
+   {
+    "level": 3,
+    "text": "17. 如何进行弱网络测试？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_17-如何进行弱网络测试"
+   },
+   {
+    "level": 3,
+    "text": "18. 如何获取App性能数据（CPU、内存、流量）？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_18-如何获取app性能数据-cpu、内存、流量"
+   },
+   {
+    "level": 3,
+    "text": "19. 如何实现App启动时间测试？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_19-如何实现app启动时间测试"
+   },
+   {
+    "level": 3,
+    "text": "20. App自动化测试的最佳实践有哪些？",
+    "anchor": "https://www.xiaolincoding.com/interview/python_automation.html#_20-app自动化测试的最佳实践有哪些"
+   }
+  ]
+ },
+ "network": {
+  "cat": "后端基础",
+  "label": "计算机网络",
+  "url": "https://www.xiaolincoding.com/interview/network.html",
+  "items": [
+   {
+    "level": 2,
+    "text": "网络模型",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#网络模型"
+   },
+   {
+    "level": 3,
+    "text": "网络OSI模型和TCP/IP模型分别介绍一下",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#网络osi模型和tcp-ip模型分别介绍一下"
+   },
+   {
+    "level": 3,
+    "text": "tcp、ip分别位于哪一层？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#tcp、ip分别位于哪一层"
+   },
+   {
+    "level": 2,
+    "text": "应用层",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#应用层"
+   },
+   {
+    "level": 3,
+    "text": "应用层有哪些协议？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#应用层有哪些协议"
+   },
+   {
+    "level": 3,
+    "text": "HTTP报文有哪些部分？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#http报文有哪些部分"
+   },
+   {
+    "level": 3,
+    "text": "HTTP常用的状态码？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#http常用的状态码"
+   },
+   {
+    "level": 3,
+    "text": "HTTP返回状态301 302分别是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#http返回状态301-302分别是什么"
+   },
+   {
+    "level": 3,
+    "text": "http 502和 504 的区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#http-502和-504-的区别"
+   },
+   {
+    "level": 3,
+    "text": "HTTP层请求的类型有哪些？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#http层请求的类型有哪些"
+   },
+   {
+    "level": 3,
+    "text": "GET和POST的使用场景，有哪些区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#get和post的使用场景-有哪些区别"
+   },
+   {
+    "level": 3,
+    "text": "HTTP的长连接是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#http的长连接是什么"
+   },
+   {
+    "level": 3,
+    "text": "HTTP默认的端口是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#http默认的端口是什么"
+   },
+   {
+    "level": 3,
+    "text": "HTTP1.1怎么对请求做拆包，具体来说怎么拆的？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#http1-1怎么对请求做拆包-具体来说怎么拆的"
+   },
+   {
+    "level": 3,
+    "text": "http 断点重传是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#http-断点重传是什么"
+   },
+   {
+    "level": 3,
+    "text": "HTTP为什么不安全？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#http为什么不安全"
+   },
+   {
+    "level": 3,
+    "text": "HTTP和HTTPS 的区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#http和https-的区别"
+   },
+   {
+    "level": 3,
+    "text": "HTTPS握手过程说一下",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#https握手过程说一下"
+   },
+   {
+    "level": 3,
+    "text": "HTTPS是如何防范中间人的攻击？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#https是如何防范中间人的攻击"
+   },
+   {
+    "level": 3,
+    "text": "Http1.1和2.0的区别是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#http1-1和2-0的区别是什么"
+   },
+   {
+    "level": 3,
+    "text": "HTTP进行TCP连接之后，在什么情况下会中断",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#http进行tcp连接之后-在什么情况下会中断"
+   },
+   {
+    "level": 3,
+    "text": "HTTP、SOCKET和TCP的区别",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#http、socket和tcp的区别"
+   },
+   {
+    "level": 3,
+    "text": "DNS的全称了解么？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#dns的全称了解么"
+   },
+   {
+    "level": 3,
+    "text": "DNS 域名解析的工作流程？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#dns-域名解析的工作流程"
+   },
+   {
+    "level": 3,
+    "text": "DNS的端口是多少？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#dns的端口是多少"
+   },
+   {
+    "level": 3,
+    "text": "改过host文件吗？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#改过host文件吗"
+   },
+   {
+    "level": 3,
+    "text": "DNS的底层使用TCP还是UDP？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#dns的底层使用tcp还是udp"
+   },
+   {
+    "level": 3,
+    "text": "HTTP到底是不是无状态的？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#http到底是不是无状态的"
+   },
+   {
+    "level": 3,
+    "text": "携带Cookie的HTTP请求是有状态还是无状态的？Cookie是HTTP协议簇的一部分，那为什么还说HTTP是无状态的？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#携带cookie的http请求是有状态还是无状态的-cookie是http协议簇的一部分-那为什么还说http是无状态的"
+   },
+   {
+    "level": 3,
+    "text": "cookie和session有什么区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#cookie和session有什么区别"
+   },
+   {
+    "level": 3,
+    "text": "token，session，cookie的区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#token-session-cookie的区别"
+   },
+   {
+    "level": 3,
+    "text": "如果客户端禁用了cookie，session还能用吗？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#如果客户端禁用了cookie-session还能用吗"
+   },
+   {
+    "level": 3,
+    "text": "如果我把数据存储到 localStorage，和Cookie有什么区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#如果我把数据存储到-localstorage-和cookie有什么区别"
+   },
+   {
+    "level": 3,
+    "text": "什么数据应该存在到cookie，什么数据存放到 Localstorage",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#什么数据应该存在到cookie-什么数据存放到-localstorage"
+   },
+   {
+    "level": 3,
+    "text": "JWT 令牌和传统方式有什么区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#jwt-令牌和传统方式有什么区别"
+   },
+   {
+    "level": 3,
+    "text": "JWT 令牌都有哪些字段？（ 没答上来，忘了有哪些，没想到会问）",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#jwt-令牌都有哪些字段-没答上来-忘了有哪些-没想到会问"
+   },
+   {
+    "level": 3,
+    "text": "JWT 令牌为什么能解决集群部署，什么是集群部署？（ 答上来了）",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#jwt-令牌为什么能解决集群部署-什么是集群部署-答上来了"
+   },
+   {
+    "level": 3,
+    "text": "jwt的缺点是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#jwt的缺点是什么"
+   },
+   {
+    "level": 3,
+    "text": "JWT 令牌如果泄露了，怎么解决，JWT是怎么做的？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#jwt-令牌如果泄露了-怎么解决-jwt是怎么做的"
+   },
+   {
+    "level": 3,
+    "text": "前端是如何存储JWT的？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#前端是如何存储jwt的"
+   },
+   {
+    "level": 3,
+    "text": "为什么有HTTP协议了?还要用RPC?",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#为什么有http协议了-还要用rpc"
+   },
+   {
+    "level": 3,
+    "text": "HTTP长连接与WebSocket有什么区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#http长连接与websocket有什么区别"
+   },
+   {
+    "level": 3,
+    "text": "Nginx有哪些负载均衡算法？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#nginx有哪些负载均衡算法"
+   },
+   {
+    "level": 3,
+    "text": "Nginx位于七层网络结构中的哪一层？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#nginx位于七层网络结构中的哪一层"
+   },
+   {
+    "level": 2,
+    "text": "传输层",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#传输层"
+   },
+   {
+    "level": 3,
+    "text": "说一下tcp的头部",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#说一下tcp的头部"
+   },
+   {
+    "level": 3,
+    "text": "TCP三次握手过程说一下？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#tcp三次握手过程说一下"
+   },
+   {
+    "level": 3,
+    "text": "tcp为什么需要三次握手建立连接？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#tcp为什么需要三次握手建立连接"
+   },
+   {
+    "level": 3,
+    "text": "TCP 三次握手，客户端第三次发送的确认包丢失了发生什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#tcp-三次握手-客户端第三次发送的确认包丢失了发生什么"
+   },
+   {
+    "level": 3,
+    "text": "服务端发送第二个报文后连接的状态进入什么状态",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#服务端发送第二个报文后连接的状态进入什么状态"
+   },
+   {
+    "level": 3,
+    "text": "三次握手和 accept 是什么关系？ accept 做了哪些事情？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#三次握手和-accept-是什么关系-accept-做了哪些事情"
+   },
+   {
+    "level": 3,
+    "text": "客户端发送的第一个 SYN 报文，服务器没有收到怎么办？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#客户端发送的第一个-syn-报文-服务器没有收到怎么办"
+   },
+   {
+    "level": 3,
+    "text": "服务器收到第一个 SYN 报文，回复的 SYN + ACK 报文丢失了怎么办？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#服务器收到第一个-syn-报文-回复的-syn-ack-报文丢失了怎么办"
+   },
+   {
+    "level": 3,
+    "text": "假设客户端重传了 SYN 报文，服务端这边又收到重复的 SYN 报文怎么办？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#假设客户端重传了-syn-报文-服务端这边又收到重复的-syn-报文怎么办"
+   },
+   {
+    "level": 3,
+    "text": "第一次握手，客户端发送SYN报后，服务端回复ACK报，那这个过程中服务端内部做了哪些工作？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#第一次握手-客户端发送syn报后-服务端回复ack报-那这个过程中服务端内部做了哪些工作"
+   },
+   {
+    "level": 3,
+    "text": "大量SYN包发送给服务端服务端会发生什么事情？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#大量syn包发送给服务端服务端会发生什么事情"
+   },
+   {
+    "level": 3,
+    "text": "TCP 四次挥手过程说一下？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#tcp-四次挥手过程说一下"
+   },
+   {
+    "level": 3,
+    "text": "为什么四次挥手中间两次不能变成一次？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#为什么四次挥手中间两次不能变成一次"
+   },
+   {
+    "level": 3,
+    "text": "第二次和第三次挥手能合并嘛",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#第二次和第三次挥手能合并嘛"
+   },
+   {
+    "level": 3,
+    "text": "第三次挥手一直没发，会发生什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#第三次挥手一直没发-会发生什么"
+   },
+   {
+    "level": 3,
+    "text": "第二次和第三次挥手之间，主动断开的那端能干什么",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#第二次和第三次挥手之间-主动断开的那端能干什么"
+   },
+   {
+    "level": 3,
+    "text": "断开连接时客户端 FIN 包丢失，服务端的状态是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#断开连接时客户端-fin-包丢失-服务端的状态是什么"
+   },
+   {
+    "level": 3,
+    "text": "为什么四次挥手之后要等2MSL?",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#为什么四次挥手之后要等2msl"
+   },
+   {
+    "level": 3,
+    "text": "服务端出现大量的timewait有哪些原因?",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#服务端出现大量的timewait有哪些原因"
+   },
+   {
+    "level": 3,
+    "text": "TCP和UDP区别是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#tcp和udp区别是什么"
+   },
+   {
+    "level": 3,
+    "text": "TCP为什么可靠传输",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#tcp为什么可靠传输"
+   },
+   {
+    "level": 3,
+    "text": "怎么用udp实现http？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#怎么用udp实现http"
+   },
+   {
+    "level": 3,
+    "text": "tcp粘包怎么解决？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#tcp粘包怎么解决"
+   },
+   {
+    "level": 3,
+    "text": "TCP的拥塞控制介绍一下？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#tcp的拥塞控制介绍一下"
+   },
+   {
+    "level": 2,
+    "text": "网络场景",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#网络场景"
+   },
+   {
+    "level": 3,
+    "text": "描述一下打开百度首页后发生的网络过程",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#描述一下打开百度首页后发生的网络过程"
+   },
+   {
+    "level": 3,
+    "text": "网页非常慢转圈圈的时候，要定位问题需要从哪些角度？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#网页非常慢转圈圈的时候-要定位问题需要从哪些角度"
+   },
+   {
+    "level": 3,
+    "text": "server a和server b，如何判断两个服务器正常连接？出错怎么办？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#server-a和server-b-如何判断两个服务器正常连接-出错怎么办"
+   },
+   {
+    "level": 3,
+    "text": "服务端正常启动了，但是客户端请求不到有哪些原因?如何排查?",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#服务端正常启动了-但是客户端请求不到有哪些原因-如何排查"
+   },
+   {
+    "level": 3,
+    "text": "服务器ping不通但是http能请求成功，会出现这种情况吗?什么原因造成的?",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#服务器ping不通但是http能请求成功-会出现这种情况吗-什么原因造成的"
+   },
+   {
+    "level": 2,
+    "text": "网络攻击",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#网络攻击"
+   },
+   {
+    "level": 3,
+    "text": "什么是ddos攻击？怎么防范？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#什么是ddos攻击-怎么防范"
+   },
+   {
+    "level": 3,
+    "text": "SQL注入问题是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#sql注入问题是什么"
+   },
+   {
+    "level": 3,
+    "text": "CSRF攻击是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#csrf攻击是什么"
+   },
+   {
+    "level": 3,
+    "text": "XSS攻击是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#xss攻击是什么"
+   },
+   {
+    "level": 3,
+    "text": "了解过DNS劫持吗？",
+    "anchor": "https://www.xiaolincoding.com/interview/network.html#了解过dns劫持吗"
+   }
+  ]
+ },
+ "os": {
+  "cat": "后端基础",
+  "label": "操作系统",
+  "url": "https://www.xiaolincoding.com/interview/os.html",
+  "items": [
+   {
+    "level": 2,
+    "text": "用户态和内核态",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#用户态和内核态"
+   },
+   {
+    "level": 3,
+    "text": "用户态和内核态的区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#用户态和内核态的区别"
+   },
+   {
+    "level": 2,
+    "text": "进程管理",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#进程管理"
+   },
+   {
+    "level": 3,
+    "text": "线程和进程的区别是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#线程和进程的区别是什么"
+   },
+   {
+    "level": 3,
+    "text": "进程，线程，协程的区别是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#进程-线程-协程的区别是什么"
+   },
+   {
+    "level": 3,
+    "text": "为什么进程崩溃不会对其他进程产生很大影响",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#为什么进程崩溃不会对其他进程产生很大影响"
+   },
+   {
+    "level": 3,
+    "text": "你说到进程是分配资源的基本单位，那么这个资源指的是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#你说到进程是分配资源的基本单位-那么这个资源指的是什么"
+   },
+   {
+    "level": 3,
+    "text": "讲下为什么进程之下还要设计线程？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#讲下为什么进程之下还要设计线程"
+   },
+   {
+    "level": 3,
+    "text": "多线程比单线程的优势，劣势？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#多线程比单线程的优势-劣势"
+   },
+   {
+    "level": 3,
+    "text": "多线程是不是越多越好，太多会有什么问题？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#多线程是不是越多越好-太多会有什么问题"
+   },
+   {
+    "level": 3,
+    "text": "进程切换和线程切换的区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#进程切换和线程切换的区别"
+   },
+   {
+    "level": 3,
+    "text": "线程切换为什么比进程切换快，节省了什么资源？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#线程切换为什么比进程切换快-节省了什么资源"
+   },
+   {
+    "level": 3,
+    "text": "线程切换详细过程是怎么样的？上下文保存在哪里？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#线程切换详细过程是怎么样的-上下文保存在哪里"
+   },
+   {
+    "level": 3,
+    "text": "进程的状态（五种状态），如何切换？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#进程的状态-五种状态-如何切换"
+   },
+   {
+    "level": 3,
+    "text": "进程上下文有哪些？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#进程上下文有哪些"
+   },
+   {
+    "level": 3,
+    "text": "进程间通讯有哪些方式？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#进程间通讯有哪些方式"
+   },
+   {
+    "level": 3,
+    "text": "管道有几种方式？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#管道有几种方式"
+   },
+   {
+    "level": 3,
+    "text": "信号和信号量有什么区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#信号和信号量有什么区别"
+   },
+   {
+    "level": 3,
+    "text": "共享内存怎么实现的？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#共享内存怎么实现的"
+   },
+   {
+    "level": 3,
+    "text": "线程间通讯有什么方式？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#线程间通讯有什么方式"
+   },
+   {
+    "level": 3,
+    "text": "除了互斥锁你还知道什么锁？分别应用于什么场景？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#除了互斥锁你还知道什么锁-分别应用于什么场景"
+   },
+   {
+    "level": 3,
+    "text": "进程调度算法有哪些？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#进程调度算法有哪些"
+   },
+   {
+    "level": 2,
+    "text": "锁",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#锁"
+   },
+   {
+    "level": 3,
+    "text": "为什么并发执行线程要加锁？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#为什么并发执行线程要加锁"
+   },
+   {
+    "level": 3,
+    "text": "自旋锁是什么？应用在哪些场景？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#自旋锁是什么-应用在哪些场景"
+   },
+   {
+    "level": 3,
+    "text": "死锁发生条件是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#死锁发生条件是什么"
+   },
+   {
+    "level": 3,
+    "text": "如何避免死锁？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#如何避免死锁"
+   },
+   {
+    "level": 3,
+    "text": "讲一下银行家算法",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#讲一下银行家算法"
+   },
+   {
+    "level": 3,
+    "text": "乐观锁和悲观锁有什么区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#乐观锁和悲观锁有什么区别"
+   },
+   {
+    "level": 2,
+    "text": "内存管理",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#内存管理"
+   },
+   {
+    "level": 3,
+    "text": "介绍一下操作系统内存管理",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#介绍一下操作系统内存管理"
+   },
+   {
+    "level": 3,
+    "text": "什么是虚拟内存和物理内存？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#什么是虚拟内存和物理内存"
+   },
+   {
+    "level": 3,
+    "text": "讲一下页表？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#讲一下页表"
+   },
+   {
+    "level": 3,
+    "text": "讲一下段表？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#讲一下段表"
+   },
+   {
+    "level": 3,
+    "text": "虚拟地址是怎么转化到物理地址的？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#虚拟地址是怎么转化到物理地址的"
+   },
+   {
+    "level": 3,
+    "text": "程序的内存布局是怎么样的？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#程序的内存布局是怎么样的"
+   },
+   {
+    "level": 3,
+    "text": "堆和栈的区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#堆和栈的区别"
+   },
+   {
+    "level": 3,
+    "text": "fork()会复制哪些东西？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#fork-会复制哪些东西"
+   },
+   {
+    "level": 3,
+    "text": "介绍copy on write(写时复制)",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#介绍copy-on-write-写时复制"
+   },
+   {
+    "level": 3,
+    "text": "copy on write节省了什么资源？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#copy-on-write节省了什么资源"
+   },
+   {
+    "level": 3,
+    "text": "malloc 1KB和1MB 有什么区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#malloc-1kb和1mb-有什么区别"
+   },
+   {
+    "level": 3,
+    "text": "介绍一下brk，mmap",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#介绍一下brk-mmap"
+   },
+   {
+    "level": 3,
+    "text": "操作系统内存不足的时候会发生什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#操作系统内存不足的时候会发生什么"
+   },
+   {
+    "level": 3,
+    "text": "页面置换有哪些算法？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#页面置换有哪些算法"
+   },
+   {
+    "level": 2,
+    "text": "中断",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#中断"
+   },
+   {
+    "level": 3,
+    "text": "什么是中断？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#什么是中断"
+   },
+   {
+    "level": 3,
+    "text": "讲讲中断的流程",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#讲讲中断的流程"
+   },
+   {
+    "level": 3,
+    "text": "中断的类型有哪些？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#中断的类型有哪些"
+   },
+   {
+    "level": 3,
+    "text": "中断的作用是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#中断的作用是什么"
+   },
+   {
+    "level": 2,
+    "text": "网络 i/o",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#网络-i-o"
+   },
+   {
+    "level": 3,
+    "text": "你了解过哪些io模型？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#你了解过哪些io模型"
+   },
+   {
+    "level": 3,
+    "text": "服务器处理并发请求有哪几种方式？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#服务器处理并发请求有哪几种方式"
+   },
+   {
+    "level": 3,
+    "text": "讲一下io多路复用",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#讲一下io多路复用"
+   },
+   {
+    "level": 3,
+    "text": "select、poll、epoll 的区别是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#select、poll、epoll-的区别是什么"
+   },
+   {
+    "level": 3,
+    "text": "epoll 的 边缘触发和水平触发有什么区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#epoll-的-边缘触发和水平触发有什么区别"
+   },
+   {
+    "level": 3,
+    "text": "redis，nginx，netty 是依赖什么做的这么高性能？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#redis-nginx-netty-是依赖什么做的这么高性能"
+   },
+   {
+    "level": 3,
+    "text": "零拷贝是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/os.html#零拷贝是什么"
+   }
+  ]
+ },
+ "mysql": {
+  "cat": "后端基础",
+  "label": "MySQL",
+  "url": "https://www.xiaolincoding.com/interview/mysql.html",
+  "items": [
+   {
+    "level": 2,
+    "text": "SQL基础",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#sql基础"
+   },
+   {
+    "level": 3,
+    "text": "NOSQL和SQL的区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#nosql和sql的区别"
+   },
+   {
+    "level": 3,
+    "text": "数据库三大范式是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#数据库三大范式是什么"
+   },
+   {
+    "level": 3,
+    "text": "MySQL 怎么连表查询？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#mysql-怎么连表查询"
+   },
+   {
+    "level": 3,
+    "text": "MySQL如何避免重复插入数据？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#mysql如何避免重复插入数据"
+   },
+   {
+    "level": 3,
+    "text": "CHAR 和 VARCHAR有什么区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#char-和-varchar有什么区别"
+   },
+   {
+    "level": 3,
+    "text": "VARCHAR 后面代表字节还是字符？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#varchar-后面代表字节还是字符"
+   },
+   {
+    "level": 3,
+    "text": "int(1) int(10) 在mysql有什么不同？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#int-1-int-10-在mysql有什么不同"
+   },
+   {
+    "level": 3,
+    "text": "Text数据类型可以无限大吗？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#text数据类型可以无限大吗"
+   },
+   {
+    "level": 3,
+    "text": "IP地址如何在数据库里存储？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#ip地址如何在数据库里存储"
+   },
+   {
+    "level": 3,
+    "text": "说一下外键约束",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#说一下外键约束"
+   },
+   {
+    "level": 3,
+    "text": "MySQL的关键字in和exist",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#mysql的关键字in和exist"
+   },
+   {
+    "level": 3,
+    "text": "mysql中的一些基本函数，你知道哪些？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#mysql中的一些基本函数-你知道哪些"
+   },
+   {
+    "level": 3,
+    "text": "SQL查询语句的执行顺序是怎么样的？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#sql查询语句的执行顺序是怎么样的"
+   },
+   {
+    "level": 3,
+    "text": "sql题：给学生表、课程成绩表，求不存在01课程但存在02课程的学生的成绩",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#sql题-给学生表、课程成绩表-求不存在01课程但存在02课程的学生的成绩"
+   },
+   {
+    "level": 3,
+    "text": "给定一个学生表 student_score（stu_id，subject_id，score），查询总分排名在5-10名的学生id及对应的总分",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#给定一个学生表-student-score-stu-id-subject-id-score-查询总分排名在5-10名的学生id及对应的总分"
+   },
+   {
+    "level": 3,
+    "text": "SQL题：查某个班级下所有学生的选课情况",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#sql题-查某个班级下所有学生的选课情况"
+   },
+   {
+    "level": 3,
+    "text": "如何用 MySQL 实现一个可重入的锁？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#如何用-mysql-实现一个可重入的锁"
+   },
+   {
+    "level": 2,
+    "text": "存储引擎",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#存储引擎"
+   },
+   {
+    "level": 3,
+    "text": "执行一条SQL请求的过程是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#执行一条sql请求的过程是什么"
+   },
+   {
+    "level": 3,
+    "text": "讲一讲mysql的引擎吧，你有什么了解？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#讲一讲mysql的引擎吧-你有什么了解"
+   },
+   {
+    "level": 3,
+    "text": "MySQL为什么InnoDB是默认引擎？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#mysql为什么innodb是默认引擎"
+   },
+   {
+    "level": 3,
+    "text": "说一下mysql的innodb与MyISAM的区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#说一下mysql的innodb与myisam的区别"
+   },
+   {
+    "level": 3,
+    "text": "数据管理里，数据文件大体分成哪几种数据文件？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#数据管理里-数据文件大体分成哪几种数据文件"
+   },
+   {
+    "level": 2,
+    "text": "索引",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#索引"
+   },
+   {
+    "level": 3,
+    "text": "索引是什么？有什么好处？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#索引是什么-有什么好处"
+   },
+   {
+    "level": 3,
+    "text": "讲讲索引的分类是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#讲讲索引的分类是什么"
+   },
+   {
+    "level": 3,
+    "text": "哈希索引使用场景是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#哈希索引使用场景是什么"
+   },
+   {
+    "level": 3,
+    "text": "MySQL聚簇索引和非聚簇索引的区别是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#mysql聚簇索引和非聚簇索引的区别是什么"
+   },
+   {
+    "level": 3,
+    "text": "如果聚簇索引的数据更新，它的存储要不要变化？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#如果聚簇索引的数据更新-它的存储要不要变化"
+   },
+   {
+    "level": 3,
+    "text": "MySQL主键是聚簇索引吗？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#mysql主键是聚簇索引吗"
+   },
+   {
+    "level": 3,
+    "text": "什么字段适合当做主键？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#什么字段适合当做主键"
+   },
+   {
+    "level": 3,
+    "text": "性别字段能加索引么？为啥？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#性别字段能加索引么-为啥"
+   },
+   {
+    "level": 3,
+    "text": "表中十个字段，你主键用自增ID还是UUID，为什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#表中十个字段-你主键用自增id还是uuid-为什么"
+   },
+   {
+    "level": 3,
+    "text": "什么自增ID更快一些，UUID不快吗，它在B+树里面存储是有序的吗?",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#什么自增id更快一些-uuid不快吗-它在b-树里面存储是有序的吗"
+   },
+   {
+    "level": 3,
+    "text": "Mysql中的索引是怎么实现的 ？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#mysql中的索引是怎么实现的"
+   },
+   {
+    "level": 3,
+    "text": "查询数据时，到了B+树的叶子节点，之后的查找数据是如何做？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#查询数据时-到了b-树的叶子节点-之后的查找数据是如何做"
+   },
+   {
+    "level": 3,
+    "text": "B+树的特性是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#b-树的特性是什么"
+   },
+   {
+    "level": 3,
+    "text": "说说B+树和B树的区别",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#说说b-树和b树的区别"
+   },
+   {
+    "level": 3,
+    "text": "B+树的好处是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#b-树的好处是什么"
+   },
+   {
+    "level": 3,
+    "text": "B+树的叶子节点链表是单向还是双向？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#b-树的叶子节点链表是单向还是双向"
+   },
+   {
+    "level": 3,
+    "text": "MySQL为什么用B+树结构？和其他结构比的优点？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#mysql为什么用b-树结构-和其他结构比的优点"
+   },
+   {
+    "level": 3,
+    "text": "为什么 MySQL 不用跳表？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#为什么-mysql-不用跳表"
+   },
+   {
+    "level": 3,
+    "text": "联合索引的实现原理？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#联合索引的实现原理"
+   },
+   {
+    "level": 3,
+    "text": "创建联合索引时需要注意什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#创建联合索引时需要注意什么"
+   },
+   {
+    "level": 3,
+    "text": "联合索引ABC，现在有个执行语句是A = XXX and C &lt; XXX，索引怎么走",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#联合索引abc-现在有个执行语句是a-xxx-and-c-xxx-索引怎么走"
+   },
+   {
+    "level": 3,
+    "text": "联合索引(a,b,c) ，查询条件 where b &gt; xxx and a = x 会生效吗",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#联合索引-a-b-c-查询条件-where-b-xxx-and-a-x-会生效吗"
+   },
+   {
+    "level": 3,
+    "text": "联合索引 (a, b，c)，where条件是 a=2 and c = 1，能用到联合索引吗？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#联合索引-a-b-c-where条件是-a-2-and-c-1-能用到联合索引吗"
+   },
+   {
+    "level": 3,
+    "text": "索引失效有哪些？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#索引失效有哪些"
+   },
+   {
+    "level": 3,
+    "text": "什么情况下会回表查询",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#什么情况下会回表查询"
+   },
+   {
+    "level": 3,
+    "text": "什么是覆盖索引？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#什么是覆盖索引"
+   },
+   {
+    "level": 3,
+    "text": "如果一个列即使单列索引，又是联合索引，单独查它的话先走哪个？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#如果一个列即使单列索引-又是联合索引-单独查它的话先走哪个"
+   },
+   {
+    "level": 3,
+    "text": "索引已经建好了，那我再插入一条数据，索引会有哪些变化？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#索引已经建好了-那我再插入一条数据-索引会有哪些变化"
+   },
+   {
+    "level": 3,
+    "text": "索引字段是不是建的越多越好？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#索引字段是不是建的越多越好"
+   },
+   {
+    "level": 3,
+    "text": "如果有一个字段是status值为0或者1，适合建索引吗",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#如果有一个字段是status值为0或者1-适合建索引吗"
+   },
+   {
+    "level": 3,
+    "text": "索引的优缺点？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#索引的优缺点"
+   },
+   {
+    "level": 3,
+    "text": "怎么决定建立哪些索引?",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#怎么决定建立哪些索引"
+   },
+   {
+    "level": 3,
+    "text": "索引优化详细讲讲",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#索引优化详细讲讲"
+   },
+   {
+    "level": 3,
+    "text": "了解过前缀索引吗？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#了解过前缀索引吗"
+   },
+   {
+    "level": 2,
+    "text": "事务",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#事务"
+   },
+   {
+    "level": 3,
+    "text": "事务的特性是什么？如何实现的？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#事务的特性是什么-如何实现的"
+   },
+   {
+    "level": 3,
+    "text": "mysql可能出现什么和并发相关问题？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#mysql可能出现什么和并发相关问题"
+   },
+   {
+    "level": 3,
+    "text": "哪些场景不适合脏读，举个例子？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#哪些场景不适合脏读-举个例子"
+   },
+   {
+    "level": 3,
+    "text": "mysql的是怎么解决并发问题的？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#mysql的是怎么解决并发问题的"
+   },
+   {
+    "level": 3,
+    "text": "事务的隔离级别有哪些？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#事务的隔离级别有哪些"
+   },
+   {
+    "level": 3,
+    "text": "mysql默认级别是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#mysql默认级别是什么"
+   },
+   {
+    "level": 3,
+    "text": "可重复读隔离级别下，A事务提交的数据，在B事务能看见吗？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#可重复读隔离级别下-a事务提交的数据-在b事务能看见吗"
+   },
+   {
+    "level": 3,
+    "text": "举个例子说可重复读下的幻读问题",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#举个例子说可重复读下的幻读问题"
+   },
+   {
+    "level": 3,
+    "text": "Mysql 设置了可重读隔离级后，怎么保证不发生幻读？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#mysql-设置了可重读隔离级后-怎么保证不发生幻读"
+   },
+   {
+    "level": 3,
+    "text": "串行化隔离级别是通过什么实现的？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#串行化隔离级别是通过什么实现的"
+   },
+   {
+    "level": 3,
+    "text": "介绍MVCC实现原理",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#介绍mvcc实现原理"
+   },
+   {
+    "level": 3,
+    "text": "一条update是不是原子性的？为什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#一条update是不是原子性的-为什么"
+   },
+   {
+    "level": 3,
+    "text": "滥用事务，或者一个事务里有特别多sql的弊端？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#滥用事务-或者一个事务里有特别多sql的弊端"
+   },
+   {
+    "level": 2,
+    "text": "锁",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#锁"
+   },
+   {
+    "level": 3,
+    "text": "讲一下mysql里有哪些锁？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#讲一下mysql里有哪些锁"
+   },
+   {
+    "level": 3,
+    "text": "数据库的表锁和行锁有什么作用？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#数据库的表锁和行锁有什么作用"
+   },
+   {
+    "level": 3,
+    "text": "MySQL两个线程的update语句同时处理一条数据，会不会有阻塞？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#mysql两个线程的update语句同时处理一条数据-会不会有阻塞"
+   },
+   {
+    "level": 3,
+    "text": "两条update语句处理一张表的不同的主键范围的记录，一个&lt;10，一个&gt;15，会不会遇到阻塞？底层是为什么的？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#两条update语句处理一张表的不同的主键范围的记录-一个-10-一个-15-会不会遇到阻塞-底层是为什么的"
+   },
+   {
+    "level": 3,
+    "text": "如果2个范围不是主键或索引？还会阻塞吗？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#如果2个范围不是主键或索引-还会阻塞吗"
+   },
+   {
+    "level": 2,
+    "text": "日志",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#日志"
+   },
+   {
+    "level": 3,
+    "text": "日志文件是分成了哪几种？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#日志文件是分成了哪几种"
+   },
+   {
+    "level": 3,
+    "text": "讲一下binlog",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#讲一下binlog"
+   },
+   {
+    "level": 3,
+    "text": "UndoLog日志的作用是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/mysql.html#undolog日志的作用是什么"
+   }
+  ]
+ },
+ "redis": {
+  "cat": "后端基础",
+  "label": "Redis",
+  "url": "https://www.xiaolincoding.com/interview/redis.html",
+  "items": [
+   {
+    "level": 2,
+    "text": "数据结构",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#数据结构"
+   },
+   {
+    "level": 3,
+    "text": "讲一下Redis底层的数据结构",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#讲一下redis底层的数据结构"
+   },
+   {
+    "level": 3,
+    "text": "ZSet用过吗",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#zset用过吗"
+   },
+   {
+    "level": 3,
+    "text": "Redis 中 set和zset区别是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#redis-中-set和zset区别是什么"
+   },
+   {
+    "level": 3,
+    "text": "Zset 底层是怎么实现的？",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#zset-底层是怎么实现的"
+   },
+   {
+    "level": 3,
+    "text": "跳表是怎么实现的？",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#跳表是怎么实现的"
+   },
+   {
+    "level": 3,
+    "text": "跳表是怎么设置层高的？",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#跳表是怎么设置层高的"
+   },
+   {
+    "level": 3,
+    "text": "Redis为什么使用跳表而不是用B+树?",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#redis为什么使用跳表而不是用b-树"
+   },
+   {
+    "level": 3,
+    "text": "压缩列表是怎么实现的？",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#压缩列表是怎么实现的"
+   },
+   {
+    "level": 3,
+    "text": "介绍一下 Redis 中的 listpack",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#介绍一下-redis-中的-listpack"
+   },
+   {
+    "level": 3,
+    "text": "哈希表是怎么扩容的？",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#哈希表是怎么扩容的"
+   },
+   {
+    "level": 3,
+    "text": "哈希表扩容的时候，有读请求怎么查？",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#哈希表扩容的时候-有读请求怎么查"
+   },
+   {
+    "level": 3,
+    "text": "String 是使用什么存储的?为什么不用 c 语言中的字符串?",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#string-是使用什么存储的-为什么不用-c-语言中的字符串"
+   },
+   {
+    "level": 3,
+    "text": "redis的Zset，在项目里具体用法是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#redis的zset-在项目里具体用法是什么"
+   },
+   {
+    "level": 2,
+    "text": "线程模型",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#线程模型"
+   },
+   {
+    "level": 3,
+    "text": "Redis为什么快？",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#redis为什么快"
+   },
+   {
+    "level": 3,
+    "text": "Redis哪些地方使用了多线程?",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#redis哪些地方使用了多线程"
+   },
+   {
+    "level": 3,
+    "text": "Redis怎么实现的io多路复用？",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#redis怎么实现的io多路复用"
+   },
+   {
+    "level": 3,
+    "text": "Redis的网络模型是怎样的？",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#redis的网络模型是怎样的"
+   },
+   {
+    "level": 2,
+    "text": "事务",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#事务"
+   },
+   {
+    "level": 3,
+    "text": "如何实现redis 原子性？",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#如何实现redis-原子性"
+   },
+   {
+    "level": 3,
+    "text": "除了lua有没有什么也能保证redis的原子性？",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#除了lua有没有什么也能保证redis的原子性"
+   },
+   {
+    "level": 2,
+    "text": "日志",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#日志"
+   },
+   {
+    "level": 3,
+    "text": "Redis有哪2种持久化方式？分别的优缺点是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#redis有哪2种持久化方式-分别的优缺点是什么"
+   },
+   {
+    "level": 2,
+    "text": "缓存淘汰和过期删除",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#缓存淘汰和过期删除"
+   },
+   {
+    "level": 3,
+    "text": "过期删除策略和内存淘汰策略有什么区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#过期删除策略和内存淘汰策略有什么区别"
+   },
+   {
+    "level": 3,
+    "text": "介绍一下Redis 内存淘汰策略",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#介绍一下redis-内存淘汰策略"
+   },
+   {
+    "level": 3,
+    "text": "介绍一下Redis过期删除策略",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#介绍一下redis过期删除策略"
+   },
+   {
+    "level": 3,
+    "text": "Redis的缓存失效会不会立即删除？",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#redis的缓存失效会不会立即删除"
+   },
+   {
+    "level": 3,
+    "text": "那为什么我不过期立即删除？",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#那为什么我不过期立即删除"
+   },
+   {
+    "level": 2,
+    "text": "集群",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#集群"
+   },
+   {
+    "level": 3,
+    "text": "Redis主从同步中的增量和完全同步怎么实现？",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#redis主从同步中的增量和完全同步怎么实现"
+   },
+   {
+    "level": 3,
+    "text": "redis主从和集群可以保证数据一致性吗 ？",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#redis主从和集群可以保证数据一致性吗"
+   },
+   {
+    "level": 3,
+    "text": "哨兵机制原理是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#哨兵机制原理是什么"
+   },
+   {
+    "level": 3,
+    "text": "哨兵机制的选主节点的算法介绍一下",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#哨兵机制的选主节点的算法介绍一下"
+   },
+   {
+    "level": 3,
+    "text": "Redis集群的模式了解吗 优缺点了解吗",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#redis集群的模式了解吗-优缺点了解吗"
+   },
+   {
+    "level": 3,
+    "text": "cluster集群客户端是怎样知道该访问哪个分片的？",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#cluster集群客户端是怎样知道该访问哪个分片的"
+   },
+   {
+    "level": 2,
+    "text": "场景",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#场景"
+   },
+   {
+    "level": 3,
+    "text": "为什么使用redis？",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#为什么使用redis"
+   },
+   {
+    "level": 3,
+    "text": "为什么redis比mysql要快？",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#为什么redis比mysql要快"
+   },
+   {
+    "level": 3,
+    "text": "本地缓存和Redis缓存的区别?",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#本地缓存和redis缓存的区别"
+   },
+   {
+    "level": 3,
+    "text": "高并发场景，Redis单节点+MySQL单节点能有多大的并发量？",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#高并发场景-redis单节点-mysql单节点能有多大的并发量"
+   },
+   {
+    "level": 3,
+    "text": "redis应用场景是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#redis应用场景是什么"
+   },
+   {
+    "level": 3,
+    "text": "Redis除了缓存，还有哪些应用?",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#redis除了缓存-还有哪些应用"
+   },
+   {
+    "level": 3,
+    "text": "Redis支持并发操作吗？",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#redis支持并发操作吗"
+   },
+   {
+    "level": 3,
+    "text": "Redis分布式锁的实现原理？什么场景下用到分布式锁？",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#redis分布式锁的实现原理-什么场景下用到分布式锁"
+   },
+   {
+    "level": 3,
+    "text": "Redis的大Key问题是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#redis的大key问题是什么"
+   },
+   {
+    "level": 3,
+    "text": "大Key问题的缺点？",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#大key问题的缺点"
+   },
+   {
+    "level": 3,
+    "text": "Redis大key如何解决？",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#redis大key如何解决"
+   },
+   {
+    "level": 3,
+    "text": "什么是热key？",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#什么是热key"
+   },
+   {
+    "level": 3,
+    "text": "如何解决热key问题？",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#如何解决热key问题"
+   },
+   {
+    "level": 3,
+    "text": "如何保证 redis 和 mysql 数据缓存一致性问题？",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#如何保证-redis-和-mysql-数据缓存一致性问题"
+   },
+   {
+    "level": 3,
+    "text": "缓存雪崩、击穿、穿透是什么？怎么解决？",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#缓存雪崩、击穿、穿透是什么-怎么解决"
+   },
+   {
+    "level": 3,
+    "text": "布隆过滤器原理介绍一下",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#布隆过滤器原理介绍一下"
+   },
+   {
+    "level": 3,
+    "text": "如何设计秒杀场景处理高并发以及超卖现象？",
+    "anchor": "https://www.xiaolincoding.com/interview/redis.html#如何设计秒杀场景处理高并发以及超卖现象"
+   }
+  ]
+ },
+ "systemdesign": {
+  "cat": "后端基础",
+  "label": "系统设计",
+  "url": "https://www.xiaolincoding.com/interview/systemdesign.html",
+  "items": [
+   {
+    "level": 2,
+    "text": "如何设计一个秒杀场景？",
+    "anchor": "https://www.xiaolincoding.com/interview/systemdesign.html#如何设计一个秒杀场景"
+   },
+   {
+    "level": 2,
+    "text": "让你设计一个 RPC 框架，怎么设计？",
+    "anchor": "https://www.xiaolincoding.com/interview/systemdesign.html#让你设计一个-rpc-框架-怎么设计"
+   },
+   {
+    "level": 2,
+    "text": "让你设计一个短链系统，怎么设计？",
+    "anchor": "https://www.xiaolincoding.com/interview/systemdesign.html#让你设计一个短链系统-怎么设计"
+   },
+   {
+    "level": 2,
+    "text": "如何设计一个点赞系统？",
+    "anchor": "https://www.xiaolincoding.com/interview/systemdesign.html#如何设计一个点赞系统"
+   },
+   {
+    "level": 2,
+    "text": "让你设计一个分布式 ID 发号器，怎么设计？",
+    "anchor": "https://www.xiaolincoding.com/interview/systemdesign.html#让你设计一个分布式-id-发号器-怎么设计"
+   },
+   {
+    "level": 2,
+    "text": "订单到了半个小时，半个小时未支付就取消怎么实现？",
+    "anchor": "https://www.xiaolincoding.com/interview/systemdesign.html#订单到了半个小时-半个小时未支付就取消怎么实现"
+   },
+   {
+    "level": 2,
+    "text": "如果你的系统的QPS突然提升10倍你会怎么设计?",
+    "anchor": "https://www.xiaolincoding.com/interview/systemdesign.html#如果你的系统的qps突然提升10倍你会怎么设计"
+   },
+   {
+    "level": 2,
+    "text": "如果做一个大流量的网站，单Redis无法承压了如何解决？",
+    "anchor": "https://www.xiaolincoding.com/interview/systemdesign.html#如果做一个大流量的网站-单redis无法承压了如何解决"
+   },
+   {
+    "level": 2,
+    "text": "如何设计一个可重入的分布式锁，用什么结构设计？",
+    "anchor": "https://www.xiaolincoding.com/interview/systemdesign.html#如何设计一个可重入的分布式锁-用什么结构设计"
+   },
+   {
+    "level": 2,
+    "text": "你有看过一些负载均衡的一些方案吗？",
+    "anchor": "https://www.xiaolincoding.com/interview/systemdesign.html#你有看过一些负载均衡的一些方案吗"
+   },
+   {
+    "level": 2,
+    "text": "10w顾客抢购一个只有10个库存的商品如何设计？",
+    "anchor": "https://www.xiaolincoding.com/interview/systemdesign.html#_10w顾客抢购一个只有10个库存的商品如何设计"
+   },
+   {
+    "level": 2,
+    "text": "微服务架构有了解吗？你认为什么是微服务架构？",
+    "anchor": "https://www.xiaolincoding.com/interview/systemdesign.html#微服务架构有了解吗-你认为什么是微服务架构"
+   },
+   {
+    "level": 2,
+    "text": "对于你的项目（单体），怎么拆分成微服务架构呢？",
+    "anchor": "https://www.xiaolincoding.com/interview/systemdesign.html#对于你的项目-单体-怎么拆分成微服务架构呢"
+   },
+   {
+    "level": 2,
+    "text": "对外提供一个api服务，客户说请求接口超时了，怎么排查？",
+    "anchor": "https://www.xiaolincoding.com/interview/systemdesign.html#对外提供一个api服务-客户说请求接口超时了-怎么排查"
+   }
+  ]
+ },
+ "mq": {
+  "cat": "后端基础",
+  "label": "消息队列",
+  "url": "https://www.xiaolincoding.com/interview/mq.html",
+  "items": [
+   {
+    "level": 2,
+    "text": "消息队列场景",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#消息队列场景"
+   },
+   {
+    "level": 3,
+    "text": "什么是消息队列？",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#什么是消息队列"
+   },
+   {
+    "level": 3,
+    "text": "为什么需要消息队列？",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#为什么需要消息队列"
+   },
+   {
+    "level": 3,
+    "text": "消息队列有什么缺点？",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#消息队列有什么缺点"
+   },
+   {
+    "level": 3,
+    "text": "消息队列怎么选型？",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#消息队列怎么选型"
+   },
+   {
+    "level": 3,
+    "text": "消息队列使用场景有哪些？",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#消息队列使用场景有哪些"
+   },
+   {
+    "level": 3,
+    "text": "消息重复消费怎么解决？",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#消息重复消费怎么解决"
+   },
+   {
+    "level": 3,
+    "text": "消息丢失怎么解决的？",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#消息丢失怎么解决的"
+   },
+   {
+    "level": 3,
+    "text": "使用消息队列还应该注意哪些问题？",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#使用消息队列还应该注意哪些问题"
+   },
+   {
+    "level": 3,
+    "text": "消息队列的可靠性、顺序性怎么保证？",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#消息队列的可靠性、顺序性怎么保证"
+   },
+   {
+    "level": 3,
+    "text": "如何保证幂等写？",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#如何保证幂等写"
+   },
+   {
+    "level": 3,
+    "text": "如何处理消息队列的消息积压问题？",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#如何处理消息队列的消息积压问题"
+   },
+   {
+    "level": 3,
+    "text": "如何保证数据一致性，事务消息如何实现？",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#如何保证数据一致性-事务消息如何实现"
+   },
+   {
+    "level": 3,
+    "text": "消息队列是参考哪种设计模式？",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#消息队列是参考哪种设计模式"
+   },
+   {
+    "level": 3,
+    "text": "让你写一个消息队列，该如何进行架构设计？",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#让你写一个消息队列-该如何进行架构设计"
+   },
+   {
+    "level": 2,
+    "text": "RocketMQ",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#rocketmq"
+   },
+   {
+    "level": 3,
+    "text": "消息队列为什么选择RocketMQ的？",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#消息队列为什么选择rocketmq的"
+   },
+   {
+    "level": 3,
+    "text": "RocketMQ和Kafka的区别是什么？如何做技术选型？",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#rocketmq和kafka的区别是什么-如何做技术选型"
+   },
+   {
+    "level": 3,
+    "text": "RocketMQ延时消息的底层原理",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#rocketmq延时消息的底层原理"
+   },
+   {
+    "level": 3,
+    "text": "RocektMQ怎么处理分布式事务？",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#rocektmq怎么处理分布式事务"
+   },
+   {
+    "level": 3,
+    "text": "RocketMQ消息顺序怎么保证？",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#rocketmq消息顺序怎么保证"
+   },
+   {
+    "level": 3,
+    "text": "RocketMQ怎么保证消息不被重复消费？",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#rocketmq怎么保证消息不被重复消费"
+   },
+   {
+    "level": 3,
+    "text": "RocketMQ消息积压了，怎么办？",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#rocketmq消息积压了-怎么办"
+   },
+   {
+    "level": 2,
+    "text": "kafka",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#kafka"
+   },
+   {
+    "level": 3,
+    "text": "对Kafka有什么了解吗？",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#对kafka有什么了解吗"
+   },
+   {
+    "level": 3,
+    "text": "Kafka 为什么这么快？",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#kafka-为什么这么快"
+   },
+   {
+    "level": 3,
+    "text": "kafka的模型介绍一下，kafka是推送还是拉取？",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#kafka的模型介绍一下-kafka是推送还是拉取"
+   },
+   {
+    "level": 3,
+    "text": "Kafka 如何保证顺序读取消息？",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#kafka-如何保证顺序读取消息"
+   },
+   {
+    "level": 3,
+    "text": "kafka 消息积压怎么办？",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#kafka-消息积压怎么办"
+   },
+   {
+    "level": 3,
+    "text": "Kafka为什么一个分区只能由消费者组的一个消费者消费？这样设计的意义是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#kafka为什么一个分区只能由消费者组的一个消费者消费-这样设计的意义是什么"
+   },
+   {
+    "level": 3,
+    "text": "如果有一个消费主题topic，有一个消费组group，topic有10个分区，消费线程数和分区数的关系是怎么样的？",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#如果有一个消费主题topic-有一个消费组group-topic有10个分区-消费线程数和分区数的关系是怎么样的"
+   },
+   {
+    "level": 3,
+    "text": "消息中间件如何做到高可用？",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#消息中间件如何做到高可用"
+   },
+   {
+    "level": 3,
+    "text": "Kafka 和 RocketMQ 消息确认机制有什么不同？",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#kafka-和-rocketmq-消息确认机制有什么不同"
+   },
+   {
+    "level": 3,
+    "text": "Kafka 和 RocketMQ 的 broker 架构有什么区别",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#kafka-和-rocketmq-的-broker-架构有什么区别"
+   },
+   {
+    "level": 2,
+    "text": "RabbitMQ",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#rabbitmq"
+   },
+   {
+    "level": 3,
+    "text": "RabbitMQ 和 AMQP 是什么关系？",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#rabbitmq-和-amqp-是什么关系"
+   },
+   {
+    "level": 3,
+    "text": "RabbitMQ 核心组件有哪些？",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#rabbitmq-核心组件有哪些"
+   },
+   {
+    "level": 3,
+    "text": "RabbitMQ 有哪几种交换机类型？",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#rabbitmq-有哪几种交换机类型"
+   },
+   {
+    "level": 3,
+    "text": "RabbitMQ的特性你知道哪些？",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#rabbitmq的特性你知道哪些"
+   },
+   {
+    "level": 3,
+    "text": "RabbitMQ的底层架构是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#rabbitmq的底层架构是什么"
+   },
+   {
+    "level": 3,
+    "text": "消息中间件rabbitMQ的可靠性保障怎么做？",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#消息中间件rabbitmq的可靠性保障怎么做"
+   },
+   {
+    "level": 3,
+    "text": "讲一下rabbitMQ 的延迟队列和死信机制",
+    "anchor": "https://www.xiaolincoding.com/interview/mq.html#讲一下rabbitmq-的延迟队列和死信机制"
+   }
+  ]
+ },
+ "cap": {
+  "cat": "后端基础",
+  "label": "分布式",
+  "url": "https://www.xiaolincoding.com/interview/cap.html",
+  "items": [
+   {
+    "level": 2,
+    "text": "分布式理论",
+    "anchor": "https://www.xiaolincoding.com/interview/cap.html#分布式理论"
+   },
+   {
+    "level": 3,
+    "text": "什么是分布式系统？",
+    "anchor": "https://www.xiaolincoding.com/interview/cap.html#什么是分布式系统"
+   },
+   {
+    "level": 3,
+    "text": "分布式和微服务有什么区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/cap.html#分布式和微服务有什么区别"
+   },
+   {
+    "level": 3,
+    "text": "介绍一下cap理论",
+    "anchor": "https://www.xiaolincoding.com/interview/cap.html#介绍一下cap理论"
+   },
+   {
+    "level": 3,
+    "text": "怎么理解BASE理论？",
+    "anchor": "https://www.xiaolincoding.com/interview/cap.html#怎么理解base理论"
+   },
+   {
+    "level": 2,
+    "text": "分布式锁",
+    "anchor": "https://www.xiaolincoding.com/interview/cap.html#分布式锁"
+   },
+   {
+    "level": 3,
+    "text": "用redis怎么实现分布式？",
+    "anchor": "https://www.xiaolincoding.com/interview/cap.html#用redis怎么实现分布式"
+   },
+   {
+    "level": 3,
+    "text": "还有没有其他方法实现分布式锁？",
+    "anchor": "https://www.xiaolincoding.com/interview/cap.html#还有没有其他方法实现分布式锁"
+   },
+   {
+    "level": 2,
+    "text": "分布式ID",
+    "anchor": "https://www.xiaolincoding.com/interview/cap.html#分布式id"
+   },
+   {
+    "level": 3,
+    "text": "什么情况需要用分布式ID？",
+    "anchor": "https://www.xiaolincoding.com/interview/cap.html#什么情况需要用分布式id"
+   },
+   {
+    "level": 3,
+    "text": "分布式ID有什么方案？",
+    "anchor": "https://www.xiaolincoding.com/interview/cap.html#分布式id有什么方案"
+   },
+   {
+    "level": 2,
+    "text": "分布式事务",
+    "anchor": "https://www.xiaolincoding.com/interview/cap.html#分布式事务"
+   },
+   {
+    "level": 3,
+    "text": "什么情况下需要使用分布式事务？",
+    "anchor": "https://www.xiaolincoding.com/interview/cap.html#什么情况下需要使用分布式事务"
+   },
+   {
+    "level": 3,
+    "text": "分布式事务的解决方案你知道哪些？",
+    "anchor": "https://www.xiaolincoding.com/interview/cap.html#分布式事务的解决方案你知道哪些"
+   },
+   {
+    "level": 3,
+    "text": "阿里的seata框架了解过吗？",
+    "anchor": "https://www.xiaolincoding.com/interview/cap.html#阿里的seata框架了解过吗"
+   },
+   {
+    "level": 2,
+    "text": "分布式组件",
+    "anchor": "https://www.xiaolincoding.com/interview/cap.html#分布式组件"
+   },
+   {
+    "level": 3,
+    "text": "RPC的概念是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/cap.html#rpc的概念是什么"
+   },
+   {
+    "level": 3,
+    "text": "zookeeper拿来做什么？核心的原理是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/cap.html#zookeeper拿来做什么-核心的原理是什么"
+   },
+   {
+    "level": 2,
+    "text": "分布式场景",
+    "anchor": "https://www.xiaolincoding.com/interview/cap.html#分布式场景"
+   },
+   {
+    "level": 3,
+    "text": "常见的限流算法你知道哪些？？",
+    "anchor": "https://www.xiaolincoding.com/interview/cap.html#常见的限流算法你知道哪些"
+   },
+   {
+    "level": 2,
+    "text": "分布式一致性算法",
+    "anchor": "https://www.xiaolincoding.com/interview/cap.html#分布式一致性算法"
+   },
+   {
+    "level": 3,
+    "text": "说下 Raft 算法？",
+    "anchor": "https://www.xiaolincoding.com/interview/cap.html#说下-raft-算法"
+   },
+   {
+    "level": 3,
+    "text": "说一下 Paxos 协议？",
+    "anchor": "https://www.xiaolincoding.com/interview/cap.html#说一下-paxos-协议"
+   },
+   {
+    "level": 3,
+    "text": "raft协议和paxos协议的原理？",
+    "anchor": "https://www.xiaolincoding.com/interview/cap.html#raft协议和paxos协议的原理"
+   },
+   {
+    "level": 3,
+    "text": "有什么框架或技术用了raft协议？",
+    "anchor": "https://www.xiaolincoding.com/interview/cap.html#有什么框架或技术用了raft协议"
+   },
+   {
+    "level": 3,
+    "text": "描述一下 ZAB 协议？",
+    "anchor": "https://www.xiaolincoding.com/interview/cap.html#描述一下-zab-协议"
+   }
+  ]
+ },
+ "golang": {
+  "cat": "语言与工程",
+  "label": "Golang",
+  "url": "https://www.xiaolincoding.com/interview/golang.html",
+  "items": [
+   {
+    "level": 2,
+    "text": "1. Go基础面试题",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_1-go基础面试题"
+   },
+   {
+    "level": 3,
+    "text": "1.1 与其他语言相比，使用 Go 有什么好处?",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_1-1-与其他语言相比-使用-go-有什么好处"
+   },
+   {
+    "level": 3,
+    "text": "1.2 什么是协程？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_1-2-什么是协程"
+   },
+   {
+    "level": 3,
+    "text": "1.3 协程和线程和进程的区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_1-3-协程和线程和进程的区别"
+   },
+   {
+    "level": 3,
+    "text": "1.4 Golang 中 make 和 new 的区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_1-4-golang-中-make-和-new-的区别"
+   },
+   {
+    "level": 3,
+    "text": "1.5 Golang 中数组和切片的区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_1-5-golang-中数组和切片的区别"
+   },
+   {
+    "level": 3,
+    "text": "1.6 使用for range 的时候，它的地址会发生变化吗？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_1-6-使用for-range-的时候-它的地址会发生变化吗"
+   },
+   {
+    "level": 3,
+    "text": "1.7 如何高效地拼接字符串？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_1-7-如何高效地拼接字符串"
+   },
+   {
+    "level": 3,
+    "text": "1.8 defer 的执行顺序是怎样的？defer 的作用或者使用场景是什么?",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_1-8-defer-的执行顺序是怎样的-defer-的作用或者使用场景是什么"
+   },
+   {
+    "level": 3,
+    "text": "1.9 什么是 rune 类型？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_1-9-什么是-rune-类型"
+   },
+   {
+    "level": 3,
+    "text": "1.10 Go 语言 tag 有什么用？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_1-10-go-语言-tag-有什么用"
+   },
+   {
+    "level": 3,
+    "text": "1.11 go 打印时 %v %+v %#v 的区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_1-11-go-打印时-v-v-v-的区别"
+   },
+   {
+    "level": 3,
+    "text": "1.12 Go语言中空 struct{} 占用空间么？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_1-12-go语言中空-struct-占用空间么"
+   },
+   {
+    "level": 3,
+    "text": "1.13 Go语言中，空 struct{} 有什么用？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_1-13-go语言中-空-struct-有什么用"
+   },
+   {
+    "level": 3,
+    "text": "1.14 init() 函数是什么时候执行的？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_1-14-init-函数是什么时候执行的"
+   },
+   {
+    "level": 3,
+    "text": "1.15 2 个 interface 可以比较吗 ？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_1-15-2-个-interface-可以比较吗"
+   },
+   {
+    "level": 3,
+    "text": "1.16 2 个 nil 可能不相等吗？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_1-16-2-个-nil-可能不相等吗"
+   },
+   {
+    "level": 3,
+    "text": "1.17 Go 语言函数传参是值类型还是引用类型？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_1-17-go-语言函数传参是值类型还是引用类型"
+   },
+   {
+    "level": 3,
+    "text": "1.18 如何知道一个对象是分配在栈上还是堆上？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_1-18-如何知道一个对象是分配在栈上还是堆上"
+   },
+   {
+    "level": 3,
+    "text": "1.19 Go语言的多返回值是如何实现的？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_1-19-go语言的多返回值是如何实现的"
+   },
+   {
+    "level": 3,
+    "text": "1.20 Go语言中&quot;_&quot;的作用",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_1-20-go语言中-的作用"
+   },
+   {
+    "level": 3,
+    "text": "1.21 Go语言普通指针和unsafe.Pointer有什么区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_1-21-go语言普通指针和unsafe-pointer有什么区别"
+   },
+   {
+    "level": 3,
+    "text": "1.22 unsafe.Pointer与uintptr有什么区别和联系",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_1-22-unsafe-pointer与uintptr有什么区别和联系"
+   },
+   {
+    "level": 2,
+    "text": "2. Slice面试题",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_2-slice面试题"
+   },
+   {
+    "level": 3,
+    "text": "2.1 slice的底层结构是怎样的？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_2-1-slice的底层结构是怎样的"
+   },
+   {
+    "level": 3,
+    "text": "2.2 Go语言里slice是怎么扩容的？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_2-2-go语言里slice是怎么扩容的"
+   },
+   {
+    "level": 3,
+    "text": "2.3 从一个切片截取出另一个切片，修改新切片的值会影响原来的切片内容吗",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_2-3-从一个切片截取出另一个切片-修改新切片的值会影响原来的切片内容吗"
+   },
+   {
+    "level": 3,
+    "text": "2.4 slice作为函数参数传递，会改变原slice吗？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_2-4-slice作为函数参数传递-会改变原slice吗"
+   },
+   {
+    "level": 2,
+    "text": "3. Map面试题",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_3-map面试题"
+   },
+   {
+    "level": 3,
+    "text": "3.1 Go语言Map的底层实现原理是怎样的？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_3-1-go语言map的底层实现原理是怎样的"
+   },
+   {
+    "level": 3,
+    "text": "3.2 Go语言Map的遍历是有序的还是无序的？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_3-2-go语言map的遍历是有序的还是无序的"
+   },
+   {
+    "level": 3,
+    "text": "3.3 Go语言Map的遍历为什么要设计成无序的？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_3-3-go语言map的遍历为什么要设计成无序的"
+   },
+   {
+    "level": 3,
+    "text": "3.4 Map如何实现顺序读取？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_3-4-map如何实现顺序读取"
+   },
+   {
+    "level": 3,
+    "text": "3.5 Go语言的Map是否是并发安全的？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_3-5-go语言的map是否是并发安全的"
+   },
+   {
+    "level": 3,
+    "text": "3.6 Map的Key一定要是可比较的吗？为什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_3-6-map的key一定要是可比较的吗-为什么"
+   },
+   {
+    "level": 3,
+    "text": "3.7 Go语言Map的扩容时机是怎样的？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_3-7-go语言map的扩容时机是怎样的"
+   },
+   {
+    "level": 3,
+    "text": "3.8 Go语言Map的扩容过程是怎样的？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_3-8-go语言map的扩容过程是怎样的"
+   },
+   {
+    "level": 3,
+    "text": "3.9 可以对Map的元素取地址吗？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_3-9-可以对map的元素取地址吗"
+   },
+   {
+    "level": 3,
+    "text": "3.10 Map 中删除一个 key，它的内存会释放么？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_3-10-map-中删除一个-key-它的内存会释放么"
+   },
+   {
+    "level": 3,
+    "text": "3.11 Map可以边遍历边删除吗",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_3-11-map可以边遍历边删除吗"
+   },
+   {
+    "level": 2,
+    "text": "4. Channel面试题",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_4-channel面试题"
+   },
+   {
+    "level": 3,
+    "text": "4.1 什么是CSP？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_4-1-什么是csp"
+   },
+   {
+    "level": 3,
+    "text": "4.2 Channel的底层实现原理是怎样的？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_4-2-channel的底层实现原理是怎样的"
+   },
+   {
+    "level": 3,
+    "text": "4.3 向channel发送数据的过程是怎样的？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_4-3-向channel发送数据的过程是怎样的"
+   },
+   {
+    "level": 3,
+    "text": "4.4 从Channel读取数据的过程是怎样的？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_4-4-从channel读取数据的过程是怎样的"
+   },
+   {
+    "level": 3,
+    "text": "4.5 从一个已关闭Channel仍能读出数据吗？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_4-5-从一个已关闭channel仍能读出数据吗"
+   },
+   {
+    "level": 3,
+    "text": "4.6 Channel在什么情况下会引起内存泄漏？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_4-6-channel在什么情况下会引起内存泄漏"
+   },
+   {
+    "level": 3,
+    "text": "4.7 关闭Channel会产生异常吗？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_4-7-关闭channel会产生异常吗"
+   },
+   {
+    "level": 3,
+    "text": "4.8 往一个关闭的Channel写入数据会发生什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_4-8-往一个关闭的channel写入数据会发生什么"
+   },
+   {
+    "level": 3,
+    "text": "4.9 什么是select？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_4-9-什么是select"
+   },
+   {
+    "level": 3,
+    "text": "4.10 select的执行机制是怎样的？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_4-10-select的执行机制是怎样的"
+   },
+   {
+    "level": 3,
+    "text": "4.11 select的实现原理是怎样的？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_4-11-select的实现原理是怎样的"
+   },
+   {
+    "level": 2,
+    "text": "5. Sync面试题",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_5-sync面试题"
+   },
+   {
+    "level": 3,
+    "text": "5.1 除了 mutex 以外还有那些方式安全读写共享变量？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_5-1-除了-mutex-以外还有那些方式安全读写共享变量"
+   },
+   {
+    "level": 3,
+    "text": "5.2 Go 语言是如何实现原子操作的？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_5-2-go-语言是如何实现原子操作的"
+   },
+   {
+    "level": 3,
+    "text": "5.3 聊聊原子操作和锁的区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_5-3-聊聊原子操作和锁的区别"
+   },
+   {
+    "level": 3,
+    "text": "5.4 Go语言互斥锁mutex底层是怎么实现的？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_5-4-go语言互斥锁mutex底层是怎么实现的"
+   },
+   {
+    "level": 3,
+    "text": "5.5 Mutex 有几种模式？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_5-5-mutex-有几种模式"
+   },
+   {
+    "level": 3,
+    "text": "5.6 在Mutex上自旋的goroutine 会占用太多资源吗",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_5-6-在mutex上自旋的goroutine-会占用太多资源吗"
+   },
+   {
+    "level": 3,
+    "text": "5.7 Mutex 已经被一个 Goroutine 获取了, 其它等待中的 Goroutine 们只能一直等待。那么等这个锁释放后，等待中的 Goroutine 中哪一个会优先获取 Mutex 呢?",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_5-7-mutex-已经被一个-goroutine-获取了-其它等待中的-goroutine-们只能一直等待。那么等这个锁释放后-等待中的-goroutine-中哪一个会优先获取-mutex-呢"
+   },
+   {
+    "level": 3,
+    "text": "5.8 sync.Once 的作用是什么，讲讲它的底层实现原理？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_5-8-sync-once-的作用是什么-讲讲它的底层实现原理"
+   },
+   {
+    "level": 3,
+    "text": "5.9 WaitGroup 是怎样实现协程等待？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_5-9-waitgroup-是怎样实现协程等待"
+   },
+   {
+    "level": 3,
+    "text": "5.10 讲讲sync.Map的底层原理",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_5-10-讲讲sync-map的底层原理"
+   },
+   {
+    "level": 3,
+    "text": "5.11 read map和dirty map之间有什么关联？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_5-11-read-map和dirty-map之间有什么关联"
+   },
+   {
+    "level": 3,
+    "text": "5.12 为什么要设计nil和expunged两种删除状态？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_5-12-为什么要设计nil和expunged两种删除状态"
+   },
+   {
+    "level": 3,
+    "text": "5.13 sync.Map 适用的场景？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_5-13-sync-map-适用的场景"
+   },
+   {
+    "level": 2,
+    "text": "6. Context面试题",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_6-context面试题"
+   },
+   {
+    "level": 3,
+    "text": "6.1 Go语言里的Context是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_6-1-go语言里的context是什么"
+   },
+   {
+    "level": 3,
+    "text": "6.2 Go语言的Context有什么作用？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_6-2-go语言的context有什么作用"
+   },
+   {
+    "level": 3,
+    "text": "6.3 Context.Value的查找过程是怎样的",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_6-3-context-value的查找过程是怎样的"
+   },
+   {
+    "level": 3,
+    "text": "6.4 Context如何被取消",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_6-4-context如何被取消"
+   },
+   {
+    "level": 2,
+    "text": "7. Interface面试题",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_7-interface面试题"
+   },
+   {
+    "level": 3,
+    "text": "7.1 Go语言中，interface的底层原理是怎样的？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_7-1-go语言中-interface的底层原理是怎样的"
+   },
+   {
+    "level": 3,
+    "text": "7.2 iface和eface的区别是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_7-2-iface和eface的区别是什么"
+   },
+   {
+    "level": 3,
+    "text": "7.3 类型转换和断言的区别是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_7-3-类型转换和断言的区别是什么"
+   },
+   {
+    "level": 3,
+    "text": "7.4 Go语言interface有哪些应用场景",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_7-4-go语言interface有哪些应用场景"
+   },
+   {
+    "level": 3,
+    "text": "7.5 接口之间可以相互比较吗？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_7-5-接口之间可以相互比较吗"
+   },
+   {
+    "level": 2,
+    "text": "8. 反射面试题",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_8-反射面试题"
+   },
+   {
+    "level": 3,
+    "text": "8.1 什么是反射？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_8-1-什么是反射"
+   },
+   {
+    "level": 3,
+    "text": "8.2 Go语言如何实现反射？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_8-2-go语言如何实现反射"
+   },
+   {
+    "level": 3,
+    "text": "8.3 Go语言中的反射应用有哪些",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_8-3-go语言中的反射应用有哪些"
+   },
+   {
+    "level": 3,
+    "text": "8.4 如何比较两个对象完全相同",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_8-4-如何比较两个对象完全相同"
+   },
+   {
+    "level": 2,
+    "text": "9. GMP面试题",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_9-gmp面试题"
+   },
+   {
+    "level": 3,
+    "text": "9.1 Go语言的GMP模型是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_9-1-go语言的gmp模型是什么"
+   },
+   {
+    "level": 3,
+    "text": "9.2 什么是Go scheduler",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_9-2-什么是go-scheduler"
+   },
+   {
+    "level": 3,
+    "text": "9.3 Go语言在进行goroutine调度的时候，调度策略是怎样的？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_9-3-go语言在进行goroutine调度的时候-调度策略是怎样的"
+   },
+   {
+    "level": 3,
+    "text": "9.4 发生调度的时机有哪些？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_9-4-发生调度的时机有哪些"
+   },
+   {
+    "level": 3,
+    "text": "9.5 M寻找可运行G的过程是怎样的？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_9-5-m寻找可运行g的过程是怎样的"
+   },
+   {
+    "level": 3,
+    "text": "9.6 GMP能不能去掉P层？会怎么样？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_9-6-gmp能不能去掉p层-会怎么样"
+   },
+   {
+    "level": 3,
+    "text": "9.7 P和M在什么时候会被创建？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_9-7-p和m在什么时候会被创建"
+   },
+   {
+    "level": 3,
+    "text": "9.8 m0是什么，有什么用",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_9-8-m0是什么-有什么用"
+   },
+   {
+    "level": 3,
+    "text": "9.9 g0是一个怎样的协程，有什么用？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_9-9-g0是一个怎样的协程-有什么用"
+   },
+   {
+    "level": 3,
+    "text": "9.10 g0栈和用户栈是如何进行切换的？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_9-10-g0栈和用户栈是如何进行切换的"
+   },
+   {
+    "level": 2,
+    "text": "10. 内存管理面试题",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_10-内存管理面试题"
+   },
+   {
+    "level": 3,
+    "text": "10.1 讲讲Go语言是如何分配内存的？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_10-1-讲讲go语言是如何分配内存的"
+   },
+   {
+    "level": 3,
+    "text": "10.2 知道 golang 的内存逃逸吗？什么情况下会发生内存逃逸？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_10-2-知道-golang-的内存逃逸吗-什么情况下会发生内存逃逸"
+   },
+   {
+    "level": 3,
+    "text": "10.3 内存逃逸有什么影响？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_10-3-内存逃逸有什么影响"
+   },
+   {
+    "level": 3,
+    "text": "10.4 Channel是分配在栈上，还是堆上？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_10-4-channel是分配在栈上-还是堆上"
+   },
+   {
+    "level": 3,
+    "text": "10.5 Go语言在什么情况下会发生内存泄漏？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_10-5-go语言在什么情况下会发生内存泄漏"
+   },
+   {
+    "level": 3,
+    "text": "10.6 Go语言发生了内存泄漏如何定位和优化？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_10-6-go语言发生了内存泄漏如何定位和优化"
+   },
+   {
+    "level": 2,
+    "text": "11. 垃圾回收面试题",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_11-垃圾回收面试题"
+   },
+   {
+    "level": 3,
+    "text": "11.1 常见的 GC 实现方式有哪些？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_11-1-常见的-gc-实现方式有哪些"
+   },
+   {
+    "level": 3,
+    "text": "11.2 Go 语言的 GC 使用的是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_11-2-go-语言的-gc-使用的是什么"
+   },
+   {
+    "level": 3,
+    "text": "11.3 三色标记法是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_11-3-三色标记法是什么"
+   },
+   {
+    "level": 3,
+    "text": "11.4 Go语言GC的根对象到底是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_11-4-go语言gc的根对象到底是什么"
+   },
+   {
+    "level": 3,
+    "text": "11.5 STW 是什么意思？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_11-5-stw-是什么意思"
+   },
+   {
+    "level": 3,
+    "text": "11.6 并发标记清除法的难点是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_11-6-并发标记清除法的难点是什么"
+   },
+   {
+    "level": 3,
+    "text": "11.7 Go语言是如何解决并发标记清除时，用户程序并发修改对象引用问题的？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_11-7-go语言是如何解决并发标记清除时-用户程序并发修改对象引用问题的"
+   },
+   {
+    "level": 3,
+    "text": "11.8 什么是写屏障、混合写屏障，如何实现？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_11-8-什么是写屏障、混合写屏障-如何实现"
+   },
+   {
+    "level": 3,
+    "text": "11.9 Go 语言中 GC 的流程是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_11-9-go-语言中-gc-的流程是什么"
+   },
+   {
+    "level": 3,
+    "text": "11.10 GC触发的时机有哪些？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_11-10-gc触发的时机有哪些"
+   },
+   {
+    "level": 3,
+    "text": "11.11 GC 关注的指标有哪些？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_11-11-gc-关注的指标有哪些"
+   },
+   {
+    "level": 3,
+    "text": "11.12 有了 GC，为什么还会发生内存泄露？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_11-12-有了-gc-为什么还会发生内存泄露"
+   },
+   {
+    "level": 3,
+    "text": "11.13 Go 的 GC 如何调优？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_11-13-go-的-gc-如何调优"
+   },
+   {
+    "level": 3,
+    "text": "11.14 如何观察 Go GC？",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_11-14-如何观察-go-gc"
+   },
+   {
+    "level": 2,
+    "text": "12. Go代码面试题",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_12-go代码面试题"
+   },
+   {
+    "level": 3,
+    "text": "12.1 开启100个协程，顺序打印1-1000，且保证协程号1的，打印尾数为1的数字",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_12-1-开启100个协程-顺序打印1-1000-且保证协程号1的-打印尾数为1的数字"
+   },
+   {
+    "level": 3,
+    "text": "12.2 三个goroutinue交替打印abc 10次",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_12-2-三个goroutinue交替打印abc-10次"
+   },
+   {
+    "level": 3,
+    "text": "12.3 用不超过10个goroutine不重复的打印slice中的100个元素",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_12-3-用不超过10个goroutine不重复的打印slice中的100个元素"
+   },
+   {
+    "level": 3,
+    "text": "12.4 两个协程交替打印奇偶数",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_12-4-两个协程交替打印奇偶数"
+   },
+   {
+    "level": 3,
+    "text": "12.5 用单个channel实现0,1的交替打印",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_12-5-用单个channel实现0-1的交替打印"
+   },
+   {
+    "level": 3,
+    "text": "12.6 sync.Cond实现多生产者多消费者",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_12-6-sync-cond实现多生产者多消费者"
+   },
+   {
+    "level": 3,
+    "text": "12.7 使用go实现1000个并发控制并设置执行超时时间1秒",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_12-7-使用go实现1000个并发控制并设置执行超时时间1秒"
+   },
+   {
+    "level": 3,
+    "text": "12.8 使用两个Goroutine，向标准输出中按顺序按顺序交替打出字母与数字，输出是a1b2c3",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_12-8-使用两个goroutine-向标准输出中按顺序按顺序交替打出字母与数字-输出是a1b2c3"
+   },
+   {
+    "level": 3,
+    "text": "12.9 编写一个程序限制10个goroutine执行，每执行完一个goroutine就放一个新的goroutine进来",
+    "anchor": "https://www.xiaolincoding.com/interview/golang.html#_12-9-编写一个程序限制10个goroutine执行-每执行完一个goroutine就放一个新的goroutine进来"
+   }
+  ]
+ },
+ "linux": {
+  "cat": "语言与工程",
+  "label": "Linux 命令",
+  "url": "https://www.xiaolincoding.com/interview/linux.html",
+  "items": [
+   {
+    "level": 2,
+    "text": "Linux的常用命令了解过哪些？",
+    "anchor": "https://www.xiaolincoding.com/interview/linux.html#linux的常用命令了解过哪些"
+   },
+   {
+    "level": 2,
+    "text": "ps命令里都有哪些选项，ps展示哪些东西？",
+    "anchor": "https://www.xiaolincoding.com/interview/linux.html#ps命令里都有哪些选项-ps展示哪些东西"
+   },
+   {
+    "level": 2,
+    "text": "top命令会展示什么东西，里面每一项都是呈现什么样的数据？",
+    "anchor": "https://www.xiaolincoding.com/interview/linux.html#top命令会展示什么东西-里面每一项都是呈现什么样的数据"
+   },
+   {
+    "level": 2,
+    "text": "已知一个进程名，如何杀掉这个进程？",
+    "anchor": "https://www.xiaolincoding.com/interview/linux.html#已知一个进程名-如何杀掉这个进程"
+   },
+   {
+    "level": 2,
+    "text": "linux 如何查看进程状态？",
+    "anchor": "https://www.xiaolincoding.com/interview/linux.html#linux-如何查看进程状态"
+   },
+   {
+    "level": 2,
+    "text": "linux 如何查看线程状态？",
+    "anchor": "https://www.xiaolincoding.com/interview/linux.html#linux-如何查看线程状态"
+   },
+   {
+    "level": 2,
+    "text": "如何查看网络连接情况？",
+    "anchor": "https://www.xiaolincoding.com/interview/linux.html#如何查看网络连接情况"
+   },
+   {
+    "level": 2,
+    "text": "怎么查看哪个端口被哪个进程占用？",
+    "anchor": "https://www.xiaolincoding.com/interview/linux.html#怎么查看哪个端口被哪个进程占用"
+   },
+   {
+    "level": 2,
+    "text": "端口通不通用什么命令？",
+    "anchor": "https://www.xiaolincoding.com/interview/linux.html#端口通不通用什么命令"
+   },
+   {
+    "level": 2,
+    "text": "top 命令查看是多少个 CPU 核心？",
+    "anchor": "https://www.xiaolincoding.com/interview/linux.html#top-命令查看是多少个-cpu-核心"
+   },
+   {
+    "level": 2,
+    "text": "修改文件权限用什么命令？",
+    "anchor": "https://www.xiaolincoding.com/interview/linux.html#修改文件权限用什么命令"
+   },
+   {
+    "level": 2,
+    "text": "top 命令和 free 命令都可以查看内存，有什么区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/linux.html#top-命令和-free-命令都可以查看内存-有什么区别"
+   },
+   {
+    "level": 2,
+    "text": "用shell命令替换一个文件中的字符串",
+    "anchor": "https://www.xiaolincoding.com/interview/linux.html#用shell命令替换一个文件中的字符串"
+   },
+   {
+    "level": 2,
+    "text": "sed和awk有什么区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/linux.html#sed和awk有什么区别"
+   },
+   {
+    "level": 2,
+    "text": "查找日志中某个字符串出现的次数 / 匹配行的长度？",
+    "anchor": "https://www.xiaolincoding.com/interview/linux.html#查找日志中某个字符串出现的次数-匹配行的长度"
+   },
+   {
+    "level": 2,
+    "text": "linux中有一个日志文件，日志文件中记录了访问请求的信息，第一列是访问的日期，第二列是请求的ip，第三列是请求的耗时，写一条shell命令来查到请求耗时最高的10条记录",
+    "anchor": "https://www.xiaolincoding.com/interview/linux.html#linux中有一个日志文件-日志文件中记录了访问请求的信息-第一列是访问的日期-第二列是请求的ip-第三列是请求的耗时-写一条shell命令来查到请求耗时最高的10条记录"
+   },
+   {
+    "level": 2,
+    "text": "假如cpu跑到100%，你的解决思路是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/linux.html#假如cpu跑到100-你的解决思路是什么"
+   },
+   {
+    "level": 2,
+    "text": "Linux 服务器当中如何查看负载情况？通过什么指标进行查看？",
+    "anchor": "https://www.xiaolincoding.com/interview/linux.html#linux-服务器当中如何查看负载情况-通过什么指标进行查看"
+   },
+   {
+    "level": 2,
+    "text": "怎么判断服务器内存是否够用？如何查看服务器性能瓶颈是否是内存？",
+    "anchor": "https://www.xiaolincoding.com/interview/linux.html#怎么判断服务器内存是否够用-如何查看服务器性能瓶颈是否是内存"
+   },
+   {
+    "level": 2,
+    "text": "如何判断内存是否是满的情况？通过什么指标判断内存的使用率？",
+    "anchor": "https://www.xiaolincoding.com/interview/linux.html#如何判断内存是否是满的情况-通过什么指标判断内存的使用率"
+   },
+   {
+    "level": 2,
+    "text": "怎么判断操作系统有没有在内存替换？或者说怎么统计内存替换的频率？",
+    "anchor": "https://www.xiaolincoding.com/interview/linux.html#怎么判断操作系统有没有在内存替换-或者说怎么统计内存替换的频率"
+   }
+  ]
+ },
+ "docker": {
+  "cat": "语言与工程",
+  "label": "Docker",
+  "url": "https://www.xiaolincoding.com/interview/docker.html",
+  "items": [
+   {
+    "level": 2,
+    "text": "docker底层依托于linux怎么实现资源隔离的？",
+    "anchor": "https://www.xiaolincoding.com/interview/docker.html#docker底层依托于linux怎么实现资源隔离的"
+   },
+   {
+    "level": 2,
+    "text": "讲讲cgroup v2.0",
+    "anchor": "https://www.xiaolincoding.com/interview/docker.html#讲讲cgroup-v2-0"
+   },
+   {
+    "level": 2,
+    "text": "Docker 和虚拟机有什么区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/docker.html#docker-和虚拟机有什么区别"
+   },
+   {
+    "level": 2,
+    "text": "Docker 有哪几个核心组件？",
+    "anchor": "https://www.xiaolincoding.com/interview/docker.html#docker-有哪几个核心组件"
+   },
+   {
+    "level": 2,
+    "text": "镜像和容器有什么区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/docker.html#镜像和容器有什么区别"
+   },
+   {
+    "level": 2,
+    "text": "Docker 镜像的分层原理是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/docker.html#docker-镜像的分层原理是什么"
+   },
+   {
+    "level": 2,
+    "text": "Dockerfile 常用指令有哪些？",
+    "anchor": "https://www.xiaolincoding.com/interview/docker.html#dockerfile-常用指令有哪些"
+   },
+   {
+    "level": 2,
+    "text": "Dockerfile 中 CMD 和 ENTRYPOINT 有什么区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/docker.html#dockerfile-中-cmd-和-entrypoint-有什么区别"
+   },
+   {
+    "level": 2,
+    "text": "Dockerfile 中 COPY 和 ADD 有什么区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/docker.html#dockerfile-中-copy-和-add-有什么区别"
+   },
+   {
+    "level": 2,
+    "text": "什么是多阶段构建（multi-stage build）？有什么好处？",
+    "anchor": "https://www.xiaolincoding.com/interview/docker.html#什么是多阶段构建-multi-stage-build-有什么好处"
+   },
+   {
+    "level": 2,
+    "text": "如何减小 Docker 镜像体积？",
+    "anchor": "https://www.xiaolincoding.com/interview/docker.html#如何减小-docker-镜像体积"
+   },
+   {
+    "level": 2,
+    "text": "Docker 容器数据持久化有哪些方式？",
+    "anchor": "https://www.xiaolincoding.com/interview/docker.html#docker-容器数据持久化有哪些方式"
+   },
+   {
+    "level": 2,
+    "text": "Docker 的网络模式有哪些？",
+    "anchor": "https://www.xiaolincoding.com/interview/docker.html#docker-的网络模式有哪些"
+   },
+   {
+    "level": 2,
+    "text": "同一个宿主机上的多个容器之间怎么通信？",
+    "anchor": "https://www.xiaolincoding.com/interview/docker.html#同一个宿主机上的多个容器之间怎么通信"
+   },
+   {
+    "level": 2,
+    "text": "Docker Compose 是什么？什么场景用？",
+    "anchor": "https://www.xiaolincoding.com/interview/docker.html#docker-compose-是什么-什么场景用"
+   },
+   {
+    "level": 2,
+    "text": "Docker 常用命令有哪些？",
+    "anchor": "https://www.xiaolincoding.com/interview/docker.html#docker-常用命令有哪些"
+   },
+   {
+    "level": 2,
+    "text": "如何进入一个运行中的容器？",
+    "anchor": "https://www.xiaolincoding.com/interview/docker.html#如何进入一个运行中的容器"
+   },
+   {
+    "level": 2,
+    "text": "容器启动后立刻退出，怎么排查？",
+    "anchor": "https://www.xiaolincoding.com/interview/docker.html#容器启动后立刻退出-怎么排查"
+   },
+   {
+    "level": 2,
+    "text": "docker commit 和 docker build 有什么区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/docker.html#docker-commit-和-docker-build-有什么区别"
+   },
+   {
+    "level": 2,
+    "text": "docker run 的常用参数有哪些？",
+    "anchor": "https://www.xiaolincoding.com/interview/docker.html#docker-run-的常用参数有哪些"
+   },
+   {
+    "level": 2,
+    "text": "Docker 和 Kubernetes 是什么关系？",
+    "anchor": "https://www.xiaolincoding.com/interview/docker.html#docker-和-kubernetes-是什么关系"
+   },
+   {
+    "level": 2,
+    "text": "如何清理 Docker 的无用镜像、容器和卷？",
+    "anchor": "https://www.xiaolincoding.com/interview/docker.html#如何清理-docker-的无用镜像、容器和卷"
+   }
+  ]
+ },
+ "git": {
+  "cat": "语言与工程",
+  "label": "Git",
+  "url": "https://www.xiaolincoding.com/interview/git.html",
+  "items": [
+   {
+    "level": 2,
+    "text": "Git 使用熟练吗？",
+    "anchor": "https://www.xiaolincoding.com/interview/git.html#git-使用熟练吗"
+   },
+   {
+    "level": 2,
+    "text": "git rebase和merge的区别",
+    "anchor": "https://www.xiaolincoding.com/interview/git.html#git-rebase和merge的区别"
+   },
+   {
+    "level": 2,
+    "text": "如何使用 git 命令合并两个分支，发生冲突如何解决",
+    "anchor": "https://www.xiaolincoding.com/interview/git.html#如何使用-git-命令合并两个分支-发生冲突如何解决"
+   },
+   {
+    "level": 2,
+    "text": "Git 有哪几个工作区域？它们之间是怎么流转的？",
+    "anchor": "https://www.xiaolincoding.com/interview/git.html#git-有哪几个工作区域-它们之间是怎么流转的"
+   },
+   {
+    "level": 2,
+    "text": "git pull 和 git fetch 有什么区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/git.html#git-pull-和-git-fetch-有什么区别"
+   },
+   {
+    "level": 2,
+    "text": "git diff 有哪些常见用法？",
+    "anchor": "https://www.xiaolincoding.com/interview/git.html#git-diff-有哪些常见用法"
+   },
+   {
+    "level": 2,
+    "text": "什么是 HEAD？什么是游离 HEAD（detached HEAD）？",
+    "anchor": "https://www.xiaolincoding.com/interview/git.html#什么是-head-什么是游离-head-detached-head"
+   },
+   {
+    "level": 2,
+    "text": "git reset 的 --soft、--mixed、--hard 三种模式有什么区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/git.html#git-reset-的-soft、-mixed、-hard-三种模式有什么区别"
+   },
+   {
+    "level": 2,
+    "text": "git reset 和 git revert 的区别是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/git.html#git-reset-和-git-revert-的区别是什么"
+   },
+   {
+    "level": 2,
+    "text": "git commit --amend 是做什么的？什么时候用？",
+    "anchor": "https://www.xiaolincoding.com/interview/git.html#git-commit-amend-是做什么的-什么时候用"
+   },
+   {
+    "level": 2,
+    "text": "git checkout、git switch、git restore 有什么关系？",
+    "anchor": "https://www.xiaolincoding.com/interview/git.html#git-checkout、git-switch、git-restore-有什么关系"
+   },
+   {
+    "level": 2,
+    "text": "git stash 是做什么用的？常用命令有哪些？",
+    "anchor": "https://www.xiaolincoding.com/interview/git.html#git-stash-是做什么用的-常用命令有哪些"
+   },
+   {
+    "level": 2,
+    "text": "不小心把敏感信息（密码、密钥）提交到 Git 怎么办？",
+    "anchor": "https://www.xiaolincoding.com/interview/git.html#不小心把敏感信息-密码、密钥-提交到-git-怎么办"
+   },
+   {
+    "level": 2,
+    "text": "git pull 和 git pull --rebase 的区别是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/git.html#git-pull-和-git-pull-rebase-的区别是什么"
+   },
+   {
+    "level": 2,
+    "text": "什么是 Fast-Forward 合并？和普通 merge 有什么区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/git.html#什么是-fast-forward-合并-和普通-merge-有什么区别"
+   },
+   {
+    "level": 2,
+    "text": "git cherry-pick 是做什么的？什么场景用？",
+    "anchor": "https://www.xiaolincoding.com/interview/git.html#git-cherry-pick-是做什么的-什么场景用"
+   },
+   {
+    "level": 2,
+    "text": "如何删除本地分支和远程分支？",
+    "anchor": "https://www.xiaolincoding.com/interview/git.html#如何删除本地分支和远程分支"
+   },
+   {
+    "level": 2,
+    "text": "常见的 Git 工作流有哪些？",
+    "anchor": "https://www.xiaolincoding.com/interview/git.html#常见的-git-工作流有哪些"
+   },
+   {
+    "level": 2,
+    "text": "Fork、Clone、Pull Request 在 GitHub 协作中分别是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/git.html#fork、clone、pull-request-在-github-协作中分别是什么"
+   },
+   {
+    "level": 2,
+    "text": "git log 常用参数有哪些？",
+    "anchor": "https://www.xiaolincoding.com/interview/git.html#git-log-常用参数有哪些"
+   },
+   {
+    "level": 2,
+    "text": "git tag 有什么用？轻量标签和附注标签有什么区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/git.html#git-tag-有什么用-轻量标签和附注标签有什么区别"
+   },
+   {
+    "level": 2,
+    "text": "git blame 和 git bisect 分别是做什么的？",
+    "anchor": "https://www.xiaolincoding.com/interview/git.html#git-blame-和-git-bisect-分别是做什么的"
+   },
+   {
+    "level": 2,
+    "text": ".gitignore 里加了文件为什么不生效？",
+    "anchor": "https://www.xiaolincoding.com/interview/git.html#gitignore-里加了文件为什么不生效"
+   },
+   {
+    "level": 2,
+    "text": "推荐学习",
+    "anchor": "https://www.xiaolincoding.com/interview/git.html#推荐学习"
+   }
+  ]
+ },
+ "algorithms": {
+  "cat": "算法",
+  "label": "算法",
+  "url": "https://www.xiaolincoding.com/interview/algorithms.html",
+  "items": [
+   {
+    "level": 2,
+    "text": "算法",
+    "anchor": "https://www.xiaolincoding.com/interview/algorithms.html#算法"
+   }
+  ]
+ },
+ "data": {
+  "cat": "算法",
+  "label": "数据结构与算法",
+  "url": "https://www.xiaolincoding.com/interview/data.html",
+  "items": [
+   {
+    "level": 2,
+    "text": "数据结构",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#数据结构"
+   },
+   {
+    "level": 3,
+    "text": "了解哪些数据结构？",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#了解哪些数据结构"
+   },
+   {
+    "level": 3,
+    "text": "数组和链表区别是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#数组和链表区别是什么"
+   },
+   {
+    "level": 3,
+    "text": "为什么数组查询的复杂度为O(1)？",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#为什么数组查询的复杂度为o-1"
+   },
+   {
+    "level": 3,
+    "text": "说一下队列和栈的区别",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#说一下队列和栈的区别"
+   },
+   {
+    "level": 3,
+    "text": "介绍一下数据结构中的栈？怎么用 java 实现？",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#介绍一下数据结构中的栈-怎么用-java-实现"
+   },
+   {
+    "level": 3,
+    "text": "如何使用两个栈实现队列？",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#如何使用两个栈实现队列"
+   },
+   {
+    "level": 3,
+    "text": "常见的队列有哪些及应用场景？",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#常见的队列有哪些及应用场景"
+   },
+   {
+    "level": 3,
+    "text": "平衡二叉树结构是怎么样的？",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#平衡二叉树结构是怎么样的"
+   },
+   {
+    "level": 3,
+    "text": "红黑树说一下，跳表说一下？",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#红黑树说一下-跳表说一下"
+   },
+   {
+    "level": 3,
+    "text": "你知道什么地方用了红黑树和跳表吗？",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#你知道什么地方用了红黑树和跳表吗"
+   },
+   {
+    "level": 3,
+    "text": "跳表时间复杂度？",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#跳表时间复杂度"
+   },
+   {
+    "level": 3,
+    "text": "红黑树的数据结构介绍一下？",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#红黑树的数据结构介绍一下"
+   },
+   {
+    "level": 3,
+    "text": "红黑树和AVL树相比查询性能好还是插入性能好一些？",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#红黑树和avl树相比查询性能好还是插入性能好一些"
+   },
+   {
+    "level": 3,
+    "text": "二叉树搜索最坏的时间复杂度，为什么会这样？以及用什么结果解决？",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#二叉树搜索最坏的时间复杂度-为什么会这样-以及用什么结果解决"
+   },
+   {
+    "level": 3,
+    "text": "B+树的特点是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#b-树的特点是什么"
+   },
+   {
+    "level": 3,
+    "text": "B+树和B树有什么不一样，B+树的叶子节点和非叶子节点有什么不一样，非叶子节点会不会存数据？",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#b-树和b树有什么不一样-b-树的叶子节点和非叶子节点有什么不一样-非叶子节点会不会存数据"
+   },
+   {
+    "level": 3,
+    "text": "红黑树，b树，b+树有什么区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#红黑树-b树-b-树有什么区别"
+   },
+   {
+    "level": 3,
+    "text": "堆是什么？",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#堆是什么"
+   },
+   {
+    "level": 3,
+    "text": "前缀树是什么？有什么应用？",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#前缀树是什么-有什么应用"
+   },
+   {
+    "level": 3,
+    "text": "LRU是什么？如何实现？",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#lru是什么-如何实现"
+   },
+   {
+    "level": 3,
+    "text": "布隆过滤器怎么设计？时间复杂度？",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#布隆过滤器怎么设计-时间复杂度"
+   },
+   {
+    "level": 2,
+    "text": "排序算法",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#排序算法"
+   },
+   {
+    "level": 3,
+    "text": "说几个你懂的排序算法，并说明其时间空间复杂度",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#说几个你懂的排序算法-并说明其时间空间复杂度"
+   },
+   {
+    "level": 3,
+    "text": "讲一下冒泡排序算法",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#讲一下冒泡排序算法"
+   },
+   {
+    "level": 3,
+    "text": "讲一下快排原理",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#讲一下快排原理"
+   },
+   {
+    "level": 3,
+    "text": "堆排序算法原理，稳定吗？",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#堆排序算法原理-稳定吗"
+   },
+   {
+    "level": 3,
+    "text": "归并排序和快速排序的使用场景",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#归并排序和快速排序的使用场景"
+   },
+   {
+    "level": 3,
+    "text": "什么是排序稳定性？",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#什么是排序稳定性"
+   },
+   {
+    "level": 3,
+    "text": "稳定和不稳定排序算法有什么特点？",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#稳定和不稳定排序算法有什么特点"
+   },
+   {
+    "level": 3,
+    "text": "说说快排流程，时间复杂度",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#说说快排流程-时间复杂度"
+   },
+   {
+    "level": 3,
+    "text": "快排为什么时间复杂度最差是O（n^2）",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#快排为什么时间复杂度最差是o-n-2"
+   },
+   {
+    "level": 3,
+    "text": "快排这么强，那冒泡排序还有必要吗？",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#快排这么强-那冒泡排序还有必要吗"
+   },
+   {
+    "level": 3,
+    "text": "如果要对一个很大的数据集，进行排序，而没办法一次性在内存排序，这时候怎么办？",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#如果要对一个很大的数据集-进行排序-而没办法一次性在内存排序-这时候怎么办"
+   },
+   {
+    "level": 3,
+    "text": "数组长度为N，找出最大的前K个值，怎么设计这个算法？时间复杂度是多少",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#数组长度为n-找出最大的前k个值-怎么设计这个算法-时间复杂度是多少"
+   },
+   {
+    "level": 2,
+    "text": "经典算法与思想",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#经典算法与思想"
+   },
+   {
+    "level": 3,
+    "text": "哈希表的原理是什么？哈希冲突怎么解决？",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#哈希表的原理是什么-哈希冲突怎么解决"
+   },
+   {
+    "level": 3,
+    "text": "归并排序的原理是什么？怎么实现？",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#归并排序的原理是什么-怎么实现"
+   },
+   {
+    "level": 3,
+    "text": "二分查找怎么实现？写代码时容易出哪些坑？",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#二分查找怎么实现-写代码时容易出哪些坑"
+   },
+   {
+    "level": 3,
+    "text": "DFS 和 BFS 有什么区别？分别在什么场景用？",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#dfs-和-bfs-有什么区别-分别在什么场景用"
+   },
+   {
+    "level": 3,
+    "text": "如何反转一个链表？",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#如何反转一个链表"
+   },
+   {
+    "level": 3,
+    "text": "如何判断一个链表是否有环？如何找到环的入口节点？",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#如何判断一个链表是否有环-如何找到环的入口节点"
+   },
+   {
+    "level": 3,
+    "text": "二叉树有几种遍历方式？分别怎么实现？",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#二叉树有几种遍历方式-分别怎么实现"
+   },
+   {
+    "level": 3,
+    "text": "什么是动态规划？典型的动态规划问题有哪些？",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#什么是动态规划-典型的动态规划问题有哪些"
+   },
+   {
+    "level": 3,
+    "text": "时间复杂度和空间复杂度怎么分析？",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#时间复杂度和空间复杂度怎么分析"
+   },
+   {
+    "level": 3,
+    "text": "贪心算法和动态规划有什么区别？",
+    "anchor": "https://www.xiaolincoding.com/interview/data.html#贪心算法和动态规划有什么区别"
+   }
+  ]
+ }
+}

@@ -243,36 +243,7 @@
 .fc-filter { margin-left: auto; width: 180px; }
 .fc-plan-settings { margin-bottom: 8px; }
 
-/* ---------------- 卡片列表 ---------------- */
-
-.fc-card-list { display: flex; flex-direction: column; gap: 10px; }
-
-.fc-card-row {
-    display: grid;
-    grid-template-columns: 1fr auto auto;
-    align-items: center;
-    gap: 16px;
-    padding: 14px 18px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--r-lg);
-}
-.fc-card-main { min-width: 0; }
-.fc-card-front { font-size: 14px; font-weight: 600; }
-.fc-card-back-src {
-    margin-top: 4px;
-    font-size: 12px;
-    color: var(--text-muted);
-    white-space: pre-wrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    -webkit-box-orient: vertical;
-}
-.fc-card-meta { display: flex; flex-direction: column; gap: 3px; font-size: 11.5px; text-align: right; }
-.fc-card-actions { display: flex; gap: 2px; }
+/* ---------------- 卡片状态徽章 ---------------- */
 
 .fc-state {
     align-self: flex-end;
@@ -624,6 +595,9 @@ kbd {
     transition: border-color 0.16s, color 0.16s, background 0.16s;
 }
 .fc-chip:hover { border-color: var(--accent-tint-2); color: var(--primary); }
+/* 口语页也在用这个 chip（干扰项那一排），禁用态原本写在 speaking.css 里，
+   两份样式表定义同一个裸类，谁后加载谁说了算 —— 收回到组件自己这儿 */
+.fc-chip:disabled { opacity: 0.5; cursor: not-allowed; }
 .fc-chip.on {
     color: var(--surface);
     background: var(--primary);
@@ -793,4 +767,295 @@ kbd {
     .fc-strength li { grid-template-columns: 72px 1fr 64px; gap: 8px; }
     /* 统计表列多，窄屏让它自己横向滚，别把整页撑宽 */
     .fc-table { display: block; overflow-x: auto; white-space: nowrap; }
+}
+
+/* ============================================================
+   卡片工作台：左边题目列表 + 右边详情 / 编辑 / 预览
+
+   两列而不是一列长表：卡多了之后一列要一直上下滚，
+   而且就地展开编辑会把下面的行全推走，改完找不回原来的位置。
+   ============================================================ */
+
+.fc-workbench {
+    display: grid;
+    grid-template-columns: 300px minmax(0, 1fr);
+    gap: var(--sp-4);
+    align-items: start;
+    margin-top: var(--sp-4);
+}
+
+/* ---------------- 左：题目列表 ---------------- */
+
+.fc-rail {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+    padding: var(--sp-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-card);
+    /* 跟着页面滚到顶就停住 —— 右边内容长的时候，列表不该跟着滚出视野。
+       减去顶栏高度再留一点缝 */
+    position: sticky;
+    top: 76px;
+    max-height: calc(100vh - 96px);
+}
+
+.fc-rail-head { display: flex; gap: var(--sp-2); }
+/* 覆盖 .fc-filter 那条给旧版区块标题用的 margin-left:auto + 定宽 */
+.fc-rail-head .fc-filter { flex: 1; width: auto; min-width: 0; margin-left: 0; }
+
+.fc-rail-add {
+    flex: 0 0 auto;
+    width: 34px;
+    padding: 0;
+    justify-content: center;
+}
+
+.fc-rail-count { margin: 0; font-size: var(--fs-xs); }
+
+.fc-rail-list {
+    flex: 1;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow-y: auto;
+}
+
+/* 顶对齐而不是居中：题目会换行把这一行撑高，
+   居中的话星标会飘到三行文字的正中间，看着像挂在半空 */
+.fc-rail-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 2px;
+    border-radius: var(--radius-md);
+}
+
+.fc-rail-list li:hover { background: var(--color-bg-alt); }
+
+.fc-rail-item {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: flex-start;
+    gap: var(--sp-2);
+    padding: 8px 6px 8px 9px;
+    line-height: 1.55;
+    border: none;
+    border-radius: var(--radius-md);
+    background: transparent;
+    color: var(--color-text);
+    font: inherit;
+    font-size: var(--fs-sm);
+    text-align: left;
+    cursor: pointer;
+    transition: color var(--transition-normal), background var(--transition-normal);
+}
+
+/* 选中项：淡青绿底 + 左侧那道 3px 的条，跟侧栏当前项是同一套语言 */
+.fc-rail-item.is-active {
+    background: var(--accent-tint);
+    color: var(--color-primary-hover);
+    font-weight: 600;
+    box-shadow: inset 3px 0 0 var(--color-primary);
+}
+
+/* 题目完整显示，长了就往下撑开。
+   不截断的理由：这批卡的开头常常是同一句式（「什么是…」「…和…有什么区别」），
+   截成一行之后好几张长得一模一样，等于没法从列表里认卡。
+   break-word 兜住中英文混排里那种超长的不可断词（函数名、URL）。 */
+.fc-rail-front {
+    flex: 1;
+    min-width: 0;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+/* 状态点：一个 6px 的小圆，靠颜色区分新卡 / 学习中 / 复习。
+   不写字是因为这一行的主角是题目，状态只需要「扫一眼有个印象」 */
+/* 状态点跟第一行文字对齐 —— 顶对齐之后它会贴到行盒最上沿，
+   往下推半行才落在字的中线上 */
+.fc-dot {
+    flex: 0 0 auto;
+    width: 6px;
+    height: 6px;
+    margin-top: 7px;
+    border-radius: 50%;
+    background: var(--color-text-muted);
+}
+
+.fc-dot.fc-state-new { background: var(--rate-4); }
+.fc-dot.fc-state-learning,
+.fc-dot.fc-state-relearning { background: var(--warn); }
+.fc-dot.fc-state-review { background: var(--ok); }
+
+.fc-rail-star {
+    flex: 0 0 auto;
+    width: 26px;
+    height: 26px;
+    margin-top: 3px;
+    display: grid;
+    place-items: center;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    /* 没收藏时几乎看不见：一列全是灰星星会把题目盖住 */
+    color: var(--color-text-muted);
+    opacity: 0.35;
+    font-size: 12px;
+    cursor: pointer;
+    transition: color var(--transition-normal), opacity var(--transition-normal);
+}
+
+.fc-rail-list li:hover .fc-rail-star { opacity: 1; }
+.fc-rail-star:hover { color: var(--data); }
+.fc-rail-star.is-on { color: var(--data); opacity: 1; }
+
+.fc-rail-empty {
+    padding: var(--sp-5) var(--sp-2);
+    color: var(--color-text-muted);
+    font-size: var(--fs-sm);
+    text-align: center;
+}
+
+/* ---------------- 右：详情 / 编辑 / 预览 ---------------- */
+
+.fc-pane {
+    min-width: 0;
+    padding: var(--sp-5) var(--sp-6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-card);
+}
+
+.fc-pane-head {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--sp-3);
+    margin-bottom: var(--sp-4);
+}
+
+.fc-pane-head h3 {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+.fc-pane-actions { flex: 0 0 auto; display: flex; gap: 2px; }
+.fc-icon-btn.fc-star-on { color: var(--data); }
+
+/* 页签。下划线式而不是胶囊式：这是「同一张卡的三种看法」，
+   胶囊会让它们看起来像三个互不相干的开关 */
+.fc-tabs {
+    display: flex;
+    gap: var(--sp-1);
+    margin-bottom: var(--sp-4);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.fc-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    margin-bottom: -1px;
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    color: var(--color-text-secondary);
+    font: inherit;
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    cursor: pointer;
+    transition: color var(--transition-normal), border-color var(--transition-normal);
+}
+
+.fc-tab:hover { color: var(--color-text); }
+.fc-tab.is-active { color: var(--color-primary); border-bottom-color: var(--color-primary); }
+.fc-tab i { font-size: 11px; }
+
+/* 详情：两列的定义列表 */
+.fc-detail {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--sp-4) var(--sp-6);
+    margin: 0;
+}
+
+.fc-detail > div { display: flex; flex-direction: column; gap: 3px; }
+
+.fc-detail dt {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+}
+
+.fc-detail dd { margin: 0; font-size: var(--fs-md); }
+
+.fc-preview .u-label { margin: 0 0 6px; }
+.fc-preview .u-label + * { margin-bottom: var(--sp-5); }
+
+.fc-preview-front {
+    margin: 0;
+    padding: var(--sp-3) var(--sp-4);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-alt);
+    font-size: var(--fs-md);
+    font-weight: 600;
+}
+
+/* ---------------- 计划设置折叠 ---------------- */
+
+.fc-settings-fold { margin: var(--sp-4) 0 0; }
+
+.fc-settings-toggle {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    color: var(--color-text);
+    font: inherit;
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color var(--transition-normal), background var(--transition-normal);
+}
+
+.fc-settings-toggle:hover { border-color: var(--color-primary); background: rgba(13, 148, 136, 0.04); }
+.fc-settings-toggle i { width: 10px; font-size: 11px; color: var(--color-text-muted); }
+.fc-settings-toggle .fc-muted { margin-left: auto; font-weight: 400; font-size: var(--fs-xs); }
+
+/* ---------------- 窄屏：两列叠成一列 ---------------- */
+
+@media (max-width: 900px) {
+    .fc-workbench { grid-template-columns: minmax(0, 1fr); }
+
+    /* 叠起来之后列表不能再 sticky —— 那会让它一直挡在详情上面 */
+    .fc-rail {
+        position: static;
+        max-height: 340px;
+    }
+
+    .fc-pane { padding: var(--sp-4); }
+}
+
+/* 朗读中：按钮点亮。用主色而不是琥珀 —— 琥珀是收藏那颗星的语义，
+   两个都亮起来的时候要能分清谁是谁 */
+.fc-icon-btn.is-speaking {
+    color: var(--color-primary);
+    background: var(--accent-tint);
 }

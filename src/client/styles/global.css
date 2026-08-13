@@ -1,14 +1,20 @@
 /* ============================================================
    全站唯一的全局样式表 —— 只放真正全局的东西。
 
-   配色、字体、间距这些设计变量全在 theme.css，这里只管重置。
+   配色、字体、间距这些设计变量全在 theme.css，这里只管：
+   重置、动效关键帧、滚动条、以及三个到处都在用的共享控件
+   （主按钮 / 次按钮 / 返回链接）。
 
-   站里有几种完全不同的页面外观：套骨架的（左栏 + 右台）、
+   站里有几种完全不同的页面外观：套骨架的（侧栏 + 顶栏 + 内容）、
    沉浸式全屏的（背卡片 / 口语对话）、三线表编辑器、知识可视化。
    为了让它们互不干扰，规矩是：**除本文件与 theme.css 外，
    任何样式表都不许写 body / html 选择器**，
    页面级的整屏样式一律挂在自己的容器类上
    （.shell / .focus / .tt-shell / .viz-shell）。
+
+   还有一条：**不写工具类**。这个项目没装 Tailwind 也不要装 ——
+   页面挂的是语义类名（.config-card / .link-row / .fc-plan-card），
+   样式落在各自那一份 css 里。
    ============================================================ */
 
 *,
@@ -21,6 +27,10 @@ html,
 body {
     margin: 0;
     padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
@@ -58,4 +68,153 @@ select,
 textarea {
     font: inherit;
     color: inherit;
+}
+
+/* ============================================================
+   共享控件
+
+   这三个（主按钮 / 次按钮 / 返回链接）在好几个页面里各写过一遍，
+   现在收到这儿来。页面里原来那些 .u-btn / .u-btn-primary 仍然可用
+   （定义在 theme.css），两套的观感是对齐的。
+   ============================================================ */
+
+/* 主按钮：青绿填充，白字。悬停加深并抬 1px —— 全站的位移都不超过这个量 */
+.primary-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 28px;
+    border: none;
+    border-radius: var(--radius-md);
+    background: var(--color-primary);
+    color: #fff;
+    font-family: var(--font);
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.2;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    transition: background var(--transition-normal),
+                transform var(--transition-fast),
+                box-shadow var(--transition-normal);
+}
+
+.primary-button:hover:not(:disabled) {
+    background: var(--color-primary-hover);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+}
+
+.primary-button:active:not(:disabled) { transform: translateY(0); }
+
+.primary-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+/* 次按钮：透明底，1.5px 描边。悬停时**边框和文字一起**变青绿，
+   再垫一层几乎看不见的青绿底 */
+.secondary-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 28px;
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: transparent;
+    color: var(--color-text);
+    font-family: var(--font);
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.2;
+    cursor: pointer;
+    transition: border-color var(--transition-normal),
+                color var(--transition-normal),
+                background var(--transition-normal);
+}
+
+.secondary-button:hover:not(:disabled) {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    background: rgba(13, 148, 136, 0.04);
+}
+
+.secondary-button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* 返回链接。箭头单独一档字号，跟文字基线对齐后才不会显得缩在里面 */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color var(--transition-normal);
+}
+
+.back-link:hover { color: var(--color-primary); }
+.back-link .arrow { font-size: 1.1rem; line-height: 1; }
+
+/* ============================================================
+   动效
+
+   全站只有这四个关键帧。位移最多 20px（整页入场），
+   最长 320ms（侧栏滑出），除此之外都更小更短。
+   ============================================================ */
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.6; }
+    50%      { opacity: 1; }
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* 加载中：32px 的环，3px 边，顶边青绿，0.6s 匀速转 */
+.page-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+}
+
+.page-loading::after {
+    content: '';
+    width: 32px;
+    height: 32px;
+    border: 3px solid var(--color-border);
+    border-top-color: var(--color-primary);
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+
+/* 关掉动效不是「稍微慢一点」，是真的不要动 ——
+   前庭功能障碍的人看见位移就会不舒服，减一半没有意义 */
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 }

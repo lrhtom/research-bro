@@ -54,7 +54,10 @@ function withVoices(list: SpeechSynthesisVoice[]) {
     });
 }
 
-const { listEnglishVoices, voiceTier, bestAvailableTier, looksEnglish } = await import('./speech.js');
+const {
+    listEnglishVoices, voiceTier, bestAvailableTier, looksEnglish,
+    detectSpeechLang, bestVoiceFor,
+} = await import('./speech.js');
 
 // ------------------------------------------------------------
 
@@ -170,5 +173,52 @@ describe('英文正面识别', () => {
     it('代码味的英文仍然算 —— 字母够密就念', () => {
         expect(looksEnglish('O(n log n)')).toBe(true);
         expect(looksEnglish('int main()')).toBe(true);
+    });
+});
+
+// ------------------------------------------------------------
+
+describe('detectSpeechLang：这段该用哪种语言念', () => {
+    it('英文术语走英语 —— 记忆卡正面大量是这一类', () => {
+        expect(detectSpeechLang('authorization')).toBe('en-GB');
+        expect(detectSpeechLang('async request')).toBe('en-GB');
+    });
+
+    it('中文问句走中文', () => {
+        expect(detectSpeechLang('什么是测试金字塔？')).toBe('zh-CN');
+        // 中文里夹英文术语仍然算中文：主体是中文，用英语嗓子念整句会更糟
+        expect(detectSpeechLang('什么是 flaky test（不稳定测试）')).toBe('zh-CN');
+    });
+
+    it('日文先于中文判 —— 日文里混着汉字，先判汉字就会认成中文', () => {
+        expect(detectSpeechLang('テストを実行する')).toBe('ja-JP');
+        // 全是汉字、没有假名的日文确实分不出来，这是已知的取舍
+        expect(detectSpeechLang('実行')).toBe('zh-CN');
+    });
+
+    it('空串和纯符号退回英语，不抛错', () => {
+        expect(detectSpeechLang('')).toBe('en-GB');
+        expect(detectSpeechLang('O(1)')).toBe('en-GB');
+    });
+});
+
+describe('bestVoiceFor：按语言挑嗓子', () => {
+    it('挑得出对应语言的那一把，挑不到就返回 null', () => {
+        withVoices([
+            v('Microsoft Xiaoxiao Online (Natural)', 'zh-CN', false),
+            v('Microsoft Huihui', 'zh-CN'),
+            v('Microsoft Sonia Online (Natural)', 'en-GB', false),
+        ]);
+
+        // 同为中文，神经网络合成的那把排前面
+        expect(bestVoiceFor('zh-CN')?.name).toContain('Xiaoxiao');
+        expect(bestVoiceFor('en-GB')?.name).toContain('Sonia');
+        // 系统里一把日语嗓子都没有
+        expect(bestVoiceFor('ja-JP')).toBeNull();
+    });
+
+    it('同语族也算数：只有 zh-TW 时，要 zh-CN 也能拿到它', () => {
+        withVoices([v('Hanhan', 'zh-TW')]);
+        expect(bestVoiceFor('zh-CN')?.lang).toBe('zh-TW');
     });
 });

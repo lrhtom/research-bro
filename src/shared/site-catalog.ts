@@ -77,6 +77,16 @@ export const tools: Tool[] = [
         keywords: '记忆卡 闪卡 背单词 间隔重复 复习 anki fsrs flashcard spaced repetition 学习计划 markdown',
     },
     {
+        title: '记事本',
+        subtitle: 'Markdown Notebook',
+        desc: '左边一列笔记、右边编辑器加实时预览的 Markdown 记事本。支持标签筛选、按「今天 / 昨天 / 本周 / 更早」分组、格式工具栏与中英混排字数统计。写的时候每 0.5 秒往浏览器本地存一次草稿，存进本机 SQLite 只在你按保存或 Ctrl/⌘+S 时发生 —— 没有定时上传。',
+        icon: 'fa-note-sticky',
+        href: '/tools/notes',
+        accent: 'pink',
+        badges: ['实时预览', '本地草稿', 'SQLite 存储'],
+        keywords: '记事本 笔记 便签 markdown md 编辑器 预览 note notebook notes 标签 tag 草稿 draft 分栏 split 写作 摘录 待办 模板',
+    },
+    {
         title: '英语口语练习',
         subtitle: 'Scenario Role-play Speaking',
         desc: 'AI 扮演场景里那个具体的人，全程不出戏也不纠错。难度来自听辨压力：可以给对方叠上地方口音、快语速插话、酒吧噪音、电话音质。说话用浏览器自带的语音识别转文字，全程不录音；打字也能完整练完。',
@@ -109,12 +119,12 @@ export const tools: Tool[] = [
     {
         title: '编程比赛',
         subtitle: 'Programming Contests',
-        desc: '固定开周赛的线上编程比赛入口：Codeforces、AtCoder、力扣、牛客、CodeChef、yukicoder 六家算法竞赛，加上 CodePen 的前端创意挑战。只收有稳定周赛的站 —— 题库和真题存档一概不收。赛程页全部免登录就能看，下场比要各站自己的免费账号。',
+        desc: '固定开周赛的线上编程比赛入口：Codeforces、AtCoder、力扣（国际站与中国站两个入口）、牛客、CodeChef、yukicoder 六家算法竞赛，加上 Kaggle 的数据竞赛与 CodePen 的前端创意挑战。算法那一组只收有稳定周赛的站 —— 题库和真题存档一概不收。赛程页全部免登录就能看，下场比要各站自己的免费账号。',
         icon: 'fa-trophy',
         href: '/tools/contests',
         accent: 'amber',
         badges: ['免登录看赛程', '参赛免费', '算法 + 前端'],
-        keywords: '编程 比赛 竞赛 打比赛 周赛 算法 acm icpc oi codeforces cf atcoder abc arc agc 力扣 leetcode 双周赛 codechef starters 牛客 nowcoder 小白月赛 多校 yukicoder 日本 codepen 前端 挑战 contest challenge 刷题',
+        keywords: '编程 比赛 竞赛 打比赛 周赛 算法 acm icpc oi codeforces cf atcoder abc arc agc 力扣 leetcode 双周赛 国际站 中国站 codechef starters 牛客 nowcoder 小白月赛 多校 yukicoder 日本 kaggle 数据 机器学习 machine learning 数据科学 ai codepen 前端 挑战 contest challenge 刷题',
     },
     {
         title: '格式转换',

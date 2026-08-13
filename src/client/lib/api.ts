@@ -2,7 +2,7 @@
 
 import type {
     AssistantShortcut, AssistantStep, AssistantTodo,
-    Card, Plan, PlanWithStats, Rating, SessionResult, SpeakingReport, SpeakingSession,
+    Card, Note, Plan, PlanWithStats, Rating, SessionResult, SpeakingReport, SpeakingSession,
     SpeakingSessionFull, SpeakingSessionSummary, SpeakingTurn, StatsOverview, StudyState,
     TableFull, TableSummary,
 } from '../../shared/types';
@@ -27,6 +27,14 @@ function post<T>(url: string, body: unknown, init: RequestInit = {}): Promise<T>
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
         ...init,
+    }).then(json<T>);
+}
+
+function patch<T>(url: string, body: unknown): Promise<T> {
+    return fetch(url, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
     }).then(json<T>);
 }
 
@@ -76,6 +84,37 @@ export function apiRestoreBackup(
     mode: 'merge' | 'replace',
 ): Promise<RestoreResult> {
     return post<RestoreResult>('/api/backup', { tables, mode });
+}
+
+// ---------- 记事本 ----------
+//
+// 只有这五个。搜索没有接口（前端对拉全的列表自己过滤），
+// 标签没有接口（它就是笔记上的一个数组），草稿也没有接口（存浏览器本地）。
+
+export async function apiListNotes(): Promise<Note[]> {
+    return (await json<{ notes: Note[] }>(await fetch('/api/notes'))).notes;
+}
+
+export async function apiGetNote(id: number): Promise<Note> {
+    return (await json<{ note: Note }>(await fetch(`/api/notes/${id}`))).note;
+}
+
+export async function apiCreateNote(
+    body: { title?: string; tags?: string[]; content?: string },
+): Promise<Note> {
+    return (await post<{ note: Note }>('/api/notes', body)).note;
+}
+
+/** PATCH：只发改过的字段，没带的键服务端一律不动 */
+export async function apiUpdateNote(
+    id: number,
+    body: { title?: string; tags?: string[]; content?: string },
+): Promise<Note> {
+    return (await patch<{ note: Note }>(`/api/notes/${id}`, body)).note;
+}
+
+export async function apiDeleteNote(id: number): Promise<void> {
+    await json<{ ok: true }>(await fetch(`/api/notes/${id}`, { method: 'DELETE' }));
 }
 
 // ---------- 设置 ----------
@@ -154,6 +193,11 @@ export async function apiDeleteCard(cardId: number): Promise<void> {
 
 export async function apiResetCard(cardId: number): Promise<Card> {
     return (await post<{ card: Card }>(`/api/cards/${cardId}/reset`, {})).card;
+}
+
+/** 切换收藏。收藏的卡片在管理页排最前，但不影响学习时的出卡顺序。 */
+export async function apiToggleCardFavorite(cardId: number): Promise<Card> {
+    return (await post<{ card: Card }>(`/api/cards/${cardId}/favorite`, {})).card;
 }
 
 // ---------- 记忆卡：导入 ----------
@@ -284,17 +328,29 @@ export async function apiSpeakingReport(
     return post(`/api/speaking/sessions/${id}/report`, { regenerate });
 }
 
+export interface SpeakingTurnHandlers {
+    /** 每来一片就回调一次，调用方据此逐句朗读 —— 等整段回完再念，每轮要白等好几秒 */
+    onDelta(piece: string): void;
+    /**
+     * 服务端这一次没拿到内容、正在重来。
+     *
+     * 调用方必须把已经收到的半截**全部丢掉**（显示的文字 + 朗读队列）：
+     * 上一次可能吐了几个空白字符出来，不清掉的话重试的正文会接在它后面。
+     */
+    onRetry?(attempt: number): void;
+}
+
 /**
  * 说一句，流式收 AI 的回复。
  *
- * 每来一片就回调一次 onDelta，客户端据此逐句朗读 ——
- * 等整段回完再念，每轮要白等好几秒。
+ * 空回复不会直接变成错误 —— 服务端会自己重来（见 routes-speaking.ts），
+ * 每重来一次这里就回调一次 onRetry。
  */
 export async function apiSpeakingTurn(
     id: number,
     content: string,
     source: 'typed' | 'speech',
-    onDelta: (piece: string) => void,
+    handlers: SpeakingTurnHandlers,
     signal?: AbortSignal,
 ): Promise<{ turn: SpeakingTurn | null; error?: string }> {
     const res = await fetch(`/api/speaking/sessions/${id}/turn`, {
@@ -334,9 +390,11 @@ export async function apiSpeakingTurn(
                 if (!line.startsWith('data:')) continue;
                 try {
                     const evt = JSON.parse(line.slice(5).trim()) as {
-                        delta?: string; done?: boolean; turn?: SpeakingTurn; error?: string;
+                        delta?: string; retry?: number; done?: boolean;
+                        turn?: SpeakingTurn; error?: string;
                     };
-                    if (evt.delta) onDelta(evt.delta);
+                    if (evt.delta) handlers.onDelta(evt.delta);
+                    if (evt.retry) handlers.onRetry?.(evt.retry);
                     if (evt.done) { turn = evt.turn ?? null; error = evt.error; }
                 } catch { /* 半个 JSON，跳过 */ }
             }

@@ -192,6 +192,74 @@ export async function chat(
 }
 
 /**
+ * 空回复算失败，重试。
+ *
+ * 模型偶尔会返回一个内容为空的 choice —— 温度高、被安全策略截断、
+ * 上游负载抖动都会这样，下一次同样的请求往往就好了。
+ * 以前这种情况直接把「AI 没有返回内容」摔到用户脸上，
+ * 但用户什么都没做错，能自己重试的事不该让他重来一遍。
+ *
+ * 不重试的两种情况见 shouldRetryLlm：配置错（重试多少次都一样）
+ * 和客户端主动取消（人已经走了）。
+ */
+export async function chatNonEmpty(
+    messages: ChatMessage[],
+    opts: { temperature?: number; maxTokens?: number; signal?: AbortSignal } = {},
+    attempts = LLM_ATTEMPTS,
+): Promise<string> {
+    let lastError: unknown = null;
+
+    for (let i = 1; i <= attempts; i += 1) {
+        // 每一轮开头都要重新看一眼有没有被取消。
+        //
+        // 光在 catch 里看是不够的：取消可能发生在两次尝试之间的等待里
+        // （sleepBeforeRetry 一被 abort 就提前返回），那一路没有任何异常抛出，
+        // 不在这里拦一下就会对着一个已经没人听的请求继续补刀。
+        if (opts.signal?.aborted) throw new LlmError('请求已取消', 499);
+
+        try {
+            const text = (await chat(messages, opts)).trim();
+            if (text) return text;
+            lastError = new LlmError('大模型返回了空内容');
+        } catch (e) {
+            if (!shouldRetryLlm(e, opts.signal)) throw e;
+            lastError = e;
+        }
+        if (i < attempts) await sleepBeforeRetry(i, opts.signal);
+    }
+
+    throw lastError instanceof LlmError
+        ? lastError
+        : new LlmError(`大模型连续 ${attempts} 次没有返回有效内容，稍后再试或换一个模型`);
+}
+
+/** 默认重试次数（含第一次）。再多就是在硬撑一个坏掉的上游，白等还烧钱。 */
+export const LLM_ATTEMPTS = 3;
+
+/**
+ * 这个错误值不值得重试。
+ *
+ * 不值得的两类：
+ *   · 客户端已经断开 —— 人都走了，重试是给空气说话
+ *   · 503（没配 key / 配错了）—— 换十次也是同一个结果，直接让用户去改配置
+ */
+export function shouldRetryLlm(error: unknown, signal?: AbortSignal): boolean {
+    if (signal?.aborted) return false;
+    if (error instanceof Error && error.name === 'AbortError') return false;
+    if (error instanceof LlmError && error.status === 503) return false;
+    return true;
+}
+
+/** 退避一下再重来。抖动的上游隔几百毫秒往往就恢复了，贴着重试只会连着撞。 */
+export async function sleepBeforeRetry(attempt: number, signal?: AbortSignal): Promise<void> {
+    const ms = Math.min(400 * attempt, 1200);
+    await new Promise<void>((resolve) => {
+        const timer = setTimeout(resolve, ms);
+        signal?.addEventListener('abort', () => { clearTimeout(timer); resolve(); }, { once: true });
+    });
+}
+
+/**
  * 流式回答，逐段吐出文本增量。
  *
  * 对话轮必须流式：客户端拿到第一句就能开始朗读，

@@ -93,6 +93,8 @@ export interface Card {
     lastReview: string | null;
     reps: number;
     lapses: number;
+    /** 收藏。只影响管理页的排序与筛选，不参与 FSRS 调度 */
+    favorite: boolean;
     createdAt: string;
     updatedAt: string;
 }
@@ -381,4 +383,21 @@ export interface AssistantStep {
     /** 一句话摘要 */
     summary?: string;
     ok?: boolean;
+}
+
+// ---------- Markdown 记事本 ----------
+
+/**
+ * 一条笔记。
+ *
+ * tags 是笔记自己身上的一个字符串数组，不是关联表 —— 没有标签实体，
+ * 也就没有改名和配色。整个标签功能就是「可以拿来筛选的一串字符串」。
+ */
+export interface Note {
+    id: number;
+    title: string;
+    tags: string[];
+    content: string;
+    createdAt: string;
+    updatedAt: string;
 }

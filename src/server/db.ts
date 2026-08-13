@@ -70,10 +70,16 @@ function applyColumnMigrations(target: Database.Database): void {
     };
 
     addColumn('plans', 'favorite', 'favorite INTEGER NOT NULL DEFAULT 0');
+    addColumn('cards', 'favorite', 'favorite INTEGER NOT NULL DEFAULT 0');
 
     // 计划列表默认按「先收藏、再自定义顺序」排
     target.exec(
         'CREATE INDEX IF NOT EXISTS idx_plans_order ON plans (favorite DESC, sort_order ASC, id ASC)',
+    );
+    // 卡片管理页同理。注意这个索引只服务管理界面 ——
+    // 学习队列走的是 idx_cards_plan_due，跟收藏没关系
+    target.exec(
+        'CREATE INDEX IF NOT EXISTS idx_cards_order ON cards (plan_id, favorite DESC, sort_order ASC, id ASC)',
     );
 }
 

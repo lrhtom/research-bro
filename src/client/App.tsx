@@ -9,6 +9,7 @@ import CoursesPage from './pages/CoursesPage';
 import ConvertersPage from './pages/ConvertersPage';
 import ContestsPage from './pages/ContestsPage';
 import PaperCheckPage from './pages/PaperCheckPage';
+import NotesPage from './pages/NotesPage';
 import PlansPage from './pages/PlansPage';
 import PlanDetailPage from './pages/PlanDetailPage';
 import StudyPage from './pages/StudyPage';
@@ -51,6 +52,7 @@ export default function App() {
                 <Route path="/tools/contests" element={<ContestsPage />} />
                 <Route path="/tools/converters" element={<ConvertersPage />} />
                 <Route path="/tools/paper-check" element={<PaperCheckPage />} />
+                <Route path="/tools/notes" element={<NotesPage />} />
 
                 <Route path="/tools/flashcards" element={<PlansPage />} />
                 {/* 固定段要写在 :planId 之前 —— React Router 自己也会按「静态段优先」

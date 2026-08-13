@@ -18,12 +18,15 @@
 //    · 多引擎翻译（Google/DeepL/…） —— 会多出一套 key 和一个会挂的外部依赖，
 //                        站里既然已经有大模型，就用它
 //
-//  沉浸式页面上不出现：背卡片要用数字键评分、口语房间自己在占着麦克风，
-//  这两个场景多一颗会说话的球只会碍事。
+//  全站每一页都有它，沉浸式的背卡片和口语房间也不例外。
+//  代价知道两条，都可以接受：背卡片的数字键评分在焦点落进面板输入框时会失灵
+//  （关掉面板就好），口语房间里两边都想用麦克风时只有一边听得到
+//  （浏览器同一时刻只给一个 SpeechRecognition 实例）。
+//  默认贴边收起，不点开就不会碍事。
 // ============================================================
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
     apiAssistantChat, apiAssistantStatus, apiClearDoneTodos, apiCreateShortcut, apiCreateTodo,
     apiDeleteShortcut, apiDeleteTodo, apiListShortcuts, apiListTodos, apiTranslate,
@@ -65,12 +68,6 @@ const K_TOOLS = 'assistant.tools';
 
 /** 页面摘要最多采多少个元素。再多也只是把上下文撑满，帮不上忙。 */
 const CONTEXT_MAX_ELEMENTS = 40;
-
-/** 助手不出现的路线：沉浸式的两个 */
-const HIDDEN_ROUTES = [
-    /^\/tools\/flashcards\/[^/]+\/study$/,
-    /^\/tools\/speaking\/[^/]+$/,
-];
 
 const DEFAULT_PROFILE: Profile = {
     name: '小工',
@@ -188,13 +185,8 @@ function loadJson<T>(key: string, fallback: T): T {
 
 export default function AssistantBall() {
     const navigate = useNavigate();
-    const location = useLocation();
 
     const rootRef = useRef<HTMLDivElement | null>(null);
-    const hidden = useMemo(
-        () => HIDDEN_ROUTES.some((re) => re.test(location.pathname)),
-        [location.pathname],
-    );
 
     // ---------- 位置与贴边 ----------
 
@@ -708,8 +700,6 @@ export default function AssistantBall() {
             setShooting(false);
         }
     };
-
-    if (hidden) return null;
 
     const panelSide = pos.dock === 'right' || pos.x > viewport.w / 2 ? 'left' : 'right';
     const panelUp = pos.y > viewport.h / 2;

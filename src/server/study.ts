@@ -44,6 +44,7 @@ interface CardRow {
     elapsed_days: number;
     scheduled_days: number;
     learning_steps: number;
+    favorite: number;
     sort_order: number;
     created_at: string;
     updated_at: string;
@@ -89,6 +90,7 @@ function toCard(r: CardRow): Card {
         lastReview: r.last_review,
         reps: r.reps,
         lapses: r.lapses,
+        favorite: r.favorite === 1,
         createdAt: r.created_at,
         updatedAt: r.updated_at,
     };
@@ -185,11 +187,29 @@ function clampLimit(v: number | undefined): number {
 
 // ---------- 卡片 ----------
 
+/**
+ * 管理页的卡片列表：收藏的排最前，其余按自定义顺序。
+ *
+ * 只有这一个查询这么排。学习队列走的是 nextCard 那条按 due 排的路 ——
+ * 收藏不参与调度，否则这些卡的复习间隔会长期偏离 FSRS 的安排。
+ */
 export function listCards(planId: number): Card[] {
     const rows = db().prepare(
-        'SELECT * FROM cards WHERE plan_id = ? ORDER BY sort_order ASC, id ASC',
+        'SELECT * FROM cards WHERE plan_id = ? ORDER BY favorite DESC, sort_order ASC, id ASC',
     ).all(planId) as CardRow[];
     return rows.map(toCard);
+}
+
+/** 切换收藏。卡片不存在返回 null，路由层据此回 404。 */
+export function toggleCardFavorite(cardId: number): Card | null {
+    const cur = db().prepare('SELECT favorite FROM cards WHERE id = ?').get(cardId) as
+        | { favorite: number }
+        | undefined;
+    if (!cur) return null;
+
+    db().prepare('UPDATE cards SET favorite = ?, updated_at = ? WHERE id = ?')
+        .run(cur.favorite === 1 ? 0 : 1, nowIso(), cardId);
+    return toCard(db().prepare('SELECT * FROM cards WHERE id = ?').get(cardId) as CardRow);
 }
 
 export function createCard(planId: number, front: string, back: string, now = new Date()): Card {

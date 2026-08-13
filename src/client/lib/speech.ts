@@ -291,6 +291,87 @@ export function cancelSpeech(): void {
 }
 
 /**
+ * 从文字猜该用哪一种语言念。
+ *
+ * 顺序有讲究：**假名必须先判**。日文里混着大量汉字，先判汉字的话
+ * 「テストを実行する」会被当成中文，用中文嗓子念日文比不念还难听。
+ *
+ * 只分这三档就够了 —— 记忆卡的正面要么是英文术语（authorization），
+ * 要么是中文问句，日文是顺手兜住的。再细分下去收益很小。
+ */
+export function detectSpeechLang(text: string): string {
+    if (/[぀-ヿ]/.test(text)) return 'ja-JP';       // 平假名 / 片假名
+    if (/[一-鿿豈-﫿]/.test(text)) return 'zh-CN';
+    return 'en-GB';
+}
+
+/**
+ * 某个语言下最好的一把嗓子。
+ *
+ * 排序逻辑跟英语那套一致（神经网络合成 > 云端 > 本地机器音），
+ * 但不带 en-GB 的地区偏好 —— 那是英语场景专有的。
+ * 该语言一把嗓子都没有就返回 null，调用方仍然可以只设 lang 让系统兜底。
+ */
+export function bestVoiceFor(lang: string): SpeechSynthesisVoice | null {
+    if (!speechSynthesisSupported()) return null;
+    const prefix = lang.slice(0, 2).toLowerCase();
+
+    const score = (v: SpeechSynthesisVoice) => {
+        let s = 0;
+        if (RX_NATURAL.test(v.name)) s += 100;
+        if (RX_PREMIUM.test(v.name)) s += 90;
+        if (RX_ONLINE.test(v.name)) s += 55;
+        if (v.localService === false) s += 30;
+        if (RX_NOVELTY.test(v.name)) s -= 300;
+        // 完全匹配（zh-CN）优于同语族（zh-TW）
+        if (v.lang.toLowerCase().replace('_', '-') === lang.toLowerCase()) s += 20;
+        return s;
+    };
+
+    const pool = window.speechSynthesis.getVoices()
+        .filter((v) => v.lang.slice(0, 2).toLowerCase() === prefix);
+    if (pool.length === 0) return null;
+
+    return pool.sort((a, b) => score(b) - score(a) || a.name.localeCompare(b.name))[0];
+}
+
+/**
+ * 念一段文字，语言自己判、嗓子自己挑。
+ *
+ * 跟 speakOnce 的分工：speakOnce 是学习页用的，调用方已经选好了英语嗓子；
+ * 这个是「随手念一下这段」用的，中英日都能应付。同样是打断式，不排队。
+ *
+ * 返回值是「有没有真的开始念」—— 浏览器不支持、或者传进来是空白，
+ * 都返回 false，调用方据此决定要不要把按钮点亮。
+ */
+export function speakAuto(
+    text: string,
+    opts: { rate?: number; onEnd?: () => void } = {},
+): boolean {
+    if (!speechSynthesisSupported()) return false;
+    const s = text.trim();
+    if (!s) return false;
+
+    window.speechSynthesis.cancel();
+
+    const lang = detectSpeechLang(s);
+    const u = new SpeechSynthesisUtterance(s);
+    const voice = bestVoiceFor(lang);
+    if (voice) u.voice = voice;
+    u.lang = voice?.lang ?? lang;
+    u.rate = opts.rate ?? 0.95;
+
+    // 出错也要回调：念不出来时按钮不能一直停在「正在播放」上
+    if (opts.onEnd) {
+        u.onend = opts.onEnd;
+        u.onerror = opts.onEnd;
+    }
+
+    window.speechSynthesis.speak(u);
+    return true;
+}
+
+/**
  * 把流式吐出来的文本按句子朗读。
  *
  * 之所以要按句切：流式回复是一小片一小片来的，攒够一整句就先念，

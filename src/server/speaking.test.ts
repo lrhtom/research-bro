@@ -48,16 +48,24 @@ function fakeAnswer(system: string): string {
 
 vi.mock('./llm.js', async () => {
     const actual = await vi.importActual<typeof import('./llm.js')>('./llm.js');
+
+    const fakeChat = async (messages: Array<{ role: string; content: string }>) => {
+        const system = messages.find((m) => m.role === 'system')?.content ?? '';
+        const user = messages.filter((m) => m.role === 'user').pop()?.content ?? '';
+        llmCalls.push({ system, user });
+        return fakeAnswer(system);
+    };
+
     return {
         ...actual,
         llmConfigured: () => true,
         llmStatus: () => ({ configured: true, model: 'fake', baseUrl: 'fake' }),
-        chat: async (messages: Array<{ role: string; content: string }>) => {
-            const system = messages.find((m) => m.role === 'system')?.content ?? '';
-            const user = messages.filter((m) => m.role === 'user').pop()?.content ?? '';
-            llmCalls.push({ system, user });
-            return fakeAnswer(system);
-        },
+        chat: fakeChat,
+        // chatNonEmpty 真身会去调模块内部那个真的 chat，绕开上面这个假的，
+        // 于是测试会撞到「还没有配置大模型」。这里让它走同一个假回复 ——
+        // 空回复重试的逻辑本身另有单测覆盖，这份测的是口语流程。
+        chatNonEmpty: fakeChat,
+        sleepBeforeRetry: async () => {},
         // eslint-disable-next-line require-yield
         chatStream: async function* (messages: Array<{ role: string; content: string }>) {
             const system = messages.find((m) => m.role === 'system')?.content ?? '';

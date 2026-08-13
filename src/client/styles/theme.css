@@ -1,39 +1,50 @@
 /* ============================================================
-   工具箱 · 设计基元「案头」
+   工具箱 · 设计基元
    ============================================================
 
-   这一版的定位是**案头工具**，不是 SaaS 落地页：
-   一天要盯好几个小时，所以底色是暖白的纸而不是刺眼的纯白，
-   正文是墨色而不是灰蓝，装饰一律做成 1px 的界线而不是大面积渐变。
+   这一版换成了 aIELTS 那一套视觉语言。一句话概括它：
+   **暖白的页面底、唯一一支青绿、大量留白的白卡片配发丝边和几乎看不见的
+   投影、每一组上面一个极小的全大写标签、一条很深的滑出式侧栏配薄荷色
+   当前项，以及位移永不超过 6px、时长永不超过 320ms 的动效。**
 
-   三条贯穿全站的规矩：
-     1. 标题走衬线，正文走无衬线，**所有数字走等宽** ——
-        数字对齐是这个站的功能（表格行列数、复习张数、留存率、到期日），
-        比例字体下同一列的数字会长短不齐，读起来要费一次眼。
-     2. 只有一支强调色（松绿）。它只出现在「当前在哪儿」和「主操作」上，
-        用得越省，它指示的东西越显眼。
-     3. 圆角只有 4 / 8 / 10 三档，阴影只有两级。
-        以前那套 20px 圆角 + 毛玻璃 + 大投影的卡片，堆多了整页发糊。
+   三条不能破的规矩：
 
-   字体没有走网络字体：这个站断网也要能用（README 里写了），
-   所以用的是各平台自带、但**有性格**的那几款衬线（Constantia / Palatino /
-   宋体），而不是再引一套 Inter。
+     1. 中性色走**暖石灰**（stone），不是冷石板（slate）。
+        #fafaf9 / #1c1917 / #78716c / #e7e5e4 配一支青绿 —— 这就是全部身份。
+        换成冷灰立刻变成另一个产品。
+     2. 只有一支强调色（青绿 #0d9488）。它只出现在「当前在哪儿」和
+        「主操作」上，用得越省，它指示的东西越显眼。
+        另外五支彩色只用于给分类做色标，绝不用来强调。
+     3. 不写工具类。页面挂语义类名（.config-card / .u-head / .link-row），
+        样式全部落在各自那一份 css 里。项目里没装 Tailwind，也不要装。
+
+   字体走 Inter（Google Fonts，在 global.css 顶部引），300~700 五个字重。
+   数字仍然单独走等宽：表格行列数、复习张数、留存率、到期日，
+   比例字体下同一列的数字长短不齐，读起来要多费一次眼。
+
+   **只有亮色。** 上一版有一整套暗色变量，这一版删掉了 ——
+   参考系统本身就是单亮色的，暖白纸配青绿是它成立的前提，
+   翻成深色之后那支青绿会立刻显脏，等于换了一个设计。
    ============================================================ */
 
 :root {
     /* ---------- 字体 ---------- */
-    --font-display:
-        Constantia, 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua',
-        Georgia, 'Songti SC', STSong, 'Noto Serif CJK SC', serif;
-    --font-body:
-        'Segoe UI Variable Text', 'Segoe UI', -apple-system, BlinkMacSystemFont,
+    --font:
+        'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
         'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    /* 标题与正文同一支 —— 上一版标题走衬线，那是「案头」那一套的语汇，
+       换到 Inter 体系里会显得两个字体在打架 */
+    --font-display: var(--font);
+    --font-body: var(--font);
     /* 数字、代码、日期、DOI —— 一切需要对齐或逐字核对的东西 */
     --font-mono:
         ui-monospace, 'Cascadia Mono', 'SF Mono', 'JetBrains Mono', Consolas,
         'Liberation Mono', monospace;
 
-    /* ---------- 字号 ---------- */
+    /* ---------- 字号 ----------
+       刻意没跟着改：这套尺度是按现有那几个密集组件（三线表工具栏、
+       统计图例、记忆卡计划卡）一点点调出来的，整体加一号就会到处溢出。
+       身份来自颜色、字体、圆角和投影，不来自这半个像素。 */
     --fs-xs: 11.5px;
     --fs-sm: 12.5px;
     --fs-base: 14px;
@@ -54,164 +65,157 @@
     --sp-10: 40px;
     --sp-12: 48px;
 
-    /* ---------- 形状 ---------- */
-    --r-sm: 4px;
-    --r-md: 8px;
-    --r-lg: 10px;
-    --r-pill: 999px;
+    /* ---------- 形状 ----------
+       五档，比上一版的三档更圆也更分层：
+       6 给徽章和小按钮，10 给按钮和输入框，12 给一般容器，
+       16 给卡片，20 给页头那一整块。 */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    --radius-pill: 999px;
 
-    /* ---------- 动效 ---------- */
-    --ease: cubic-bezier(0.32, 0.72, 0, 1);
-    --dur: 160ms;
+    /* ---------- 动效 ----------
+       位移最多 6px（画廊卡片），表单里的卡片只抬 1px；
+       时长四档，最长的 .32s 只给侧栏滑出。 */
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.2s ease;
+    --transition-slow: 0.3s ease;
+    --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
 
     /* ---------- 尺寸 ---------- */
-    --rail-w: 236px;
-    --rail-w-collapsed: 60px;
-    /* 正文轨道的宽度上限。再宽一行字就太长了读着累，
-       再窄宽屏上两边空得太多 —— 统计页的图表和三线表的宽表格都按它排。 */
+    --sidebar-w: 272px;
+    /* 正文轨道。窄 680 / 中 760 是配置型页面用的，
+       宽 1240 留给三线表和统计那些真的需要横向空间的页面 */
+    --page-narrow: 680px;
+    --page-medium: 760px;
     --stage-max: 1240px;
 
-    /* ---------- 亮色（默认） ---------- */
+    /* ---------- 颜色 ---------- */
     color-scheme: light;
 
-    /* 纸：整页底色比卡片略深一点，卡片才「浮」得起来，
-       又都是暖调，长时间看不刺眼 */
-    --paper: #f4f2ed;
-    --paper-2: #eceae4;          /* 凹陷区域：轨道、代码块底 */
-    --surface: #fffefb;          /* 抬起的卡片 */
-    --surface-2: #faf8f4;        /* 表头、次级面板 */
+    --color-primary: #0d9488;
+    --color-primary-hover: #0f766e;
+    --color-bg: #fafaf9;
+    --color-surface: #ffffff;
+    --color-surface-alt: #f8fafc;   /* 页头那一块、表头、次级面板 */
+    --color-bg-alt: #f3f4f6;
+    --color-text: #1c1917;
+    --color-text-secondary: #78716c;
+    --color-text-muted: #9ca3af;
+    --color-border: #e7e5e4;
 
-    /* 墨。四档都要能读：--ink-4 是最淡的一档（编号、全大写小标签），
-       但它仍然要压过 3:1 的对比线 —— 「装饰性文字」不等于「可以看不见」。 */
-    --ink: #1a1917;
-    --ink-2: #55524d;
-    --ink-3: #7c7871;
-    --ink-4: #948f87;
+    /* 分类色标。**只用来区分类别**，不承担「重要」「主操作」这类语义 */
+    --color-accent-coral: #f97316;
+    --color-accent-rose: #e11d48;
+    --color-accent-sky: #0ea5e9;
+    --color-accent-green: #10b981;
+    --color-accent-purple: #7c3aed;
 
-    /* 界线。hairline 用于大面积分隔，rule 用于卡片边框 */
-    --hairline: rgba(26, 25, 23, 0.09);
-    --rule: rgba(26, 25, 23, 0.14);
-    --rule-strong: rgba(26, 25, 23, 0.26);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.07);
+    --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.09);
+    --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.12);
+    /* 卡片那一档：一层极淡的投影加一圈更淡的描边，
+       比单纯一条 box-shadow 更贴纸面 */
+    --shadow-card: 0 1px 6px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(0, 0, 0, 0.02);
+    --shadow-card-hover: 0 4px 20px rgba(0, 0, 0, 0.07), 0 0 0 1px rgba(0, 0, 0, 0.02);
 
-    /* 强调：松绿。只给「当前位置」和「主操作」 */
-    --accent: #12605e;
-    --accent-hover: #0d7370;
-    --accent-ink: #0b4a48;       /* 浅底上的强调文字 */
-    --accent-tint: rgba(18, 96, 94, 0.08);
-    --accent-tint-2: rgba(18, 96, 94, 0.16);
-    --on-accent: #fffefb;
-
-    /* 数据强调：赭石。给数字、计数、进度 —— 跟松绿分工，不抢「当前位置」 */
-    --data: #a1571c;
-    --data-tint: rgba(161, 87, 28, 0.10);
-
-    /* 语义。刻意跟强调色拉开，免得「主操作」和「出错了」撞色 */
-    --ok: #2c6a41;
-    --ok-tint: rgba(44, 106, 65, 0.10);
-    --warn: #8a5a00;
-    --warn-tint: rgba(138, 90, 0, 0.11);
-    --danger: #9b2c2c;
-    --danger-tint: rgba(155, 44, 44, 0.09);
-
-    /* 阴影只有两级 */
-    --shadow-1: 0 1px 2px rgba(26, 25, 23, 0.06);
-    --shadow-2: 0 10px 28px -16px rgba(26, 25, 23, 0.40);
-
-    --focus-ring: 0 0 0 3px var(--accent-tint-2);
-}
-
-/* ---------- 暗色 ---------- */
-/* 所有组件只认变量，所以暗色就是把这一组换掉。
-   底色不用纯黑：暖灰的深色跟亮色那张暖纸是同一个调子，
-   切换时不会有「换了个站」的割裂感。 */
-@media (prefers-color-scheme: dark) {
-    :root {
-        color-scheme: dark;
-
-        --paper: #16181a;
-        --paper-2: #101214;
-        --surface: #1d2023;
-        --surface-2: #212528;
-
-        --ink: #eceae5;
-        --ink-2: #b0aca6;
-        --ink-3: #928d86;
-        --ink-4: #7e7972;
-
-        --hairline: rgba(236, 234, 229, 0.09);
-        --rule: rgba(236, 234, 229, 0.14);
-        --rule-strong: rgba(236, 234, 229, 0.28);
-
-        --accent: #4bb3a8;
-        --accent-hover: #63c9be;
-        --accent-ink: #7fd6cb;
-        --accent-tint: rgba(75, 179, 168, 0.12);
-        --accent-tint-2: rgba(75, 179, 168, 0.22);
-        --on-accent: #0d1a1a;
-
-        --data: #d99a5b;
-        --data-tint: rgba(217, 154, 91, 0.14);
-
-        --ok: #6cc08a;
-        --ok-tint: rgba(108, 192, 138, 0.13);
-        --warn: #d9a441;
-        --warn-tint: rgba(217, 164, 65, 0.13);
-        --danger: #e08585;
-        --danger-tint: rgba(224, 133, 133, 0.13);
-
-        --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
-        --shadow-2: 0 12px 30px -16px rgba(0, 0, 0, 0.8);
-    }
+    /* 3px 半透明青绿的聚焦环，每一个可聚焦控件都用它 */
+    --focus-ring: 0 0 0 3px rgba(13, 148, 136, 0.12);
 }
 
 /* ============================================================
-   旧变量名的兼容层
+   语义别名
    ============================================================
 
-   记忆卡 / 口语 / 三线表三份样式表里有两百多处在用上一版的变量名。
-   语义是一一对得上的（primary 就是现在的 accent，border 就是 rule…），
-   所以在这里搭一层别名，比把三个文件逐行翻一遍稳妥得多 ——
-   翻的过程中漏掉一处，那一处就会变成透明或纯黑，还很难发现。
+   上面那一组是**设计系统的名字**，下面这一组是**用途的名字**。
+   全站 5000 多行样式、两百多处引用走的是下面这些 —— 一一对得上，
+   所以换主题只要改上面那一组，下面不用动，页面更不用动。
 
-   新写的样式一律用新名字；这一层只服务存量代码。
+   新写样式时两组都可以用：说「这是主色」用 --color-primary，
+   说「这里要一条发丝线」用 --hairline。
    ============================================================ */
 :root {
-    --primary: var(--accent);
-    --primary-hover: var(--accent-hover);
-    --primary-color: var(--accent);
-    --accent-pink: var(--data);
+    /* 纸与面 */
+    --paper: var(--color-bg);
+    --paper-2: var(--color-bg-alt);
+    --surface: var(--color-surface);
+    --surface-2: var(--color-surface-alt);
+    --surface-color: var(--color-surface);
+    --bg-gradient-start: var(--color-bg);
+    --bg-gradient-end: var(--color-bg-alt);
 
-    --text-primary: var(--ink);
-    --text-secondary: var(--ink-2);
-    --text-muted: var(--ink-3);
+    /* 墨。四档，越往后越淡，但最淡的一档仍要压过 3:1 ——
+       「装饰性文字」不等于「可以看不见」 */
+    --ink: var(--color-text);
+    --ink-2: var(--color-text-secondary);
+    --ink-3: #8b8580;
+    --ink-4: var(--color-text-muted);
+    --text-primary: var(--color-text);
+    --text-secondary: var(--color-text-secondary);
+    --text-muted: var(--color-text-muted);
 
-    --border: var(--rule);
-    --border-color: var(--rule);
-    --surface-color: var(--surface);
+    /* 界线。hairline 分隔大面积，rule 画卡片边 */
+    --hairline: rgba(28, 25, 23, 0.06);
+    --rule: var(--color-border);
+    --rule-strong: #d6d3d1;
+    --border: var(--color-border);
+    --border-color: var(--color-border);
 
-    --danger-color: var(--danger);
-    --success-color: var(--ok);
+    /* 强调 */
+    --accent: var(--color-primary);
+    --accent-hover: var(--color-primary-hover);
+    --accent-ink: var(--color-primary-hover);   /* 浅底上的强调文字，深一档才够读 */
+    --accent-tint: rgba(13, 148, 136, 0.06);
+    --accent-tint-2: rgba(13, 148, 136, 0.12);
+    --on-accent: #ffffff;
+    --primary: var(--color-primary);
+    --primary-hover: var(--color-primary-hover);
+    --primary-color: var(--color-primary);
 
-    --bg-gradient-start: var(--paper);
-    --bg-gradient-end: var(--paper-2);
+    /* 数据强调：给数字、计数、进度。跟主色分工，不抢「当前位置」 */
+    --data: #c2410c;
+    --data-tint: rgba(249, 115, 22, 0.10);
+    --accent-pink: var(--color-accent-rose);
 
-    /* 四档评分的色阶（重来 / 困难 / 良好 / 简单）。
-       这是一组**有序**的语义色，不是随手取的四个颜色，所以单独定义。 */
+    /* 语义色。色相取自分类色标，但都压深一档 ——
+       #10b981 当背景很好看，当白底上的文字就不够黑 */
+    --ok: #047857;
+    --ok-tint: rgba(16, 185, 129, 0.10);
+    --success-color: #047857;
+    --warn: #b45309;
+    --warn-tint: rgba(249, 115, 22, 0.12);
+    --danger: #be123c;
+    --danger-tint: rgba(225, 29, 72, 0.08);
+    --danger-color: #be123c;
+
+    /* 四档评分（重来 / 困难 / 良好 / 简单）。
+       这是一组**有序**的语义色，不是随手取的四个颜色 */
     --rate-1: var(--danger);
     --rate-2: var(--warn);
     --rate-3: var(--ok);
-    --rate-4: #2b6cb0;
+    --rate-4: #0369a1;
     --rate-1-tint: var(--danger-tint);
     --rate-2-tint: var(--warn-tint);
     --rate-3-tint: var(--ok-tint);
-    --rate-4-tint: rgba(43, 108, 176, 0.11);
-}
+    --rate-4-tint: rgba(14, 165, 233, 0.10);
 
-@media (prefers-color-scheme: dark) {
-    :root {
-        --rate-4: #7aa8dd;
-        --rate-4-tint: rgba(122, 168, 221, 0.14);
-    }
+    /* 形状与动效的旧名字 */
+    --r-sm: var(--radius-sm);
+    --r-md: var(--radius-md);
+    --r-lg: var(--radius-lg);
+    --r-pill: var(--radius-pill);
+    --ease: var(--ease-out);
+    --dur: 200ms;
+
+    /* 投影的旧名字 */
+    --shadow-1: var(--shadow-sm);
+    --shadow-2: var(--shadow-lg);
+
+    /* 侧栏宽度的旧名字（shell.css 已改用 --sidebar-w，这里留给存量引用） */
+    --rail-w: var(--sidebar-w);
 }
 
 /* ============================================================
@@ -219,49 +223,44 @@
    ============================================================ */
 
 body {
-    font-family: var(--font-body);
+    font-family: var(--font);
     font-size: var(--fs-base);
-    line-height: 1.65;
-    color: var(--ink);
-    background: var(--paper);
+    line-height: 1.6;
+    color: var(--color-text);
+    background: var(--color-bg);
     -webkit-font-smoothing: antialiased;
 }
 
 h1, h2, h3, h4 {
-    font-family: var(--font-display);
-    font-weight: 600;
-    letter-spacing: -0.01em;
+    font-family: var(--font);
+    font-weight: 700;
+    letter-spacing: -0.02em;
     line-height: 1.25;
 }
 
-/* 数字一律等宽 + 表格数字对齐 */
-b, strong { font-weight: 650; }
+b, strong { font-weight: 600; }
 
 code, kbd, samp, pre { font-family: var(--font-mono); }
 
-a { color: var(--accent-ink); text-underline-offset: 3px; }
+a { color: var(--color-primary-hover); text-underline-offset: 3px; }
 
 ::selection { background: var(--accent-tint-2); }
 
 :focus-visible {
-    outline: 2px solid var(--accent);
+    outline: 2px solid var(--color-primary);
     outline-offset: 2px;
-    border-radius: var(--r-sm);
+    border-radius: var(--radius-sm);
 }
 
-/* 滚动条也换成纸的调子，默认那条亮蓝在暖底上很跳 */
+/* 滚动条：6px 细条，轨道透明，滑块 #cbd5e1 */
 * {
     scrollbar-width: thin;
-    scrollbar-color: var(--rule-strong) transparent;
+    scrollbar-color: #cbd5e1 transparent;
 }
-*::-webkit-scrollbar { width: 10px; height: 10px; }
-*::-webkit-scrollbar-thumb {
-    background: var(--rule-strong);
-    border: 3px solid transparent;
-    background-clip: content-box;
-    border-radius: var(--r-pill);
-}
-*::-webkit-scrollbar-thumb:hover { background-clip: content-box; background-color: var(--ink-4); }
+*::-webkit-scrollbar { width: 6px; height: 6px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+*::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
 /* ============================================================
    通用基元（u- 前缀 = universal，全站可用）
@@ -319,16 +318,36 @@ a { color: var(--accent-ink); text-underline-offset: 3px; }
     color: var(--ink-3);
 }
 /* 需要读者停一下的注解：左边一条强调色细线 */
+/* 每一页开头那段导语。
+   八个页面都在用它，所以它就是这个站的「页头块」——
+   浅底、大圆角、右上角一团青绿辉光，跟 .page-header 是同一个东西，
+   只是它自带正文而不是标题。改这一处，八个页面同时有了同一种开场。 */
 .u-aside {
-    margin: var(--sp-3) 0 var(--sp-6);
-    padding: var(--sp-3) var(--sp-4);
+    position: relative;
+    overflow: hidden;
+    margin: 0 0 28px;
+    padding: 22px 26px;
     font-size: var(--fs-sm);
-    line-height: 1.85;
-    color: var(--ink-2);
-    background: var(--accent-tint);
-    border-left: 2px solid var(--accent);
-    border-radius: 0 var(--r-md) var(--r-md) 0;
+    line-height: 1.8;
+    color: var(--color-text-secondary);
+    background: var(--color-surface-alt);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
 }
+
+.u-aside::after {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -8%;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(13, 148, 136, 0.07) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.u-aside > * { position: relative; }
 .u-aside i { color: var(--accent); }
 .u-aside b { color: var(--ink); }
 
@@ -361,19 +380,31 @@ a { color: var(--accent-ink); text-underline-offset: 3px; }
                 border-color var(--dur) var(--ease),
                 background var(--dur) var(--ease);
 }
-.u-btn:hover:not(:disabled) { color: var(--accent-ink); border-color: var(--accent); }
-.u-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+/* 次按钮：边框和文字**一起**变青绿，再垫一层几乎看不见的青绿底。
+   只变边框会显得按钮在发呆，只变文字又看不出边界动过 */
+.u-btn:hover:not(:disabled) {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+    background: rgba(13, 148, 136, 0.04);
+}
+.u-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
 .u-btn-primary {
     color: var(--on-accent);
     background: var(--accent);
     border-color: var(--accent);
+    box-shadow: var(--shadow-sm);
 }
+/* 主按钮多一个 1px 的抬升 —— 全站位移的下限档，表单里的东西都用这一档 */
 .u-btn-primary:hover:not(:disabled) {
     color: var(--on-accent);
     background: var(--accent-hover);
     border-color: var(--accent-hover);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
 }
+.u-btn-primary:active:not(:disabled) { transform: translateY(0); }
+.u-btn-primary:disabled { box-shadow: none; transform: none; }
 
 .u-btn-quiet { background: transparent; border-color: transparent; }
 .u-btn-quiet:hover:not(:disabled) { background: var(--accent-tint); border-color: transparent; }
@@ -450,10 +481,12 @@ a { color: var(--accent-ink); text-underline-offset: 3px; }
     padding: 8px 11px;
     color: var(--ink);
     background: var(--surface);
-    border: 1px solid var(--rule);
-    border-radius: var(--r-md);
+    /* 1.5px 而不是 1px：输入框要能一眼从卡片背景里分出来，
+       这半个像素就是「可以往里打字」和「只是一块底色」的差别 */
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-md);
     outline: none;
-    transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+    transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
 }
 .u-input:focus, .u-textarea:focus, .u-select:focus {
     border-color: var(--accent);
@@ -614,4 +647,123 @@ kbd {
 @media (prefers-reduced-motion: reduce) {
     .u-rise { animation: none; opacity: 1; }
     * { transition-duration: 1ms !important; }
+}
+
+/* ============================================================
+   页面节奏基元
+
+   一个内容页的骨架永远是这三件套：
+     .page-header  —— 页头那一整块（浅底、大圆角、右上角一团青绿辉光）
+     .config-card  —— 白卡片，发丝边，几乎看不见的投影
+     .config-card h3 —— 卡片里每一组上面那个极小的全大写标签
+
+   最后那个小标签是这套设计的签名动作：11px、700、全大写、字距 .8px。
+   每一组前面都放一个，页面立刻有节奏；漏掉几个，整页就散了。
+   ============================================================ */
+
+.page-header {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 28px;
+    padding: 28px 32px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    background: var(--color-surface-alt);
+}
+
+/* 右上角那团辉光。半径 200px、透明度 .07 —— 大到能铺满一角，
+   淡到不会被当成一个「东西」 */
+.page-header::after {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -8%;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(13, 148, 136, 0.07) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.page-header > * { position: relative; }
+
+.page-header h2 {
+    margin: 0 0 8px;
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.4px;
+}
+
+.page-header p {
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-size: 14px;
+    line-height: 1.55;
+}
+
+.page-header .back-link { margin-bottom: 18px; font-size: 13px; opacity: 0.75; }
+.page-header .back-link:hover { opacity: 1; }
+
+/* 表单里的卡片。抬 1px —— 表单里的卡片是「一排东西」，
+   抬高了会让整排看着在跳；画廊里的卡片才抬 6px */
+.config-card {
+    margin-bottom: 12px;
+    padding: 22px 26px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-card);
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.config-card:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-card-hover);
+}
+
+/* 签名的小标签 */
+.config-card h3,
+.u-label {
+    margin: 0 0 16px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+}
+
+/* ---------- 卡片网格 ----------
+   生成出来的一堆东西（工具卡、演示卡、计划卡）用这个。
+   这里的卡片比表单卡片戏剧得多：毛玻璃 + 抬 6px + 青绿色的投影。
+   注意投影是**染青绿的**，不是黑的 —— 黑投影会让整页发灰。 */
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+}
+
+.glass-card {
+    padding: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: var(--radius-xl);
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.glass-card:hover {
+    transform: translateY(-6px) scale(1.01);
+    border-color: rgba(13, 148, 136, 0.3);
+    box-shadow: 0 20px 40px rgba(13, 148, 136, 0.08),
+                0 0 0 1px rgba(13, 148, 136, 0.1) inset;
+}
+
+@media (max-width: 640px) {
+    .page-header { padding: 22px 20px; border-radius: var(--radius-lg); }
+    .page-header h2 { font-size: 20px; }
+    .config-card { padding: 18px 18px; }
+    .card-grid { grid-template-columns: 1fr; gap: 16px; }
 }

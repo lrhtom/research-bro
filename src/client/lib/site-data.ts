@@ -62,13 +62,29 @@ export interface Converter {
     keywords: string;
 }
 
+/** 同一个比赛的一个入口。只有分站的条目才需要列出来（见 Contest.entries）。 */
+export interface ContestEntry {
+    /** 按钮上的字，例如「中国站」 */
+    label: string;
+    site: string;
+    href: string;
+}
+
 export interface Contest {
-    /** algo = 算法竞赛；web = 前端创意挑战 */
-    cat: 'algo' | 'web';
+    /** algo = 算法竞赛；web = 前端创意挑战；data = 数据 / 机器学习竞赛 */
+    cat: 'algo' | 'web' | 'data';
     title: string;
     en: string;
     site: string;
     href: string;
+    /**
+     * 一个比赛有两个官方入口时填这里（力扣的国际站与中国站就是这种）。
+     *
+     * 填了之后整张卡片**不再是一个大链接**，改成在卡里并排放几个入口按钮 ——
+     * 两个目的地却只有一个点击区，点下去到底去哪儿全靠猜。
+     * href / site 仍然要填主入口，全站搜索用的是那一份。
+     */
+    entries?: ContestEntry[];
     icon: string;
     accent: Accent;
     /** 开赛节奏，例如「每周六 · ABC」 */
@@ -312,15 +328,21 @@ export const contests: Contest[] = [
         en: 'LeetCode Contest',
         site: 'leetcode.cn',
         href: 'https://leetcode.cn/contest/',
+        // 两个站是同期同题、各自独立排名，账号也不通用 —— 所以给两个入口，
+        // 而不是替用户选一个
+        entries: [
+            { label: '中国站', site: 'leetcode.cn', href: 'https://leetcode.cn/contest/' },
+            { label: '国际站', site: 'leetcode.com', href: 'https://leetcode.com/contest/' },
+        ],
         icon: 'fa-list-check',
         accent: 'amber',
         cadence: '每周日周赛 + 隔周六双周赛',
-        lang: '中文（国际站 leetcode.com 同期同题）',
+        lang: '中文 / 英文（两站同期同题）',
         join: '免费注册即可参赛',
-        desc: '面试向刷题站里唯一有稳定周赛的。周赛每周日上午（北京时间 10:30）四道题，双周赛在隔周的周六晚上，题目难度跟大厂算法面试基本同一档 —— 想练面试手感而不是拼名次的，这条线比 Codeforces 直接。往届可以随时开「虚拟」按原时长补打。',
-        badges: ['每周日 4 题', '双周赛', '虚拟补赛'],
-        verified: '2026-08-09',
-        keywords: '力扣 leetcode lc 周赛 双周赛 竞赛 算法 面试 刷题 虚拟 补赛 rating 大厂 hot100',
+        desc: '面试向刷题站里唯一有稳定周赛的。周赛每周日上午（北京时间 10:30）四道题，双周赛在隔周的周六晚上，题目难度跟大厂算法面试基本同一档 —— 想练面试手感而不是拼名次的，这条线比 Codeforces 直接。往届可以随时开「虚拟」按原时长补打。国际站与中国站同期同题，但排名和账号各算各的，按你想跟谁比来挑。',
+        badges: ['每周日 4 题', '双周赛', '虚拟补赛', '国际站 / 中国站'],
+        verified: '2026-08-11',
+        keywords: '力扣 leetcode lc 周赛 双周赛 竞赛 算法 面试 刷题 虚拟 补赛 rating 大厂 hot100 国际站 中国站 leetcode.cn leetcode.com',
     },
     {
         cat: 'algo',
@@ -386,6 +408,22 @@ export const contests: Contest[] = [
         badges: ['官方已暂停', 'DSA 面试向', '往期可做'],
         verified: '2026-08-09',
         keywords: 'geeksforgeeks gfg 周赛 weekly 算法 dsa 面试 印度 practice potd 打比赛',
+    },
+    {
+        cat: 'data',
+        title: 'Kaggle',
+        en: 'Kaggle Competitions',
+        site: 'kaggle.com',
+        href: 'https://www.kaggle.com/competitions',
+        icon: 'fa-chart-line',
+        accent: 'blue',
+        cadence: '常年数十场并行 · 单场 1~3 个月',
+        lang: '英文',
+        join: '免费注册后组队提交',
+        desc: '数据科学与机器学习竞赛的大本营，比的不是限时手速而是模型效果：给一份数据集和一个评测指标，在赛期内反复提交预测、刷公开榜，截止时按私榜定名次。「Getting Started」那一组（泰坦尼克、房价预测）常年开着、没有截止日期，是入门 ML 最常见的第一站；Playground 每月一期，用合成数据练手，压力比正赛小得多。自带浏览器里的 Notebook 环境，有免费 GPU / TPU 额度，本机不用配任何东西。',
+        badges: ['入门赛常驻', '每月 Playground', '免费 GPU 额度'],
+        verified: '2026-08-11',
+        keywords: 'kaggle 数据 竞赛 机器学习 machine learning 深度学习 ai 数据科学 data science notebook gpu tpu playground titanic 泰坦尼克 房价 榜单 leaderboard 建模 特征工程',
     },
     {
         cat: 'web',

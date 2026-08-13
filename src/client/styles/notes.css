@@ -1,0 +1,647 @@
+/* ============================================================
+   Markdown 记事本
+
+   语义化类名，统一 nb- 前缀（notebook），一个功能一份样式表 ——
+   跟站里其它模块一样，没有任何工具类。
+   ============================================================ */
+
+/* 整块给一个确定的高度，让左右两列各自内部滚动。
+   不用 100vh：上面还有顶栏和 layout-content 的内边距，
+   写死 100vh 会把底部状态栏顶出屏幕。clamp 保证小屏也有下限。 */
+.nb-wrap {
+    display: grid;
+    grid-template-columns: 300px minmax(0, 1fr);
+    gap: var(--sp-4);
+    height: clamp(460px, calc(100vh - 150px), 1040px);
+}
+
+.nb-wrap--collapsed {
+    grid-template-columns: 52px minmax(0, 1fr);
+}
+
+/* ---------------- 侧栏 ---------------- */
+
+.nb-side {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.nb-side-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-2);
+    padding: var(--sp-3) var(--sp-4);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.nb-side-head h2 {
+    margin: 0;
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    color: var(--color-text);
+    white-space: nowrap;
+}
+
+/* 收起时只留那颗展开按钮，其余整块藏掉 —— 藏的是内容不是容器，
+   容器还要占住那 52px，否则右边编辑器会突然横向抖一下 */
+.nb-wrap--collapsed .nb-side-head { justify-content: center; padding: var(--sp-3) 0; }
+.nb-wrap--collapsed .nb-side-head h2,
+.nb-wrap--collapsed .nb-new,
+.nb-wrap--collapsed .nb-search,
+.nb-wrap--collapsed .nb-list,
+.nb-wrap--collapsed .nb-side-foot { display: none; }
+
+.nb-new {
+    margin: var(--sp-3) var(--sp-3) var(--sp-2);
+    padding: 9px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-2);
+    font: inherit;
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: #fff;
+    background: var(--color-primary);
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: background var(--transition-fast);
+}
+
+.nb-new:hover { background: var(--color-primary-hover); }
+
+.nb-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 0 var(--sp-3) var(--sp-3);
+}
+
+.nb-search > i {
+    position: absolute;
+    left: 10px;
+    font-size: 12px;
+    color: var(--color-text-muted);
+    pointer-events: none;
+}
+
+.nb-search input {
+    width: 100%;
+    padding: 7px 26px 7px 28px;
+    font: inherit;
+    font-size: var(--fs-sm);
+    color: var(--color-text);
+    background: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+}
+
+.nb-search input:focus { outline: none; box-shadow: var(--focus-ring); }
+
+.nb-search-clear {
+    position: absolute;
+    right: 6px;
+    width: 18px;
+    height: 18px;
+    display: grid;
+    place-items: center;
+    font-size: 15px;
+    line-height: 1;
+    color: var(--color-text-muted);
+    background: none;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.nb-search-clear:hover { color: var(--color-text); background: var(--color-border); }
+
+.nb-list {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding-bottom: var(--sp-2);
+}
+
+/* 分组标题吸顶：列表滚起来之后还能知道现在看的是哪一档 */
+.nb-group-label {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    margin: 0;
+    padding: 6px var(--sp-4);
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: .04em;
+    color: var(--color-text-muted);
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.nb-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+    padding: 10px var(--sp-4);
+    font: inherit;
+    text-align: left;
+    color: inherit;
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--color-border);
+    cursor: pointer;
+    transition: background var(--transition-fast);
+}
+
+.nb-item:hover { background: var(--color-bg-alt); }
+
+.nb-item.is-active {
+    background: var(--color-bg-alt);
+    box-shadow: inset 3px 0 0 var(--color-primary);
+}
+
+.nb-item-head {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.nb-item-head b {
+    flex: 1;
+    min-width: 0;
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--color-text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* 有未保存草稿的那颗点 */
+.nb-dot {
+    flex: 0 0 auto;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--color-accent-coral);
+}
+
+.nb-item-preview {
+    font-size: var(--fs-xs);
+    line-height: 1.5;
+    color: var(--color-text-muted);
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.nb-item-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.nb-chip {
+    padding: 1px 7px;
+    font-size: 11px;
+    color: var(--color-text-secondary);
+    background: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+}
+
+.nb-side-foot {
+    padding: 8px var(--sp-4);
+    font-size: var(--fs-xs);
+    color: var(--color-text-muted);
+    border-top: 1px solid var(--color-border);
+}
+
+.nb-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-2);
+    padding: var(--sp-8) var(--sp-4);
+    font-size: var(--fs-sm);
+    color: var(--color-text-muted);
+    text-align: center;
+}
+
+.nb-empty p { margin: 0; }
+.nb-empty-icon { font-size: 26px; opacity: .5; }
+
+/* ---------------- 编辑器 ---------------- */
+
+.nb-main {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.nb-blank {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-3);
+    padding: var(--sp-8);
+    color: var(--color-text-muted);
+    text-align: center;
+}
+
+.nb-blank > i { font-size: 34px; opacity: .4; }
+.nb-blank p { margin: 0; }
+.nb-blank-hint { max-width: 40em; font-size: var(--fs-sm); line-height: 1.7; }
+
+.nb-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    padding: var(--sp-3) var(--sp-4);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.nb-title {
+    flex: 1;
+    min-width: 0;
+    font: inherit;
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    color: var(--color-text);
+    background: none;
+    border: none;
+    padding: 2px 0;
+}
+
+.nb-title:focus { outline: none; box-shadow: 0 2px 0 var(--color-primary); }
+
+.nb-meta-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+}
+
+.nb-dirty {
+    padding: 2px 8px;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--color-accent-coral);
+    background: color-mix(in srgb, var(--color-accent-coral) 12%, transparent);
+    border-radius: var(--radius-pill);
+    white-space: nowrap;
+}
+
+.nb-tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    padding: var(--sp-2) var(--sp-4);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.nb-chip--edit {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding-right: 3px;
+}
+
+.nb-chip--edit button {
+    width: 15px;
+    height: 15px;
+    display: grid;
+    place-items: center;
+    font-size: 13px;
+    line-height: 1;
+    color: var(--color-text-muted);
+    background: none;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.nb-chip--edit button:hover { color: #fff; background: var(--color-accent-coral); }
+
+.nb-tag-input {
+    flex: 1;
+    min-width: 140px;
+    padding: 3px 4px;
+    font: inherit;
+    font-size: var(--fs-xs);
+    color: var(--color-text);
+    background: none;
+    border: none;
+}
+
+.nb-tag-input:focus { outline: none; }
+
+.nb-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+    padding: 6px var(--sp-4);
+    background: var(--color-bg-alt);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.nb-tools {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.nb-tools-sep {
+    width: 1px;
+    height: 18px;
+    margin: 0 4px;
+    background: var(--color-border);
+}
+
+.nb-icon-btn {
+    position: relative;
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    background: none;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.nb-icon-btn:hover { color: var(--color-text); background: var(--color-border); }
+
+/* H2 / H3 共用一个图标，右下角那个小数字是唯一的区分 */
+.nb-icon-btn sub {
+    position: absolute;
+    right: 3px;
+    bottom: 3px;
+    font-size: 8px;
+    line-height: 1;
+}
+
+.nb-modes {
+    display: flex;
+    gap: 2px;
+    padding: 2px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+}
+
+/* 三档都带文字。纯图标猜不出「分栏」和「预览」的区别 ——
+   这一组要一眼可辨，省下来的那点宽度不值 */
+.nb-mode {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    font: inherit;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    background: none;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.nb-mode:hover { color: var(--color-text); }
+.nb-mode.is-active { color: #fff; background: var(--color-primary); }
+
+.nb-panes {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+}
+
+.nb-panes--edit,
+.nb-panes--preview { grid-template-columns: minmax(0, 1fr); }
+.nb-panes--split { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.nb-panes--split .nb-preview { border-left: 1px solid var(--color-border); }
+
+/* 就是一个 textarea。见页面顶部的说明：这里不需要编辑器控件。 */
+.nb-editor {
+    min-height: 0;
+    padding: var(--sp-4);
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    line-height: 1.75;
+    color: var(--color-text);
+    background: var(--color-surface);
+    border: none;
+    resize: none;
+    tab-size: 4;
+}
+
+.nb-editor:focus { outline: none; }
+
+.nb-preview {
+    min-height: 0;
+    padding: var(--sp-4);
+    overflow-y: auto;
+    background: var(--color-surface);
+}
+
+.nb-preview-empty {
+    margin: 0;
+    font-size: var(--fs-sm);
+    color: var(--color-text-muted);
+}
+
+.nb-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-3);
+    padding: 6px var(--sp-4);
+    font-size: var(--fs-xs);
+    color: var(--color-text-muted);
+    background: var(--color-bg-alt);
+    border-top: 1px solid var(--color-border);
+}
+
+/* ---------------- 按钮 ---------------- */
+
+.nb-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    font: inherit;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.nb-btn:hover:not(:disabled) { color: var(--color-text); background: var(--color-bg-alt); }
+.nb-btn:disabled { opacity: .45; cursor: not-allowed; }
+
+.nb-btn--primary {
+    color: #fff;
+    background: var(--color-primary);
+    border-color: transparent;
+}
+
+.nb-btn--primary:hover:not(:disabled) { color: #fff; background: var(--color-primary-hover); }
+
+.nb-btn--danger { color: var(--color-accent-coral); }
+.nb-btn--danger:hover:not(:disabled) { color: #fff; background: var(--color-accent-coral); border-color: transparent; }
+
+/* ---------------- 新建弹窗 ---------------- */
+
+.nb-modal-mask {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: grid;
+    place-items: center;
+    padding: var(--sp-4);
+    background: rgba(15, 23, 42, .45);
+}
+
+.nb-modal {
+    width: min(520px, 100%);
+    padding: var(--sp-5);
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+}
+
+.nb-modal-title {
+    margin: 0 0 var(--sp-4);
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+    font-size: var(--fs-md);
+    color: var(--color-text);
+}
+
+.nb-field { display: block; margin-bottom: var(--sp-4); }
+
+.nb-field-label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--color-text-secondary);
+}
+
+.nb-input {
+    width: 100%;
+    padding: 8px 10px;
+    font: inherit;
+    font-size: var(--fs-sm);
+    color: var(--color-text);
+    background: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+}
+
+.nb-input:focus { outline: none; box-shadow: var(--focus-ring); }
+
+.nb-tpl-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+    gap: 6px;
+}
+
+.nb-tpl {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 6px;
+    font: inherit;
+    font-size: var(--fs-xs);
+    color: var(--color-text-secondary);
+    background: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.nb-tpl i { font-size: 16px; }
+.nb-tpl:hover { color: var(--color-text); }
+
+.nb-tpl.is-active {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+    background: color-mix(in srgb, var(--color-primary) 8%, transparent);
+}
+
+.nb-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--sp-2);
+}
+
+/* ---------------- 提示条 ---------------- */
+
+.nb-toast {
+    position: fixed;
+    top: 76px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2100;
+    padding: 8px 18px;
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: #fff;
+    border-radius: var(--radius-pill);
+    box-shadow: var(--shadow-lg);
+}
+
+.nb-toast--ok { background: var(--color-accent-green); }
+.nb-toast--err { background: var(--color-accent-coral); }
+
+/* ---------------- 窄屏 ---------------- */
+
+@media (max-width: 900px) {
+    /* 两列并排在窄屏没有意义，改成上下：列表在上、编辑器在下。
+       分栏视图也一并退回单列 —— 手机上并排两栏谁都看不清 */
+    .nb-wrap,
+    .nb-wrap--collapsed {
+        grid-template-columns: minmax(0, 1fr);
+        height: auto;
+    }
+
+    .nb-side { max-height: 44vh; }
+    .nb-main { min-height: 62vh; }
+    .nb-panes--split { grid-template-columns: minmax(0, 1fr); }
+    .nb-panes--split .nb-preview {
+        border-left: none;
+        border-top: 1px solid var(--color-border);
+    }
+}

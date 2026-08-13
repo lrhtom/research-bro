@@ -1,0 +1,70 @@
+{
+ "test_dev": [
+  {
+   "text": "业务测试面试题",
+   "anchor": "https://www.xiaolincoding.com/interview/business_testing.html"
+  },
+  {
+   "text": "Java 自动化测试面试题",
+   "anchor": "https://www.xiaolincoding.com/interview/java_automation.html"
+  },
+  {
+   "text": "Python 自动化测试面试题",
+   "anchor": "https://www.xiaolincoding.com/interview/python_automation.html"
+  },
+  {
+   "text": "性能测试面试题",
+   "anchor": "https://www.xiaolincoding.com/interview/performance_testing.html"
+  },
+  {
+   "text": "测试开发训练营 (opens new window)",
+   "anchor": "https://xiaolincoding.com/other/cekai_offer.html"
+  },
+  {
+   "text": "Docker面试题",
+   "anchor": "https://www.xiaolincoding.com/interview/docker.html"
+  },
+  {
+   "text": "Agent项目",
+   "anchor": "https://www.xiaolincoding.com/project/agent_info.html"
+  },
+  {
+   "text": "训练营",
+   "anchor": "https://www.xiaolincoding.com/other/llm_offer.html"
+  },
+  {
+   "text": "做简历",
+   "anchor": "https://www.xiaolincoding.com/project/xiaolinjianli.html"
+  },
+  {
+   "text": "PDF下载",
+   "anchor": "https://www.xiaolincoding.com/cs_learn/pdf.html"
+  },
+  {
+   "text": "赞赏我",
+   "anchor": "https://www.xiaolincoding.com/cs_learn/reward.html"
+  }
+ ],
+ "algorithms": [
+  {
+   "text": "Agent项目",
+   "anchor": "https://www.xiaolincoding.com/project/agent_info.html"
+  },
+  {
+   "text": "训练营",
+   "anchor": "https://www.xiaolincoding.com/other/llm_offer.html"
+  },
+  {
+   "text": "做简历",
+   "anchor": "https://www.xiaolincoding.com/project/xiaolinjianli.html"
+  },
+  {
+   "text": "PDF下载",
+   "anchor": "https://www.xiaolincoding.com/cs_learn/pdf.html"
+  },
+  {
+   "text": "赞赏我",
+   "anchor": "https://www.xiaolincoding.com/cs_learn/reward.html"
+  }
+ ]
+}

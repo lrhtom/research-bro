@@ -78,6 +78,11 @@ CREATE TABLE IF NOT EXISTS cards (
     scheduled_days REAL    NOT NULL DEFAULT 0,
     learning_steps INTEGER NOT NULL DEFAULT 0,
 
+    -- 收藏。**只影响管理界面的排序与筛选，不参与调度** ——
+    -- 「我关心这张卡」和「什么时候该复习它」是两回事，
+    -- 让收藏插队会让这些卡的间隔长期偏离 FSRS 算出来的安排。
+    favorite       INTEGER NOT NULL DEFAULT 0,
+
     sort_order     INTEGER NOT NULL DEFAULT 0,
     created_at     TEXT    NOT NULL,
     updated_at     TEXT    NOT NULL
@@ -213,6 +218,31 @@ CREATE TABLE IF NOT EXISTS assistant_todos (
 );
 
 CREATE INDEX IF NOT EXISTS idx_assistant_todos_order ON assistant_todos (done ASC, id DESC);
+
+-- ------------------------------------------------------------
+--  Markdown 记事本
+--
+--  标签直接以 JSON 数组存在笔记这一行上，**不建标签表**。
+--  没有标签实体，也就没有改名、没有配色、没有标签的标签 ——
+--  整个标签功能就是「一串可以拿来筛选的字符串」，到此为止。
+--  真要按标签查，这个量级下前端把全部笔记拉下来自己过一遍就够了。
+--
+--  也没有 search / autosave / tag 三类接口：
+--  搜索在前端做，本地草稿存 sessionStorage，存云端只在你按保存时发生。
+-- ------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS notes (
+    id         INTEGER PRIMARY KEY AUTOINCREMENT,
+    title      TEXT    NOT NULL DEFAULT '',
+    -- JSON 数组，元素是小写去空白后的标签字符串
+    tags       TEXT    NOT NULL DEFAULT '[]',
+    content    TEXT    NOT NULL DEFAULT '',
+    created_at TEXT    NOT NULL,
+    updated_at TEXT    NOT NULL
+);
+
+-- 侧栏永远按「最近改过的在最上面」排，这个索引就是为它建的
+CREATE INDEX IF NOT EXISTS idx_notes_updated ON notes (updated_at DESC, id DESC);
 
 CREATE TABLE IF NOT EXISTS assistant_shortcuts (
     id              INTEGER PRIMARY KEY AUTOINCREMENT,

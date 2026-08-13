@@ -1,0 +1,195 @@
+{
+  "name": "毕业答辩 · 一问一答（LD6053 aIELTS）",
+  "description": "viva 现场问答，47 题。每题一句英文一句中文，枚举型答案逐点展开，代码题带文件与行号。来源 viva_25064849_RUIHANLIU_v4.pptx（27 页），行号 2026-08-13 逐条回读校验过。",
+  "dailyNewLimit": 8,
+  "cards": [
+    {
+      "front": "Q1 · 问题陈述里的三个问题是什么？",
+      "back": "**EN** Three problems, and one shared root: the tools never share state.\n\n**中** 三个问题，一个共同的根 —— 工具之间从不共享状态。\n\n---\n\n**1. No official scoring**\n- AI marking drifts off the band descriptors and the scores crowd the middle, so a learner cannot tell a 6.0 from a 6.5.\n- AI 打分偏离官方评分标准，分数还往中间挤，学习者分不出 6.0 和 6.5。\n\n**2. Words with no context**\n- A word learned on Monday never returns on Tuesday, yet transfer needs eight to twelve contextual meetings.\n- 周一背的词周二不再出现，可迁移要靠八到十二次语境重逢。\n\n**3. Four skills, four apps**\n- No tool knows what another tool already taught, so single-skill gains stay small and every switch costs attention.\n- 一个工具不知道另一个教过什么，单项提升有限，每次切换还要多付注意力。\n\n\n*出处：第 4 页 · Three problems, one root（Xia 2024; Kasneci 2023; Nation 2022; Ramancauskas 2025; Sweller 2011） ｜ 引言*"
+    },
+    {
+      "front": "Q2 · 为什么说是「一个根」？单独修一个不行吗？",
+      "back": "**EN** Because all three come from the same cause, fixing one leaves the learner switching apps and paying the attention cost every time.\n\n**中** 三者同源，只修一个，学习者照样在应用之间来回切换，每切一次都付一份注意力。\n\n*出处：第 4 页 · Every switch costs attention（Sweller, Ayres and Kalyuga, 2011） ｜ 引言*"
+    },
+    {
+      "front": "Q3 · 文献综述分了几个主题？分别是什么？",
+      "back": "**EN** Five themes, each read for one methodological strength set beside one stated limitation.\n\n**中** 五个主题，每篇文献都读出一条方法优点，配一条明写的局限。\n\n---\n\n**1. 1 · Marking and item generation in writing**\n- Scoring moved from rule-based e-rater to LLMs, which hold up but crowd toward the middle.\n- 打分从规则式 e-rater 走到大模型，分数站得住但爱往中间挤。\n\n**2. 2 · Anxiety in spoken exams**\n- Foreign language anxiety is measurable and an AI examiner nearly removes its link to performance.\n- 外语焦虑可测量，换成 AI 考官后它与成绩的关联几乎消失。\n\n**3. 3 · Spaced repetition versus contextual output**\n- Scheduling research answers when to review while vocabulary research answers how, and the two never meet.\n- 调度研究回答「何时复习」，词汇研究回答「怎么复习」，两边从不碰面。\n\n**4. 4 · LLM reliability**\n- Hallucination critiques and benchmarks stop at principle and produce no application-layer fix.\n- 幻觉批判和基准都停在原则层面，没给出应用层的解法。\n\n**5. 5 · Multi-skill integration in reading and listening**\n- Item generation is validated offline on borrowed passages, untied to any learner state.\n- 出题研究都在借来的语篇上离线验证，不挂任何学习者状态。\n\n\n*出处：第 5 页 · Literature in Five themes, one big gap ｜ 引言*"
+    },
+    {
+      "front": "Q4 · 五个主题各对应哪个研究问题？为什么？",
+      "back": "> **必考**\n\n**EN** Three themes feed RQ1, one feeds RQ2, one feeds RQ3.\n\n**中** 三个主题喂 RQ1，一个喂 RQ2，一个喂 RQ3。\n\n---\n\n**1. 主题 1 Marking and item generation `RQ1`**\n- RQ1 asks whether the workflow helps, and rubric-aligned marking is the first thing a learner needs from it.\n- RQ1 问这套流程有没有用，而对齐评分标准的批改正是学习者最先要的那一项。\n\n**2. 主题 2 Anxiety in spoken exams `RQ1`**\n- Also RQ1, because a low-pressure AI examiner is part of what makes the workflow usable at all for speaking.\n- 同样归 RQ1，低压力的 AI 考官正是口语这一项能被用起来的前提。\n\n**3. 主题 3 Spaced repetition versus context `RQ2`**\n- RQ2 asks whether FSRS beats fixed intervals, which is exactly the when-versus-how split this theme names.\n- RQ2 问 FSRS 是否胜过固定间隔，正是这个主题点出的「何时」对「怎么」的割裂。\n\n**4. 主题 4 LLM reliability `RQ3`**\n- RQ3 asks whether the harness cuts errors, and this theme supplies the hallucination and guardrail literature it is measured against.\n- RQ3 问 harness 能不能压住错误，这个主题提供了幻觉与护栏的对照文献。\n\n**5. 主题 5 Multi-skill integration `RQ1`**\n- Back to RQ1: integration across reading and listening is the claim RQ1 puts to the test.\n- 回到 RQ1：阅读听力的跨技能整合，正是 RQ1 要检验的那个主张。\n\n\n*出处：第 5 页 · 每条主题标题后面的 RQ 标签 ｜ 引言*"
+    },
+    {
+      "front": "Q5 · 文献空白是什么？",
+      "back": "**EN** No platform found in a public search brings controllable AI generation, adaptive vocabulary scheduling and multi-skill evaluation into one workflow.\n\n**中** 公开检索范围内，没有平台把可控 AI 生成、自适应词汇调度、多技能评估放进同一套流程。\n\n*出处：第 5 页 · GAP 绿框 ｜ 引言*"
+    },
+    {
+      "front": "Q6 · 项目目标是什么？",
+      "back": "**EN** To design, develop and evaluate aIELTS: controllable AI generation plus adaptive vocabulary scheduling across all four skills, so candidates can prepare for IELTS better.\n\n**中** 设计、开发并评估 aIELTS：把可控 AI 生成和自适应词汇调度接到一起，覆盖听说读写四项，让考生能把雅思备考做得更好。\n\n---\n\n**1. What is built**\n- A full-stack platform that generates practice for all four skills under one reliability layer.\n- 一个全栈平台，在同一层可靠性保障下生成四项技能的练习。\n\n**2. What makes it adaptive**\n- FSRS scheduling decides which words are due, and those words are woven into the material generated next.\n- FSRS 调度决定哪些词到期，这些词会被织进接下来生成的材料里。\n\n**3. What it is for**\n- The outcome clause the aim template asks for: candidates prepare for the test better, which is what RQ1 then puts to the test.\n- 这正是目标模板要求的成效句：考生把备考做得更好，而 RQ1 接着就去检验这一句。\n\n\n*出处：第 6 页 · AIM 一行（论文 1.3 节同步） ｜ 引言*"
+    },
+    {
+      "front": "Q7 · 三个研究问题分别问什么？怎么判定？",
+      "back": "**EN** Three questions, and each carries its own measure decided before any data arrived.\n\n**中** 三个问题，每个都带一把在数据到来之前就定好的尺子。\n\n---\n\n**1. RQ1 · Does one workflow help? `RQ1`**\n- Judged on whether both journeys finish every step, and on how useful learners rate the workflow.\n- 看两条旅程能否每一步走完，再看使用者给流程打多少分。\n\n**2. RQ2 · Does FSRS beat fixed intervals? `RQ2`**\n- Judged on retention held at matched review cost, not on retention alone.\n- 看复习成本对齐之后的留存，而不是单看留存。\n\n**3. RQ3 · Does the harness cut errors? `RQ3`**\n- Judged on format failures and on made-up content, counted separately.\n- 看格式失败数和捏造内容数，两者分开数。\n\n\n*出处：第 6 页 · 三个 RQ 卡片 ｜ 引言*"
+    },
+    {
+      "front": "Q8 · 五个目标是什么？",
+      "back": "**EN** Five objectives, written at proposal stage and judged later against the target as first written.\n\n**中** 五个目标，开题时写下，后面按最初写下的标准判定。\n\n---\n\n**1. O1 Platform built**\n- A full-stack four-skill platform, deployed and reachable.\n- 一个全栈四技能平台，部署上线可访问。\n\n**2. O2 Marking and generation**\n- Rubric-aligned marking and on-demand item generation working end to end.\n- 对齐评分标准的批改与按需出题，端到端跑通。\n\n**3. O3 Retention gain at seven days**\n- A measured retention improvement against fixed-interval review.\n- 相对固定间隔复习，测出留存提升。\n\n**4. O4 Success and format targets**\n- Generation success rate and JSON format compliance meeting their numbers.\n- 生成成功率和 JSON 格式合规达到既定数字。\n\n**5. O5 Testing across five levels**\n- Unit, integration, system, usability and performance testing all run.\n- 单元、集成、系统、可用性、性能五个层级全部跑过。\n\n\n*出处：第 6 页 · OBJECTIVES 一行 ｜ 引言*"
+    },
+    {
+      "front": "Q9 · 研究策略是什么？为什么选它？",
+      "back": "**EN** Mixed methods with design and build leading, because the central contribution is a working artefact.\n\n**中** 混合方法、以设计与构建为主，因为核心产出是一个能跑的系统。\n\n---\n\n**1. Design and build leads**\n- The contribution is an artefact that integrates technologies in a new way, which is what this strategy is for.\n- 贡献是一个把多项技术以新方式整合起来的产物，这正是该策略的用途。\n\n**2. Survey and telemetry cross-check**\n- A telemetry figure counts as evidence only where the learner reports agree, and any divergence is reported rather than smoothed away.\n- 遥测数字只有在使用者反馈也认同时才算证据，出现分歧就如实报告，不抹平。\n\n\n*出处：第 8 页 · Methodology（Oates, 2006; Creswell and Creswell, 2018） ｜ 设计与实现*"
+    },
+    {
+      "front": "Q10 · 为什么不做纯实验或案例研究？",
+      "back": "**EN** Both were considered and rejected for named reasons, not by default.\n\n**中** 两个都认真考虑过再拒掉，不是默认跳过。\n\n---\n\n**1. A pure experiment**\n- No validated multi-skill IELTS baseline exists to control against, so there is nothing to compare the platform with.\n- 不存在经过验证的多技能雅思基线可做对照，平台没有可比的对象。\n\n**2. A case study**\n- Studying existing tools would build nothing that could be deployed, so RQ1 and RQ3 would lose their artefact.\n- 研究现成工具产不出可部署的东西，RQ1 和 RQ3 就失去了赖以成立的产物。\n\n\n*出处：第 8 页 · CONSIDERED AND REJECTED ｜ 设计与实现*"
+    },
+    {
+      "front": "Q11 · 伦理审批的情况？",
+      "back": "**EN** Approved under the medium-risk interview and usability category, reference HL_RISK_722, before any participant activity began.\n\n**中** 按中风险的访谈与可用性类别获批，编号 HL_RISK_722，在任何参与者活动之前签署。\n\n*出处：第 8 页 · Solo Kanban, fifteen weeks. Ethics HL_RISK_722 ｜ 设计与实现*"
+    },
+    {
+      "front": "Q12 · 系统架构是什么样的？",
+      "back": "**EN** Four layers behind one deployable service, live at aielts.xyz.\n\n**中** 四层结构，打包成一个可部署服务，线上地址 aielts.xyz。\n\n---\n\n**1. 1 · Front**\n- React 19 with TypeScript on Vite 7, spanning 61 pages and 6 vocabulary study modes.\n- React 19 加 TypeScript，跑在 Vite 7 上，61 个页面、6 种词汇学习模式。\n\n**2. 2 · Back**\n- Django 6 exposing 156 endpoints, with single-device JWT and one scheduler.\n- Django 6 暴露 156 个接口，单设备 JWT，一个调度器。\n\n**3. 3 · Data**\n- Aiven MySQL holding 34 models, with Upstash Redis for locks and cache.\n- Aiven MySQL 承载 34 个模型，Upstash Redis 管锁和缓存。\n\n**4. 4 · AI**\n- Eight LLM routes behind one client, DeepSeek V4 by default, with one harness before every call.\n- 八条 LLM 路由封在一个客户端后面，默认 DeepSeek V4，每次调用前都过同一套 harness。\n\n\n*出处：第 9 页 · Four layers ｜ 设计与实现*"
+    },
+    {
+      "front": "Q13 · 题目生成的规则从哪来？",
+      "back": "**EN** Rules were distilled by hand from Cambridge IELTS 4 to 21, and the raw data is public.\n\n**中** 规则是从剑桥雅思 4 到 21 手工蒸馏出来的，原始数据已公开。\n\n---\n\n**1. Eighteen books held**\n- Of the eighteen usable books, only four were machine-readable; the rest had to be read out by hand.\n- 十八本可用，其中只有四本机器可读，其余要人工读出来。\n\n**2. Published**\n- The extracted corpus sits at github.com/lrhtom/IELTS_raw_data, so the distillation is checkable.\n- 抽出来的语料放在 github.com/lrhtom/IELTS_raw_data，蒸馏过程可核查。\n\n\n*出处：第 10 页 · Rules distilled from Cambridge IELTS 4-21 ｜ 设计与实现*"
+    },
+    {
+      "front": "Q14 · 四项技能各自怎么生成？",
+      "back": "**EN** One pipeline, four skill generators, and the words due today get woven into whatever is produced.\n\n**中** 一条流水线、四个技能生成器，今天到期的词会被织进生成出来的材料里。\n\n---\n\n**1. Listening**\n- The passage is written first and edge-tts voices it, with audio cached by content hash so the same script never costs twice.\n- 先写文稿再由 edge-tts 配音，音频按内容哈希缓存，同一份稿子不会付两次费。\n\n**2. Reading**\n- A 400 to 900 word passage plus task items, which is also where the scheduled words find their context.\n- 400 到 900 词的文章加题目，调度到期的词也正是在这里找到语境。\n\n**3. Speaking**\n- All three parts, with Azure scoring pronunciation and a role-play mode that adds real pressure.\n- 三个 part 全覆盖，Azure 打发音分，角色扮演模式加上真实压力。\n\n**4. Writing**\n- Two tasks marked on the four official dimensions, with an AI teacher that walks a draft rather than handing back a corrected essay.\n- 两个 task，按官方四个维度评，AI 教师带着改草稿，而不是直接退回一篇改好的作文。\n\n\n*出处：第 10 页 · Four skills generation ｜ 设计与实现*"
+    },
+    {
+      "front": "Q15 · 生成流程为什么要拆成四步？",
+      "back": "**EN** A full listening paper takes over a minute, so the pipeline is built around not making the learner wait on a blocked request.\n\n**中** 一套完整听力题要一分多钟，所以整条流水线是围绕「不让学习者干等」设计的。\n\n---\n\n**1. 1 · Return at once**\n- The front end goes asynchronous and the back end multithreads, so the request returns before the work finishes.\n- 前端异步、后端多线程，活还没干完请求就先返回。\n\n**2. 2 · Combine**\n- Three passages and four sections are assembled in one pass into a whole paper.\n- 三篇文章、四个部分一次合成整卷。\n\n**3. 3 · Chain the tools**\n- The model writes and a tool renders, never both, so audio, charts and images never come out of the model.\n- 模型只写字、工具负责渲染，绝不兼任，音频、图表、图片都不出自模型。\n\n**4. 4 · Check, retry once**\n- A paper that fails its check is re-issued once under a new lock, and only a paper that passed reaches the learner.\n- 没过检查的卷子换一把锁重发一次，只有通过的卷子才送到学习者面前。\n\n\n*出处：第 11 页 · How generation runs ｜ 设计与实现*"
+    },
+    {
+      "front": "Q16 · 重试机制有什么已知缺陷？",
+      "back": "> **必考**\n\n**EN** The retry re-sends the same prompt rather than the detected defects, so it is a blind re-roll and the slide says so up front.\n\n**中** 重试重发的是同一份提示词、不是检测到的缺陷，所以那只是盲目重摇 —— 幻灯片上主动写明了。\n\n*出处：第 11 页 · STATED UP FRONT ｜ 设计与实现*"
+    },
+    {
+      "front": "Q17 · 一个单词是怎么串起四个模块的？",
+      "back": "**EN** Not four features bundled together, but one shared vocabulary state that four modules read and write.\n\n**中** 不是四个功能捆在一起，是一份共享的词汇状态，四个模块都读也都写。\n\n---\n\n**1. 1 · Tapped while reading**\n- A word the learner did not know is tapped inside the passage they are already reading.\n- 在正在读的文章里点开一个不认识的词。\n\n**2. 2 · Becomes a card**\n- The word gains stability, difficulty and a recall probability, which is the FSRS state.\n- 这个词获得稳定性、难度和回忆概率，也就是 FSRS 状态。\n\n**3. 3 · FSRS sets the next day**\n- The next review date comes from that card stability, not from a fixed calendar.\n- 下一次复习日期由这张卡自己的稳定性算出，不是按固定日历排。\n\n**4. 4 · Returns inside new material**\n- The word comes back inside a passage, a listening script or a writing prompt, which closes the loop.\n- 这个词回到新的文章、听力稿或写作题目里，闭环就此合上。\n\n\n*出处：第 13 页 · One word, four modules ｜ 设计与实现*"
+    },
+    {
+      "front": "Q18 · 间隔重复早有定论，FSRS 补的是什么？",
+      "back": "**EN** Spacing was already proven; FSRS answers how long the gap should be for this particular card.\n\n**中** 间隔效应早已被证明，FSRS 回答的是这一张卡的间隔到底该多长。\n\n*出处：第 13 页 · Spacing was already proven. FSRS answers how long ｜ 设计与实现*"
+    },
+    {
+      "front": "Q19 · FSRS 里的 R、S、D 分别是什么？",
+      "back": "> **必考**\n\n**EN** Three variables carry the whole algorithm: how likely recall is today, how long that likelihood lasts, and how stubborn the card is.\n\n**中** 三个变量撑起整个算法：今天记不记得住、这份记性能撑多久、这张卡有多难缠。\n\n---\n\n**1. R · Retrievability 可提取性**\n- R is the chance of recalling this card today, and it turns on only two things: how many days since the last review, and the card&rsquo;s current S.\n- R 就是「今天还能不能想起这张卡」的概率，只看两件事：离上次复习过了几天，以及这张卡当下的 S。\n\n**2. R 为什么非有不可**\n- Any honest spaced-repetition algorithm has to predict R somehow, or it has no way to say which interval is the best one.\n- 任何诚实的间隔重复算法都得能预测 R，哪怕方式不同；预测不了，就没法判断哪个间隔最优。\n\n**3. S · Stability 稳定性**\n- S is how many days recall takes to fall from 100% to 90%, so S = 365 means a card is still at 90% a full year later, and bigger is better.\n- S 是回忆概率从 100% 掉到 90% 需要的天数，S=365 就是整整一年后才掉到 90%，越大越好。\n\n**4. S 为什么是难点**\n- Estimating S is the hard part, and it is where FSRS actually lives.\n- 估计 S 是最难的一步，FSRS 的本事全在这里。\n\n**5. D · Difficulty 难度**\n- D has no clean definition: it is a bundle of heuristics with little to do with how memory really works, so Easy pushes it down while Hard or Again push it up.\n- D 没有明确定义，是一堆跟人类记忆原理关系不大的启发式算出来的：按「简单」它降，按「困难」或「重来」它升。\n\n\n| 做什么 | 文件 | 行 | 这一段在干什么 |\n|---|---|---|---|\n| R 的公式 | `backend/api/core/fsrs_utils.py` | 67-72 | _retrievability：R(t) = (1 + FACTOR·t/S)^DECAY，DECAY = −0.5 |\n| S 怎么被推高与打回 | `backend/api/core/fsrs_utils.py` | 97-116 | _recall_stability：记住就涨，忘了就回落 |\n| R 与 S 的那条恒等式 | `backend/api/management/commands/simulate_rq2.py` | 1-42 | 解 R(t)=0.9 恰好得 t=S。这就是 RQ2 模拟能闭式求解、不用猜学习者记没记住的原因 |\n| D 的取值范围 | `backend/api/core/fsrs_utils.py` | 11-34 | D 被钳在 [1, 10]。第 25 页反思里那个「95.7% 卡片越界」，越的就是这个界 |\n\n*出处：第 13 页 One word, four modules · 第 20 页 RQ2 ｜ 设计与实现*"
+    },
+    {
+      "front": "Q20 · harness 的四个机制是什么？",
+      "back": "**EN** Four mechanisms wrap every LLM call, on the principle that the model is not trusted.\n\n**中** 四个机制包住每一次 LLM 调用，前提是不信任模型。\n\n---\n\n**1. 1 · Constrained prompt**\n- The prompt is locked to the band descriptors and user text never reaches the system role.\n- 提示词锁死在评分标准上，用户文本进不了 system 角色。\n\n**2. 2 · Singleflight**\n- A Redis lock makes duplicate calls wait for the in-flight result, which stops double charging.\n- Redis 锁让重复调用等待在途结果，避免重复扣费。\n\n**3. 3 · Provider route**\n- Eight routes are selectable per request, so a bad provider is a switch rather than a rewrite.\n- 八条路由按请求可选，某家供应商出问题只是切一下，不用改代码。\n\n**4. 4 · JSON match**\n- Cleaning, greedy brace matching and deterministic repair run before anything is billed or stored.\n- 清洗、贪婪花括号匹配、确定性修复，都在计费和落库之前跑完。\n\n\n*出处：第 15 页 · Four mechanisms, no trust（Böckeler, 2026） ｜ 设计与实现*"
+    },
+    {
+      "front": "Q21 · 现场演示会看到什么？",
+      "back": "**EN** Three moves on the live deployment, with a recorded clip ready if the network fails.\n\n**中** 线上环境走三步，网络出问题就播提前录好的片段。\n\n---\n\n**1. 1 · Generate**\n- All four skills generated on the spot, which shows the pipeline of slide 11 actually running.\n- 现场生成四项技能的题目，让第 11 页那条流水线真的跑一遍。\n\n**2. 2 · Writing Teacher**\n- The AI teacher walks a prepared draft, which is FR13 and the rubric alignment made visible.\n- AI 教师带着一篇准备好的草稿走一遍，这是 FR13，也是评分标准对齐的可见证据。\n\n**3. 3 · Make a plan, study, read the data**\n- A vocabulary plan is created and studied, then the data is read back, which shows the RQ2 loop end to end.\n- 建一个词汇计划、学一轮、再回看数据，把 RQ2 的闭环从头走到尾。\n\n\n*出处：第 18 页 · Live demo ｜ 演示与结果*"
+    },
+    {
+      "front": "Q22 · RQ1 的结论是什么？",
+      "back": "**EN** Supported, on both measures, with one qualification.\n\n**中** 两项判据都成立，附一条保留。\n\n---\n\n**1. Journeys**\n- Both end-to-end journeys finished every step on the deployed build.\n- 两条端到端旅程在线上环境每一步都走完。\n\n**2. Ratings**\n- Across 64 ratings the mean was 4.28 with no item below 3, and speaking was unanimous at 5.00.\n- 64 个评分均值 4.28，无一项低于 3，口语全票 5.00。\n\n**3. Samples**\n- Eight people answered the questionnaire and five ran the same chain unaided.\n- 八人填问卷，五人在无协助下走同一条链路。\n\n\n*出处：第 19 页 · RQ1 · Supported, with one catch ｜ 演示与结果*"
+    },
+    {
+      "front": "Q23 · RQ1 那个 catch 是什么？",
+      "back": "> **必考**\n\n**EN** The generated receptive material is the weak point, and the cause is named rather than left open.\n\n**中** 生成的接收性材料是弱项，而且成因是被指名的，不是含糊带过。\n\n---\n\n**1. What rated lowest**\n- Generated reading rated lowest of the eight items and listening was not high either.\n- 生成的阅读在八项里评分最低，听力也不高。\n\n**2. Where it failed**\n- Three of five could not finish the listening task in the guided sessions.\n- 引导式测试里，五人中有三人没能完成听力任务。\n\n**3. Why**\n- Generation length drives it, not the interface, and slide 21 shows the same fault from the telemetry side.\n- 成因是生成长度而不是界面，第 21 页从遥测那一侧看到的是同一个故障。\n\n\n*出处：第 19 页 · THE CATCH / WHY ｜ 演示与结果*"
+    },
+    {
+      "front": "Q24 · RQ2 的结论是什么？",
+      "back": "**EN** At matched review cost FSRS wins on both retention measures.\n\n**中** 在复习成本对齐的前提下，FSRS 在两项留存指标上都赢。\n\n---\n\n**1. Minimum retention**\n- FSRS-4.5 held 98.4% against 93.6% for Fixed-7d.\n- FSRS-4.5 的最低留存 98.4%，固定七天 93.6%。\n\n**2. Time below target**\n- FSRS spent 0.0% of card-days below the target against 10.7% for Fixed-7d.\n- 低于目标的卡-天占比，FSRS 是 0.0%，固定七天是 10.7%。\n\n**3. Review cost**\n- FSRS used 2.23 reviews per card against 2.00, so Fixed-7d is about ten percent cheaper and still loses.\n- 每卡复习次数 FSRS 是 2.23、固定七天是 2.00，固定七天便宜约一成，仍然输。\n\n\n*出处：第 20 页 · RQ2 · Cheaper, and still better ｜ 演示与结果*"
+    },
+    {
+      "front": "Q25 · RQ2 为什么是模拟不是实验？",
+      "back": "> **必考**\n\n**EN** The design in Section 3.5 could not run, so a counterfactual was run over real data instead.\n\n**中** 3.5 节设计的实验跑不了，改成在真实数据上跑反事实。\n\n---\n\n**1. What was missing**\n- No fixed-interval control arm was ever built into the product and no rating log was persisted.\n- 产品里从未实现固定间隔对照组，评分日志也从未落库。\n\n**2. What was run instead**\n- A counterfactual over 3,403 real cards with stability fitted from 29,200 real reviews across a 14-day horizon.\n- 拿 3,403 张真实卡片跑反事实，稳定性由 29,200 条真实复习拟合，horizon 14 天。\n\n**3. What it can and cannot say**\n- It establishes review cost rather than observed retention, because both arms are scored on the FSRS curve.\n- 它确立的是复习成本而不是实测留存，因为两条臂都用 FSRS 自己的曲线打分。\n\n\n*出处：第 20 页 · A simulation, not an experiment. n = 3,403 cards ｜ 演示与结果*"
+    },
+    {
+      "front": "Q26 · RQ3 的结论是什么？",
+      "back": "**EN** Format held and repair did not, which is a split verdict rather than a pass.\n\n**中** 格式守住了，修复没起作用 —— 这是一个分裂的结论，不是通过。\n\n---\n\n**1. Format compliance**\n- 110 of 120 calls parsed on the first try, 91.7% against a 90% target.\n- 120 次调用有 110 次一次解析成功，91.7% 对着 90% 的目标。\n\n**2. Hallucination**\n- Zero made-up content in 50 outputs read by hand, which answers the Bender and Ji critique directly.\n- 50 条人工通读的输出里零捏造，正面回应了 Bender 与 Ji 的批评。\n\n**3. Repair**\n- Deterministic repair recovered none of the ten failures, so that mechanism showed no benefit against the one failure mode observed.\n- 确定性修复对十次失败一次都没救回来，对观察到的唯一失败模式没有收益。\n\n\n*出处：第 21 页 · RQ3 · Format held, repair did not ｜ 演示与结果*"
+    },
+    {
+      "front": "Q27 · 那十次失败是怎么回事？",
+      "back": "**EN** All ten were output cut short, not wrong content, and none of them was billed.\n\n**中** 十次全是输出被截断、不是内容出错，而且一次都没有计费。\n\n---\n\n**1. Where they landed**\n- Nine in listening and one in reading, with zero in speaking and writing.\n- 九次出在听力、一次出在阅读，口语与写作零失败。\n\n**2. What that means**\n- Length drives failure, not open-endedness, because a listening paper is the longest thing the system generates.\n- 决定失败的是长度不是开放性，因为听力卷是整个系统生成的最长产物。\n\n**3. How it was found**\n- The provider had reported finish_reason=length all along, and nothing in the code was reading that field.\n- 供应商一直在如实回报 finish_reason=length，只是代码里没人读这个字段。\n\n\n*出处：第 21 页 · WHERE THE FAILURES LANDED / WHAT THAT MEANS ｜ 演示与结果*"
+    },
+    {
+      "front": "Q28 · 五个目标达成得怎么样？",
+      "back": "**EN** Judged against the target as first written, not against what turned out to be reachable.\n\n**中** 按最初写下的目标判定，不按后来发现能做到的水平判定。\n\n---\n\n**1. O1 Platform built · Met**\n- All in-scope requirements traced to test cases, 12 of 13 passed in full, 61 pages deployed.\n- 范围内需求全部追溯到测试用例，13 项中 12 项完全通过，61 个页面已部署。\n\n**2. O2 Marking and generation · Met**\n- Rubric-aligned marking and on-demand generation both work end to end.\n- 对齐评分标准的批改与按需生成，端到端都跑通。\n\n**3. O5 Testing across five levels · Mostly**\n- Five levels ran, but concurrency was never load tested and one security scan was never run.\n- 五个层级都跑了，但并发从未做规模测试，一项安全扫描也没执行。\n\n**4. O4 Success and format targets · Partly**\n- Format compliance met its number while the end-to-end latency target did not.\n- 格式合规达标，端到端时延目标没达标。\n\n**5. O3 Retention gain at seven days · Not met**\n- A deployment that never ran a control arm cannot compute an observed retention gain.\n- 一个从未跑过对照组的部署，算不出实测的留存提升。\n\n\n*出处：第 23 页 · What was met ｜ 结论*"
+    },
+    {
+      "front": "Q29 · O3 为什么没达成？",
+      "back": "> **必考**\n\n**EN** It is a design fault rather than a resource bound, and the target was deliberately left as written.\n\n**中** 这是设计上的错，不是资源不足；而且目标被刻意保留原样。\n\n---\n\n**1. The cause**\n- No fixed-interval control arm was built, so there is nothing the scheduler could be measured against.\n- 固定间隔对照组从未建成，调度器没有可对照的东西。\n\n**2. The choice**\n- The target was not rewritten to fit what the product could actually measure, which keeps the miss visible.\n- 目标没有为了迁就实测能力被改写，这样这次没达成才留在明面上。\n\n**3. The lesson**\n- A scheduler shipped without either a control arm or a review log cannot be asked about retention afterwards, however much data it later accumulates.\n- 一个既没有对照组也没有复习日志就上线的调度器，事后再问它留存也问不出来，后面攒多少数据都没用。\n\n\n*出处：第 23 页 · WHY O3 FAILED ｜ 结论*"
+    },
+    {
+      "front": "Q30 · 主要局限有哪些？",
+      "back": "**EN** Three, stated before the results rather than after them.\n\n**中** 三条，写在结果之前而不是之后。\n\n---\n\n**1. Small, self-selected samples**\n- Eight questionnaire respondents and five session participants, all acquaintances, so the ratings are indicative rather than representative.\n- 八名问卷受访者、五名会话参与者，都是熟人，所以评分只能当指示性证据。\n\n**2. RQ2 is a simulation**\n- The comparison is about scheduling cost and says nothing about what a learner would actually have recalled.\n- 那个对比讲的是调度成本，对学习者实际记住了什么一句话也说不了。\n\n**3. Real concurrency never tested**\n- A single-developer environment provided no way to generate the load, so this is an absence of evidence rather than a negative result.\n- 单人开发环境造不出那个负载，所以这是证据缺失，不是负面结果。\n\n\n*出处：第 23 页 · LIMITS, STATED FIRST（全文见 7.5.5 与 8.3 节） ｜ 结论*"
+    },
+    {
+      "front": "Q31 · 项目的贡献是什么？",
+      "back": "**EN** Three audiences, three different things.\n\n**中** 三类受众，三样不同的东西。\n\n---\n\n**1. Learners**\n- A tutor available at any hour at low cost, with a bring-your-own-API-key path.\n- 随时可用的低成本辅导，并且可以自带 API key。\n\n**2. Teachers**\n- Questions written and marked faster, which is preparation time saved.\n- 出题和批改都更快，省下的是备课时间。\n\n**3. Other subjects**\n- The harness moves across domains, because the skill registries transfer.\n- harness 可以跨学科迁移，因为技能注册表是可搬的。\n\n\n*出处：第 24 页 · Contribution and what next ｜ 结论*"
+    },
+    {
+      "front": "Q32 · 接下来做什么？",
+      "back": "**EN** Four extensions, each traceable to a limitation or a finding.\n\n**中** 四项延伸，每一项都能追到某条局限或某个发现。\n\n---\n\n**1. Teacher and student sides**\n- Split the roles properly so a teacher can assign and a student can receive.\n- 把角色拆开，老师能布置、学生能接收。\n\n**2. Rebuild the back end in Go**\n- Concurrency was never load tested, and this is the answer to that limit.\n- 并发从未做过压测，这条就是冲那个局限去的。\n\n**3. AI detection on submitted essays**\n- A writing platform that generates text should also be able to tell whether the submission was generated.\n- 一个会生成文本的写作平台，也该分得出交上来的东西是不是生成的。\n\n**4. AI short video in vocabulary learning**\n- Extends the contextual reinforcement of slide 13 from text into another modality.\n- 把第 13 页那套语境强化从文本扩到另一种形式。\n\n\n*出处：第 24 页 · NEXT STEPS ｜ 结论*"
+    },
+    {
+      "front": "Q33 · 这个项目让你学到了什么？",
+      "back": "**EN** Three kinds of learning, and none of them is the platform itself.\n\n**中** 三样学到的东西，没有一样是平台本身。\n\n---\n\n**1. 8.5.1 Learning · English**\n- The literature review began as a list and became an argument only after supervisor feedback, and every source now shows a strength beside a weakness.\n- 文献综述一开始是一份清单，是导师反馈之后才变成论证，现在每篇文献都是一条优点配一条局限。\n\n**2. 8.5.2 Challenges · FSRS math logic**\n- Card values sat out of range for weeks because the check was written outside the class that owned the value.\n- 卡片的值越界了好几周，因为检查写在了拥有这个值的类之外。\n\n**3. 8.5.3 Skills developed · managing a big project**\n- One client fronts eight providers, so a new route costs a branch and a key rather than an integration.\n- 一个客户端封住八家供应商，新增一条路由只要一个分支加一把密钥，不是一次集成。\n\n\n*出处：第 25 页 · Reflective statement 三张卡 ｜ 结论*"
+    },
+    {
+      "front": "Q34 · 工程量有多大？",
+      "back": "**EN** 141,500 lines of code in 439 files, 120 AI calls measured, and 3,442 vocabulary cards checked.\n\n**中** 439 个文件里 141,500 行代码，120 次 AI 调用埋点，3,442 张词汇卡片核查。\n\n*出处：第 25 页 · 中间那行数字 ｜ 结论*"
+    },
+    {
+      "front": "Q35 · 你自己的雅思分数算不算成果？",
+      "back": "> **必考**\n\n**EN** No. It is reflective material, and the slide labels it as such before anyone asks.\n\n**中** 不算。那是反思材料，幻灯片在被问之前就已经这样标注了。\n\n---\n\n**1. What the number is**\n- The overall band moved from 6.0 to 6.5 on 22 June 2026, carried by speaking and listening.\n- 总分 2026 年 6 月 22 日从 6.0 到 6.5，提升集中在口语和听力。\n\n**2. Why it is not evidence**\n- n equals one, there was no control, and the author is also the developer.\n- n 等于 1，没有对照，而且作者本人就是开发者。\n\n**3. What depends on it**\n- Nothing: no result in Chapter 7 rests on this number.\n- 什么都不依赖它：第 7 章没有任何结论建立在这个数字上。\n\n\n*出处：第 25 页 · REFLECTION, NOT A RESULT ｜ 结论*"
+    },
+    {
+      "front": "Q36 · 架构那几个数字，代码在哪？",
+      "back": "**EN** Four anchors carry the numbers on the architecture slide.\n\n**中** 架构页上的四个数字，各有一处可以当场翻开的代码。\n\n| 做什么 | 文件 | 行 | 这一段在干什么 |\n|---|---|---|---|\n| 156 endpoints 的路由表 | `backend/api/urls.py` | 46-79 | 整张 urlpatterns。现在实数 160 条，比幻灯片多，口头说「超过 150」最稳 |\n| 34 张数据模型 | `backend/api/models/__init__.py` | 24-51 | 模型导出清单，数出来正好 34 |\n| 单设备 JWT：令牌 ID 比对 | `backend/api/core/authentication.py` | 60-64 | 把 token 里的 jwt_token_id 与库里的比，不等就 401 |\n| 八条模型路由的分发 | `backend/api/core/ai_client.py` | 53-122 | AIClient.__init__ 里一条 provider 一个分支 |\n\n*出处：第 9 页 Four layers ｜ 代码与测试索引*"
+    },
+    {
+      "front": "Q37 · 四技能生成的代码在哪？",
+      "back": "**EN** Seven anchors, one per claim the four-skills slide makes.\n\n**中** 四技能页上每一句说法各有一处代码。\n\n| 做什么 | 文件 | 行 | 这一段在干什么 |\n|---|---|---|---|\n| 阅读题型注册表（不是自由出题） | `backend/api/skills/reading/generation.py` | 622-649 | 题型是登记好的，模型只能在表里选 |\n| 听力：先写稿再配音 | `backend/api/practice/listening_views.py` | 124-135 | 调 edge-tts，文稿在前音频在后 |\n| 音频按内容哈希缓存 | `backend/api/practice/listening_views.py` | 98-111 | md5(voice|text) 当键，同一份稿子不重复付费 |\n| 口语：Azure 发音评测 | `backend/api/practice/speaking_views.py` | 151-176 | speechsdk 打分，不是模型打分 |\n| 写作：四项官方评分维度 | `backend/api/skills/writing/correction.py` | 14-29 | Task Response 等四项写死在 prompt 契约里 |\n| 今日词汇织入（前端取词） | `frontend/src/pages/reading/reading_page.tsx` | 252-255 | 把到期词列表发给后端 |\n| 今日词汇织入（后端进 prompt） | `backend/api/practice/reading_views.py` | 469-474 | Incorporate as many of these target words as possible |\n\n*出处：第 10 页 Four skills generation ｜ 代码与测试索引*"
+    },
+    {
+      "front": "Q38 · 异步生成那四步，代码在哪？",
+      "back": "**EN** The pipeline slide has eleven anchors, including the two admissions.\n\n**中** 流水线页十一处，包括主动承认的那两条。\n\n| 做什么 | 文件 | 行 | 这一段在干什么 |\n|---|---|---|---|\n| ① 立刻返回 202 Accepted | `backend/api/practice/reading_views.py` | 545-558 | spawn_ai_generation 之后马上回，不等生成 |\n| ① 前端拿 202 就跳走 | `frontend/src/pages/reading/reading_page.tsx` | 255-260 | 卡片显示「生成中」 |\n| ① 守护线程接手真正的活 | `backend/api/practice/ai_question_views.py` | 208-247 | _run() 在后台跑 |\n| ① 线程写库前 close_all | `backend/api/practice/ai_question_views.py` | 211-217 | Aiven 连接早断了，不关会拿到死连接 |\n| ② 三篇阅读并行 | `backend/api/practice/reading_views.py` | 973-982 | ThreadPoolExecutor，一篇一个请求 |\n| ② 四个听力 section 并行 | `backend/api/practice/listening_views.py` | 1180-1189 | 同上 |\n| ③ 模型写不了渲染代码，直接拒 | `backend/api/practice/writing_chart_views.py` | 1086-1099 | _looks_like_python 黑名单，含 import matplotlib |\n| ③ 图表由模型出规格、程序渲染 | `backend/api/practice/writing_chart_views.py` | 1159-1200 | _generate_chart_payload；1172 行写着 You MUST NOT use matplotlib |\n| ③ 地图题交给 FLUX.2-pro 出图 | `backend/api/practice/writing_chart_views.py` | 414-483 | _generate_raster_map；上游调用在 ai_client.py:802-844 |\n| ④ 生成 → 校验 → 重试一次 → 判失败 | `backend/api/practice/listening_views.py` | 480-513 | 整段状态流转 |\n| ④ 重试换新锁 = 盲目重掷 | `backend/api/practice/listening_views.py` | 489-492 | scope 带 attempt 号，但发出去的还是同一份 prompt |\n\n*出处：第 11 页 How generation runs ｜ 代码与测试索引*"
+    },
+    {
+      "front": "Q39 · FSRS 的代码在哪？RQ2 的模拟呢？",
+      "back": "**EN** Seven anchors: the algorithm itself, where it runs, and the counterfactual that answers RQ2.\n\n**中** 七处：算法本体、它在哪跑、以及回答 RQ2 的那段反事实。\n\n| 做什么 | 文件 | 行 | 这一段在干什么 |\n|---|---|---|---|\n| 权重表与遗忘曲线常数 | `backend/api/core/fsrs_utils.py` | 11-34 | W[0..20] 与 DECAY / FACTOR |\n| 遗忘曲线 R(t, S) | `backend/api/core/fsrs_utils.py` | 67-72 | _retrievability；解 R=0.9 得 t=S 就出自这里 |\n| 稳定性增长与遗忘回落 | `backend/api/core/fsrs_utils.py` | 97-116 | _recall_stability |\n| 四状态排程状态机 | `backend/api/core/fsrs_utils.py` | 161-224 | New / Learning / Review / Relearning |\n| 排程在服务端跑，客户端改不了 | `backend/api/vocab/vocab_views.py` | 218-243 | 评分上来才算，前端只负责显示 |\n| RQ2 反事实模拟的核心函数 | `backend/api/management/commands/simulate_rq2.py` | 62-77 | simulate_card(stability, interval, horizon) |\n| RQ2 三条局限写在代码注释里 | `backend/api/management/commands/simulate_rq2.py` | 27-38 | 不是事后补的说法，是写在实现旁边的 |\n\n*出处：第 13 页 One word, four modules · 第 20 页 RQ2 ｜ 代码与测试索引*"
+    },
+    {
+      "front": "Q40 · harness 四个机制的代码在哪？",
+      "back": "**EN** Six anchors: one per mechanism, plus the refund path when a call fails.\n\n**中** 六处：四个机制各一处，外加调用失败时的退币。\n\n| 做什么 | 文件 | 行 | 这一段在干什么 |\n|---|---|---|---|\n| 机制 1：prompt 锁死在官方评分标准 | `backend/api/skills/writing/correction.py` | 1-30 | 契约写在文件头，用户文本进不了 system 角色 |\n| 机制 2：Singleflight Redis 锁 | `backend/api/core/ai_client.py` | 291-304 | SET-NX，键是 ai_sf:lock 加 scope 加 user |\n| 机制 3：八条路由分发 | `backend/api/core/ai_client.py` | 53-122 | 同 Q35，一条路由一个分支加一把 key |\n| 机制 4：清洗 → 贪婪匹配 → 修复 | `backend/api/core/ai_client.py` | 585-620 | 三步同框 |\n| 机制 4 细节：_repair_json 怎么修 | `backend/api/core/ai_client.py` | 901-937 | 补引号、补括号、去尾逗号 |\n| 失败退币 | `backend/api/core/ai_client.py` | 938-953 | refund_at；解析失败这次生成不计费 |\n\n*出处：第 15 页 Four mechanisms, no trust ｜ 代码与测试索引*"
+    },
+    {
+      "front": "Q41 · RQ3 的遥测数字是从哪张表来的？",
+      "back": "**EN** Three anchors: where each call is logged, the table it lands in, and the rate limit around it.\n\n**中** 三处：每次调用在哪打点、落进哪张表、外面套着什么限流。\n\n| 做什么 | 文件 | 行 | 这一段在干什么 |\n|---|---|---|---|\n| RQ3 遥测埋点：失败也留痕 | `backend/api/core/ai_client.py` | 361-378 | 注释直接写着 RQ3 reliability instrumentation |\n| AIGenerationLog 数据表 | `backend/api/models/stats.py` | 70-95 | 120 次调用的 91.7% 就是数这张表 |\n| 限流：每分钟 5 次生成 | `backend/api/core/rate_limit.py` | 6-27 | fail-open，Redis 挂了不拦人 |\n\n*出处：第 21 页 RQ3 ｜ 代码与测试索引*"
+    },
+    {
+      "front": "Q42 · RQ1 的测试有哪些？",
+      "back": "> **必考**\n\n**EN** RQ1 asks whether one workflow helps, so its tests are the cross-module contracts that make the workflow one thing.\n\n**中** RQ1 问一套流程有没有用，所以它的测试是把流程串成一体的那些跨模块契约。\n\n| 做什么 | 文件 | 行 | 这一段在干什么 |\n|---|---|---|---|\n| API 契约（FR2 / FR3 / FR9） | `backend/tests/integration/test_api_contracts.py` | 1-364 | 35 例。含「同步词汇 → 生成阅读 → 扣费」这条跨模块链，正是 RQ1 的整合主张 |\n| 写作全流程 | `backend/tests/integration/test_writing_full.py` | 1-152 | 11 例。父子 AIQuestion、Task1 随机题型在创建时定死 |\n| 收藏与错题 | `backend/tests/integration/test_favorites.py` | 1-189 | 18 例 |\n| 题库模板 | `backend/tests/integration/test_template_questions.py` | 1-200 | 14 例。非管理员拒绝、管理员设置与清除 |\n| 分数换算九分制 | `frontend/src/utils/ielts_band.test.ts` | 1-42 | 24 例。40/40 → 9.0 逐档核对 |\n| 背词卡片 store | `frontend/src/store/vocab_flashcard_store.test.ts` | 1-288 | 24 例 |\n| 文案不为空（多语） | `frontend/src/i18n/translations.test.ts` | 1-78 | 2 例。任何一种语言漏翻就红 |\n\n*出处：第 19 页 RQ1 · 全部可跑：backend/tests/integration/ ｜ 代码与测试索引*"
+    },
+    {
+      "front": "Q43 · RQ2 的测试有哪些？",
+      "back": "> **必考**\n\n**EN** RQ2 rests on the scheduler, so the scheduler is the most tightly held module in the codebase at 98% coverage.\n\n**中** RQ2 建立在调度器上，所以调度器是全仓卡得最紧的模块，覆盖率 98%。\n\n| 做什么 | 文件 | 行 | 这一段在干什么 |\n|---|---|---|---|\n| 调度器本体 | `backend/tests/unit/test_fsrs_utils.py` | 1-224 | 53 例。四状态乘四评分全排列、稳定性与难度的界、跨午夜只算一天 |\n| 前后端权重不漂移 | `frontend/src/utils/fsrs.golden.test.ts` | 1-446 | 49 例。金标向量直接从后端 fsrs_schedule() 导出，任一侧改了权重立刻红 |\n| 今日队列语义 | `backend/tests/unit/test_plan_today_summary.py` | 1-155 | 10 例。新卡评 Good 算不算今天完成、当天不再发回 |\n| 退出后进度不丢 | `backend/tests/integration/test_plan_progress_after_exit.py` | 1-149 | 7 例 |\n| 删词后卡片不成孤儿 | `backend/tests/integration/test_plan_word_deletion.py` | 1-156 | 9 例 |\n| 到期文案 | `frontend/src/utils/vocab_due_label.test.ts` | 1-130 | 19 例。Again → 明天 等逐档 |\n| 学习汇总分桶 | `frontend/src/utils/vocab_flashcard_summary.test.ts` | 1-129 | 19 例 |\n| 当日进度跨会话累加 | `frontend/src/utils/vocab_today_progress.test.ts` | 1-134 | 13 例 |\n\n*出处：第 20 页 RQ2 · 模拟本身在 backend/api/management/commands/simulate_rq2.py ｜ 代码与测试索引*"
+    },
+    {
+      "front": "Q44 · RQ3 的测试有哪些？",
+      "back": "> **必考**\n\n**EN** RQ3 is about the harness, so its tests are the routing table and the retry policy, not the model output.\n\n**中** RQ3 问的是 harness，所以测的是路由表和重试策略，不是模型输出本身。\n\n| 做什么 | 文件 | 行 | 这一段在干什么 |\n|---|---|---|---|\n| 八条路由的环境变量映射 | `backend/tests/unit/test_ai_client.py` | 1-308 | 16 例。每条路由的 base_url / key / model / headers 各对一遍。真调上游的分支被 live_ai 标记挡在默认运行外，这正是 ai_client.py 只有 39% 的原因 |\n| 推理模型参数分流 | `backend/tests/unit/test_ai_client_reasoning_params.py` | 1-157 | 26 例。哪些模型算 reasoning、参数怎么改写 |\n| 前端重试策略 | `frontend/src/utils/retry.test.ts` | 1-95 | 12 例。首次成功直接返回、503 才重试 |\n| 数字格式兜底 | `frontend/src/utils/format.test.ts` | 1-43 | 7 例。undefined 与 null 都回 0 |\n\n*出处：第 21 页 RQ3 · 埋点表 backend/api/models/stats.py:70-95 ｜ 代码与测试索引*"
+    },
+    {
+      "front": "Q45 · 安全相关的测试在哪？",
+      "back": "**EN** Two files, and authentication.py is the one module held at 100%.\n\n**中** 两个文件，authentication.py 是全仓唯一卡到 100% 的模块。\n\n| 做什么 | 文件 | 行 | 这一段在干什么 |\n|---|---|---|---|\n| 单设备会话 | `backend/tests/unit/test_auth_single_device.py` | 1-156 | 12 例。token_id 一致才放行，不一致直接拒 |\n| 注册与登录全流程 | `backend/tests/integration/test_auth_flow.py` | 1-243 | 19 例。含「入库口令永远不是明文」 |\n\n*出处：第 23 页 LIMITS · 论文 5.4.4 节 ｜ 代码与测试索引*"
+    },
+    {
+      "front": "Q46 · 整套测试怎么跑？一共多少条？",
+      "back": "**EN** Two commands. The suite collects 399 cases today, against the 381 the dissertation reports for the 9 August run.\n\n**中** 两条命令。今天收集到 399 条，论文里报的是 8 月 9 日那次运行的 381 条。\n\n| 做什么 | 文件 | 行 | 这一段在干什么 |\n|---|---|---|---|\n| 后端（内存 SQLite，碰不到生产库） | `cd backend` | — | python -m pytest　→ 230 条：单元 117、集成 113 |\n| 前端 | `cd frontend` | — | npx vitest run　→ 169 条，全绿 |\n| 测试专用配置 | `backend/backend/settings_test.py` | 1- | 把库指到内存 SQLite，所以测试永远打不到 Aiven |\n| 数字为什么对不上 | `—` | — | 8 月 9 日跑出 381（后端 212 加前端 169）。之后后端又加了用例，今天是 399。论文那句带着日期，属于快照，不算错 |\n\n*出处：第 21 页 Table 7.4 · 论文 7.2.4 节 ｜ 代码与测试索引*"
+    },
+    {
+      "front": "Q47 · RQ2 幻灯片那六个数字，是怎么算出来的？有存档吗？",
+      "back": "> **必考**\n\n**EN** Three layers of provenance: the script documents itself, a findings report carries every number, and the raw arrays are archived as JSON.\n\n**中** 三层留痕：脚本自己写了说明，一份 findings 报告带着每个数字，原始数组存成 JSON。\n\n---\n\n**1. 第一层 · 脚本自带 40 行说明**\n- The module docstring explains why the Section 3.5 design could not run, what is actually simulated, and names three limitations it says must go into the dissertation.\n- 模块 docstring 交代了 3.5 节的设计为什么跑不了、真正模拟的是什么，并点名三条局限，还写着「必须写进论文」。\n\n**2. 第二层 · FINDINGS.md 完整报告**\n- A 5.2 KB report dated 26 July carries the method, the closed form, the full results table and the caveats.\n- 7 月 26 日的 5.2 KB 报告，方法、闭式解、完整结果表、注意事项都在。\n\n**3. 第三层 · 原始数组 JSON**\n- Per-day mean retrievability and cumulative reviews for all five arms, plus the card sample statistics.\n- 五条臂逐日的平均可提取性与累计复习次数，加上卡片样本统计。\n\n**4. 复算结果**\n- Five of the six numbers recompute straight from the JSON; the sixth lives in the report and the console output rather than the JSON.\n- 六个数字里五个能直接从 JSON 复算出来，第六个只在报告和控制台输出里，JSON 没存。\n\n\n| 做什么 | 文件 | 行 | 这一段在干什么 |\n|---|---|---|---|\n| 脚本本体（含三条局限） | `backend/api/management/commands/simulate_rq2.py` | 1-42 | module docstring：为什么不是回放真实评分、模拟的到底是什么、三条局限 |\n| 完整报告 | `evidence/rq2_simulation/FINDINGS.md` | 1-100 | 六个数字全在第 61-77 行的结果表里 |\n| 原始数组 | `evidence/rq2_simulation/rq2_simulation.json` | — | 2026-07-26 生成；n=3403、29,200 次复习、2,304 次遗忘 |\n| 98.4% / 93.6% | `evidence/rq2_simulation/rq2_simulation.json` | — | min(mean_retrievability_by_day)：FSRS 0.9845、Fixed-7d 0.9359 ✅ 复算一致 |\n| 2.23 / 2.00 | `evidence/rq2_simulation/rq2_simulation.json` | — | total_reviews ÷ n：7587÷3403=2.229、6806÷3403=2.000 ✅ 复算一致 |\n| 便宜 10% | `evidence/rq2_simulation/rq2_simulation.json` | — | 1 − 6806÷7587 = 10.3% ✅ 复算一致 |\n| 0.0% / 10.7% | `backend/api/management/commands/simulate_rq2.py` | 199-230 | under_target_rate = 低于 0.9 的（卡, 日）对占比。⚠️ 脚本算了也打印了，但没写进 JSON；只有 FINDINGS.md 第 66 与 77 行留了值 |\n\n*出处：第 20 页 RQ2 · 代码见 Q39 ｜ 代码与测试索引*"
+    }
+  ]
+}

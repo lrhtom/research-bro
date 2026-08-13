@@ -94,6 +94,14 @@ export default function SpeakingRoomPage() {
     const [muted, setMuted] = useState(false);
     /** 正在流式生成的那段回复，还没落库 */
     const [streaming, setStreaming] = useState('');
+    /**
+     * AI 这一轮没出声、服务端正在重来，值是第几次。
+     *
+     * 要显示出来而不是默默重试：对方突然沉默几秒，用户不知道是网卡了、
+     * 是自己说错了、还是程序死了 —— 说一句「没听清，正在重来」，
+     * 这几秒就从故障变成了正常等待。
+     */
+    const [retrying, setRetrying] = useState(0);
 
     const recognizerRef = useRef<Recognizer | null>(null);
     const speakerRef = useRef<SentenceSpeaker | null>(null);
@@ -306,20 +314,32 @@ export default function SpeakingRoomPage() {
 
         try {
             let acc = '';
-            const { turn, error: streamErr } = await apiSpeakingTurn(id, text, source, (piece) => {
-                acc += piece;
-                setStreaming(acc);
-                // 攒够一句就先念，不等整段回完
-                speaker.push(piece);
+            const { turn, error: streamErr } = await apiSpeakingTurn(id, text, source, {
+                onDelta: (piece) => {
+                    acc += piece;
+                    setStreaming(acc);
+                    // 攒够一句就先念，不等整段回完
+                    speaker.push(piece);
+                },
+                // 服务端这一次没出声、正在重来：把收到的半截连同朗读队列一起清掉，
+                // 否则重试的正文会接在上一次那几个空白字符后面
+                onRetry: (attempt) => {
+                    acc = '';
+                    setStreaming('');
+                    speaker.reset();
+                    setRetrying(attempt);
+                },
             });
             speaker.flush();
             setStreaming('');
+            setRetrying(0);
 
             if (streamErr) { setError(streamErr); setStatus('idle'); return; }
             if (turn) setTurns((cur) => [...cur, turn]);
             if (!speechSynthesisSupported() || mutedRef.current) setStatus('idle');
         } catch (e) {
             setStreaming('');
+            setRetrying(0);
             setError(e instanceof Error ? e.message : '这一轮没能送出去');
             setStatus('idle');
         }
@@ -511,6 +531,14 @@ export default function SpeakingRoomPage() {
                     {/* 还没吐出第一个字的这段空窗最难受 —— 顶栏那一行小字太容易漏看，
                         所以在对话流里直接占一个气泡，跟真人聊天时的「正在输入」一个意思 */}
                     {(status === 'processing' || status === 'loading') && !streaming && <ThinkingBubble />}
+
+                    {/* 重试中。不写成红色错误 —— 它还在自己想办法，用户什么都不用做 */}
+                    {retrying > 0 && (
+                        <p className="sp-retry-note">
+                            <i className="fas fa-rotate fa-spin" />
+                            对方那边没出声，正在重来（第 {retrying + 1} 次）…
+                        </p>
+                    )}
 
                     {streaming && (
                         <article className={'sp-turn sp-turn-assistant' + (hideText ? ' is-hidden' : '')}>

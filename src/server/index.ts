@@ -14,6 +14,7 @@ import { tablesRouter } from './routes-tables.js';
 import { cardsRouter } from './routes-cards.js';
 import { speakingRouter } from './routes-speaking.js';
 import { assistantRouter } from './routes-assistant.js';
+import { notesRouter } from './routes-notes.js';
 import { StudyError } from './study.js';
 import { SpeakingError } from './speaking.js';
 import { AssistantError } from './assistant.js';
@@ -39,6 +40,7 @@ export function createApp(): express.Express {
     app.use('/api', cardsRouter);
     app.use('/api', speakingRouter);
     app.use('/api', assistantRouter);
+    app.use('/api', notesRouter);
 
     // 只有在跑编译产物时才托管前端。
     //
