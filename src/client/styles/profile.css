@@ -270,3 +270,119 @@
     .me-fields { width: 100%; }
     .me-link-add .u-input { flex-basis: 100%; }
 }
+
+/* ============================================================
+   个人中心的页内小侧边栏
+
+   跟 shell.css 里那个全站滑出式侧栏是两回事，别混：
+   那个管「站里有哪些工具」、默认收起、浮在内容上；
+   这个常驻、只管个人中心内部去哪一块，不放任何站级链接。
+   类名一律 me- 前缀，跟 sidebar- 不共用一个字。
+   ============================================================ */
+
+.me-layout {
+    display: grid;
+    grid-template-columns: 216px minmax(0, 1fr);
+    gap: var(--sp-6);
+    align-items: start;
+}
+
+.me-side {
+    position: sticky;
+    /* 顶栏是吸顶的，粘住的位置要让开它，否则滚动时侧栏会钻到顶栏底下 */
+    top: calc(var(--nav-h) + var(--sp-4));
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+}
+
+/* ---- 顶部身份块 ---- */
+
+.me-side-id {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: var(--sp-5) var(--sp-4);
+    text-align: center;
+    border-bottom: 1px solid var(--hairline);
+}
+.me-side-avatar {
+    width: 64px;
+    height: 64px;
+    font-size: 24px;
+}
+.me-side-name {
+    font-family: var(--font-display);
+    font-size: var(--fs-md);
+    font-weight: 600;
+}
+.me-side-tag {
+    font-size: var(--fs-xs);
+    line-height: 1.6;
+    color: var(--ink-3);
+    /* 签名可以很长，最多两行，超出省略 —— 侧栏不能被一句话撑成一根柱子 */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* ---- 导航 ---- */
+
+.me-side-nav { display: flex; flex-direction: column; padding: var(--sp-2); gap: 2px; }
+
+.me-side-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 9px 11px;
+    font-size: var(--fs-sm);
+    color: var(--ink-2);
+    text-align: left;
+    background: transparent;
+    border: 0;
+    border-radius: var(--r-md);
+    cursor: pointer;
+    transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.me-side-item i { width: 15px; font-size: 12px; text-align: center; color: var(--ink-4); }
+.me-side-item:hover { background: var(--paper-2); color: var(--ink); }
+
+/* 选中项：左侧一道强调色竖条 + 淡底。用 inset 阴影而不是 border-left，
+   免得选中时整行往右挪 1px */
+.me-side-item.is-active {
+    color: var(--accent-ink);
+    background: var(--accent-tint);
+    box-shadow: inset 2px 0 0 var(--accent);
+}
+.me-side-item.is-active i { color: var(--accent); }
+
+.me-side-back {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px var(--sp-4);
+    font-size: var(--fs-xs);
+    color: var(--ink-3);
+    text-decoration: none;
+    border-top: 1px solid var(--hairline);
+    transition: color var(--dur) var(--ease);
+}
+.me-side-back:hover { color: var(--accent); }
+.me-side-back i { font-size: 10px; }
+
+.me-main { min-width: 0; }
+
+/* 窄屏塌成一列：侧栏不再粘顶，导航横过来滚 */
+@media (max-width: 860px) {
+    .me-layout { grid-template-columns: minmax(0, 1fr); gap: var(--sp-4); }
+    .me-side { position: static; }
+    .me-side-nav { flex-direction: row; overflow-x: auto; }
+    .me-side-item { white-space: nowrap; }
+    .me-side-item.is-active { box-shadow: inset 0 -2px 0 var(--accent); }
+}

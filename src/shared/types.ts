@@ -99,6 +99,46 @@ export interface Card {
     updatedAt: string;
 }
 
+/** 遗忘曲线上的一个采样点。d = 距上次复习的天数，r = 那一刻还记得住的概率 0..1 */
+export interface CurvePoint {
+    d: number;
+    r: number;
+}
+
+/** 四档评分各自会把这张卡排到哪儿，用来标在按钮上 */
+export interface RatingPreview {
+    /** 排到的时刻，ISO */
+    due: string;
+    /** 距现在多少天（可能是小数，学习步是分钟级的） */
+    days: number;
+}
+
+/**
+ * 单张卡的记忆曲线视图。
+ *
+ * 全部由服务端算好送来 —— 前端不碰 FSRS 公式，理由跟调度一样：
+ * 全站只有 src/server/fsrs.ts 一个地方懂这套算法。
+ */
+export interface CardCurve {
+    cardId: number;
+    /** 新卡没有曲线可画（从没复习过，没有衰减起点） */
+    hasCurve: boolean;
+    stability: number;
+    difficulty: number;
+    state: CardState;
+    /** 上次复习，ISO；从没复习过是 null */
+    lastReview: string | null;
+    due: string;
+    /** 曲线采样点 */
+    points: CurvePoint[];
+    /** 「现在」落在曲线的哪一点 */
+    now: CurvePoint;
+    /** 到期那一刻落在曲线的哪一点（正常应该贴着 90%） */
+    dueAt: CurvePoint;
+    /** 四档评分的预览 */
+    previews: Record<Rating, RatingPreview>;
+}
+
 /** 学习界面每一步要的东西：当前卡 + 进度。两者永远来自同一次服务端计算，不会对不上。 */
 export interface StudyState {
     planId: number;
@@ -189,6 +229,15 @@ export interface CalendarCell {
     taps: number;
     /** 当天首次露面的卡片数（state_before = 'new'，按卡去重） */
     newCards: number;
+    /** 当天碰过的卡片数（按卡去重）。跟 taps 是两个口径，绝不混着显示 */
+    cards: number;
+    /**
+     * 当天的学习时长。
+     *
+     * 热力图的深浅按它分档，而不是按评分次数：次数多不等于学得久
+     * —— 一天点 200 下「简单」不到三分钟，跟啃 20 张难卡半小时不是一回事。
+     */
+    durationMs: number;
 }
 
 export interface DailyVolume {
@@ -210,6 +259,17 @@ export interface ForecastBucket {
     overdue: boolean;
     /** overdue 那根是空串 */
     day: string;
+    count: number;
+}
+
+/**
+ * 到期日分布的一格：从今天起第 days 天，有 count 张卡到期。
+ *
+ * 只含已排期的卡（不含新卡）。逾期的并进 days = 0 —— 它们现在就该复习。
+ * 两张图共用这一份数据：排期分布图直接画它，遗忘曲线在前端把它累减成存活曲线。
+ */
+export interface ScheduledBucket {
+    days: number;
     count: number;
 }
 
@@ -254,12 +314,20 @@ export interface StatsOverview {
     retention30: Retention;
     durationMs30: number;
 
-    /** 最近 26 周，含没学习的空日 */
+    /** 最近一年（365 天），含没学习的空日 */
     calendar: CalendarCell[];
+    /** 日历窗口的第一天，闭区间 [calendarStart, day] */
+    calendarStart: string;
+    /** 这一年的总学习时长 */
+    yearDurationMs: number;
+    /** 这一年里有学习记录的天数（累计学习天数） */
+    activeDays: number;
     /** 最近 30 天，含没学习的空日 */
     daily: DailyVolume[];
     /** 逾期 + 未来 30 天 */
     forecast: ForecastBucket[];
+    /** 完整跨度的到期日分布（可能到几百天）。排期分布图与遗忘曲线共用 */
+    scheduled: ScheduledBucket[];
     strength: StrengthBucket[];
     leeches: Leech[];
 

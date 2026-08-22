@@ -16,6 +16,29 @@ export default defineConfig({
 
     resolve: {
         alias: { '@': r('./src/client') },
+
+        /**
+         * 强制 react / react-dom 全站只有一份实例。
+         *
+         * 装 @uiw/react-codemirror（算法题库的代码编辑器）之后踩到的：
+         * 页面报「Invalid hook call … more than one copy of React」，
+         * 然后整个应用白屏。npm ls react 显示磁盘上明明只有一份、全是 deduped ——
+         * 多出来的那一份是 **Vite 的依赖预打包** 造的：第三方包被预构建成
+         * 自己那一份产物时，可能带上另一条通往 react 的解析路径，
+         * 于是 hooks 的那个全局单例就成了两个。
+         *
+         * dedupe 让这类包一律解析回根目录这一份。这是「装了个带 React 的库
+         * 之后突然白屏」的标准解，跟具体是哪个库无关，所以往后新增
+         * React 生态的依赖也不必再排查一次。
+         */
+        dedupe: ['react', 'react-dom'],
+    },
+
+    optimizeDeps: {
+        // 预打包这两个重家伙，省得进题目页时才现场编译一遍（首次打开会卡好几秒）。
+        // 它们都是动态 import 的，Vite 扫不到静态 import，不写在这儿就只能等到
+        // 真正点进去那一刻才发现要优化，然后触发一次整页刷新。
+        include: ['@uiw/react-codemirror', '@codemirror/lang-python', 'katex'],
     },
 
     build: {

@@ -17,7 +17,7 @@ export default function HomePage() {
             <p className="u-aside home-lead">
                 自建的几件工具都跑在本机，数据存本地 SQLite，不经过任何服务器；
                 收录的外部链接<b>逐条打开验证过</b>，默认都是<b>免登录、免费</b>的，
-                个别需要账号或付费的（都在「论文相关」里）会把门槛标在卡片上。
+                个别需要账号或付费的（几乎都在「论文相关」里，「免费素材」有一条）会把门槛标在卡片上。
             </p>
 
             <div className="u-head">

@@ -1059,3 +1059,439 @@ kbd {
     color: var(--color-primary);
     background: var(--accent-tint);
 }
+
+/* 预览并进详情之后，调度数据那一栏要跟上面的卡片内容分开 ——
+   不分的话，背面 Markdown 的最后一段会跟「状态」那一行黏在一起 */
+.fc-detail-below {
+    margin-top: var(--sp-5);
+    padding-top: var(--sp-5);
+    border-top: 1px solid var(--hairline);
+}
+
+/* ============================================================
+   单卡遗忘曲线（管理页详情页签底部）
+
+   颜色全部走 theme.css 的变量与已有的 --rate-1..4，不新定义色板 ——
+   四档按钮跟学习页那四个是同一件事，颜色必须一致，
+   否则「良好」在两个页面是两种绿，人会以为它们不是一回事。
+   ============================================================ */
+
+.fc-curve {
+    margin-top: var(--sp-5);
+    padding-top: var(--sp-5);
+    border-top: 1px solid var(--hairline);
+}
+
+.fc-curve-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--sp-3);
+    margin-bottom: var(--sp-3);
+}
+.fc-curve-head h4 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--fs-md);
+    font-weight: 600;
+}
+.fc-curve-head h4 i { margin-right: 6px; font-size: 12px; color: var(--ink-4); }
+.fc-curve-now { font-size: var(--fs-xs); color: var(--ink-3); }
+.fc-curve-now b { color: var(--accent-ink); }
+
+.fc-curve-skeleton {
+    height: 190px;
+    border-radius: var(--r-md);
+    background: var(--paper-2);
+}
+
+.fc-curve-empty,
+.fc-curve-err {
+    margin: 0 0 var(--sp-3);
+    padding: 10px 12px;
+    font-size: var(--fs-xs);
+    line-height: 1.8;
+    border-radius: var(--r-md);
+}
+.fc-curve-empty { color: var(--ink-2); background: var(--paper-2); }
+.fc-curve-err { color: var(--warn); background: var(--warn-tint); }
+.fc-curve-err i { margin-right: 5px; }
+
+/* ---- 图 ---- */
+
+.fc-curve-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    /* 曲线本身不该被当成可选文本，拖选时整块蓝掉很难看 */
+    user-select: none;
+}
+
+.fc-curve-grid { stroke: var(--hairline); stroke-width: 1; }
+/* 90% 那条是 FSRS 的目标线：到期日就排在记忆掉到这里的时刻 */
+.fc-curve-grid.is-target { stroke: var(--accent); stroke-dasharray: 3 3; opacity: 0.55; }
+
+.fc-curve-axis { font-size: 9.5px; fill: var(--ink-4); font-family: var(--font-mono); }
+
+.fc-curve-area { fill: var(--accent-tint); }
+.fc-curve-line { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; }
+
+.fc-curve-due { stroke: var(--ink-4); stroke-width: 1; stroke-dasharray: 2 3; }
+.fc-curve-tag { font-size: 9.5px; fill: var(--ink-3); font-family: var(--font-mono); }
+
+.fc-curve-dot { fill: var(--accent); stroke: var(--surface); stroke-width: 2; }
+.fc-curve-dot.is-overdue { fill: var(--warn); }
+
+/* ---- 图下面那四个数 ---- */
+
+.fc-curve-facts {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--sp-2);
+    margin: var(--sp-3) 0 0;
+}
+.fc-curve-facts > div {
+    padding: 7px 9px;
+    background: var(--paper-2);
+    border-radius: var(--r-sm);
+}
+.fc-curve-facts dt { font-size: 10.5px; color: var(--ink-4); margin-bottom: 2px; }
+.fc-curve-facts dd { margin: 0; font-size: var(--fs-sm); }
+.fc-curve-overdue { color: var(--warn); }
+
+/* ---- 四档 + 清零 ---- */
+
+.fc-curve-controls { margin-top: var(--sp-4); }
+
+.fc-curve-hint {
+    margin: 0 0 var(--sp-3);
+    padding: 8px 11px;
+    font-size: var(--fs-xs);
+    line-height: 1.8;
+    color: var(--ink-2);
+    background: var(--paper-2);
+    border-left: 2px solid var(--rule);
+    border-radius: var(--r-sm);
+}
+.fc-curve-hint i { margin-right: 5px; color: var(--ink-4); }
+
+.fc-curve-rates {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--sp-2);
+}
+
+/* 跟学习页的 .fc-rate 是同一套配色，但这里矮一些：
+   管理页不是背卡现场，按钮不该抢走曲线的视觉重量 */
+.fc-curve-rate {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 8px 4px;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-top: 2px solid var(--rule);
+    border-radius: var(--r-md);
+    cursor: pointer;
+    transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.fc-curve-rate:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px -12px rgba(0, 0, 0, 0.22);
+}
+.fc-curve-rate:disabled { opacity: 0.5; cursor: wait; }
+.fc-curve-rate b { font-size: var(--fs-sm); }
+.fc-curve-rate small { font-size: 10.5px; color: var(--ink-4); font-family: var(--font-mono); }
+
+.fc-curve-rate.fc-rate-1 { border-top-color: var(--rate-1); } .fc-curve-rate.fc-rate-1 b { color: var(--rate-1); }
+.fc-curve-rate.fc-rate-2 { border-top-color: var(--rate-2); } .fc-curve-rate.fc-rate-2 b { color: var(--rate-2); }
+.fc-curve-rate.fc-rate-3 { border-top-color: var(--rate-3); } .fc-curve-rate.fc-rate-3 b { color: var(--rate-3); }
+.fc-curve-rate.fc-rate-4 { border-top-color: var(--rate-4); } .fc-curve-rate.fc-rate-4 b { color: var(--rate-4); }
+
+.fc-curve-reset {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    width: 100%;
+    margin-top: var(--sp-2);
+    padding: 8px;
+    font-size: var(--fs-xs);
+    color: var(--ink-3);
+    background: transparent;
+    border: 1px dashed var(--rule);
+    border-radius: var(--r-md);
+    cursor: pointer;
+    transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.fc-curve-reset:hover:not(:disabled) { color: var(--warn); border-color: var(--warn); }
+.fc-curve-reset:disabled { opacity: 0.5; cursor: wait; }
+
+@media (max-width: 620px) {
+    .fc-curve-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* ============================================================
+   学习活动热力图
+
+   尺寸与配色照搬 aIELTS 的那一版（10px 格、圆角 2px、间距 3px、
+   月块间距 8px、青色四档）—— 那套数值是调过的，改一个就会散。
+   本站主色恰好也是 #0d9488，所以四档直接用 --accent 的透明度阶，
+   不再另立色板。
+   ============================================================ */
+
+.hm-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+    margin-bottom: var(--sp-4);
+}
+.hm-title { font-size: var(--fs-md); color: var(--ink); }
+.hm-title b { font-weight: 700; }
+
+.hm-topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: var(--fs-xs);
+    color: var(--ink-3);
+}
+.hm-stat { white-space: nowrap; }
+.hm-divider { width: 1px; height: 12px; background: var(--rule); }
+
+/* 窄屏横向滚。热力图宁可滚，也不能压缩格子 ——
+   格子一小于 10px，四档深浅就分辨不出来了 */
+.hm-body {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: var(--sp-2);
+}
+
+.hm-graph {
+    display: flex;
+    flex-direction: column;
+    /* 宽屏铺满容器，窄屏保持自然宽度交给 .hm-body 横向滚。
+       只写 width: max-content 的话，容器再宽网格也只占自然宽度、左对齐，
+       右边就空出一大条 */
+    width: 100%;
+    min-width: max-content;
+    padding-right: 2px;
+}
+
+/* 月与月之间**至少**留 8px，块内的列间距固定 3px —— 这个差值是月份的视觉分界。
+   space-between 让多出来的空间平摊到月与月之间，而不是全堆在右边；
+   格子本身不跟着放大：10px 是四档深浅还分得出来的下限，也是上限
+   —— 格子一大，整张图就从「一年的密度」变成「一堆方块」。 */
+.hm-grid {
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+}
+.hm-month { display: flex; flex-direction: column; gap: 6px; }
+
+.hm-cells {
+    display: grid;
+    grid-template-rows: repeat(7, 10px);
+    gap: 3px;
+}
+
+.hm-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    cursor: default;
+}
+/* 月初用来占位的空格：不画、也不响应鼠标 */
+.hm-dot.hm-empty { background: transparent; }
+
+.hm-dot.hm-lvl-0 { background: var(--rule); }
+.hm-dot.hm-lvl-1 { background: rgba(13, 148, 136, 0.25); }
+.hm-dot.hm-lvl-2 { background: rgba(13, 148, 136, 0.5); }
+.hm-dot.hm-lvl-3 { background: rgba(13, 148, 136, 0.78); }
+.hm-dot.hm-lvl-4 { background: #0d9488; }
+
+.hm-xlabel {
+    font-size: 10px;
+    color: var(--ink-4);
+    white-space: nowrap;
+}
+
+.hm-legend {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: var(--sp-3);
+    font-size: 10px;
+    color: var(--ink-4);
+}
+.hm-legend .hm-dot { width: 11px; height: 11px; }
+
+/* 提示框挂在 body 上（见组件里的 createPortal），所以用 fixed 定位。
+   位置**全部由 transform 表达**，left/top 固定在 0 —— 组件每帧直接写
+   transform 让它跟着光标走，改 left/top 的话每帧都要重新布局。
+   那条短 transition 是「丝滑」的来源：光标每帧给一个新目标，
+   80ms 的缓动让提示框柔和地追上去，而不是硬贴在指针上抖。
+   时间不能再长，超过 100ms 就从「跟随」变成「拖后腿」。 */
+.hm-tip {
+    position: fixed;
+    left: 0;
+    top: 0;
+    transform: translate(-50%, calc(-100% - 12px));
+    transition: transform 80ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 110px;
+    padding: 8px 12px;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 9999;
+}
+.hm-tip-date {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 3px;
+}
+.hm-tip-line { font-size: 11px; color: var(--ink-3); }
+
+/* ============================================================
+   排期分布 / 遗忘曲线（从 aIELTS 迁过来的两张）
+
+   提示框复用热力图那套 .hm-tip —— 三张图的提示框长得一样、
+   行为也一样（跟随光标、挂 body、fixed），没有理由各写一份。
+   ============================================================ */
+
+.sc-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    /* 图不是可选文本，拖选时整块蓝掉很难看 */
+    user-select: none;
+}
+
+.sc-grid { stroke: var(--hairline); stroke-width: 0.5; }
+.sc-axis { font-size: 10px; fill: var(--ink-4); font-family: var(--font-mono); }
+
+/* 点的填充用页面底色而不是白色：这样线从点中间穿过去时，
+   点看着是"套在线上"的圈，而不是压在线上的白块 */
+.sc-dot { fill: var(--surface); stroke-width: 2; pointer-events: none; }
+.sc-dot.is-accent { stroke: var(--accent); }
+
+.sc-line { stroke: var(--accent); }
+
+.sc-bar {
+    fill: var(--accent);
+    opacity: 0.75;
+    transition: opacity var(--dur) var(--ease);
+}
+.sc-bar:hover { opacity: 1; }
+
+/* ---- 折线 / 柱状切换 ---- */
+
+.sc-head { display: flex; justify-content: flex-end; margin-bottom: var(--sp-2); }
+
+.sc-toggle {
+    display: inline-flex;
+    padding: 2px;
+    background: var(--paper-2);
+    border-radius: var(--r-md);
+}
+
+.sc-toggle-btn {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 24px;
+    color: var(--ink-4);
+    background: transparent;
+    border: 0;
+    border-radius: var(--r-sm);
+    cursor: pointer;
+    transition: color var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+.sc-toggle-btn:hover { color: var(--ink-2); }
+.sc-toggle-btn.is-on {
+    color: var(--accent-ink);
+    background: var(--surface);
+    box-shadow: var(--shadow-1);
+}
+
+/* ============================================================
+   学习分析的四组页签
+
+   跟卡片详情里那套 .fc-tab 不共用：那个是「同一张卡的三种看法」，
+   贴着内容、下划线式；这个是「四组互不相干的图表」，是分页，
+   所以做成独立的药丸按钮，视觉上跟内容拉开距离。
+   ============================================================ */
+
+.fc-atabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+    margin-bottom: var(--sp-4);
+}
+
+.fc-atab {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 14px;
+    font-size: var(--fs-sm);
+    color: var(--ink-2);
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--r-md);
+    cursor: pointer;
+    transition: color var(--dur) var(--ease), background var(--dur) var(--ease),
+                border-color var(--dur) var(--ease);
+}
+.fc-atab i { font-size: 11px; color: var(--ink-4); }
+.fc-atab:hover { color: var(--ink); border-color: var(--ink-4); }
+
+.fc-atab.is-on {
+    color: var(--accent-ink);
+    background: var(--accent-tint);
+    border-color: var(--accent-tint-2);
+    font-weight: 600;
+}
+.fc-atab.is-on i { color: var(--accent); }
+
+@media (max-width: 620px) {
+    /* 窄屏横向滚，不换行 —— 四个按钮折成两行会把内容推下去半屏 */
+    .fc-atabs { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; }
+    .fc-atab { white-space: nowrap; }
+}
+
+/* 学习页的「重学」。
+   刻意做得比四档评分**轻**：虚线边、无底色、字号更小 ——
+   它跟那四个不是一类操作（不产生流水、不计入进度），
+   长得一样重的话，手会把它当成第五档去按。 */
+.fc-relearn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    max-width: 420px;
+    margin: var(--sp-3) auto 0;
+    padding: 9px var(--sp-4);
+    font-size: var(--fs-xs);
+    color: var(--ink-3);
+    background: transparent;
+    border: 1px dashed var(--rule);
+    border-radius: var(--r-md);
+    cursor: pointer;
+    transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.fc-relearn:hover:not(:disabled) { color: var(--warn); border-color: var(--warn); }
+.fc-relearn:disabled { opacity: 0.5; cursor: wait; }
+.fc-relearn i { font-size: 11px; }

@@ -182,6 +182,58 @@ CREATE TABLE IF NOT EXISTS speaking_turns (
 
 CREATE INDEX IF NOT EXISTS idx_speaking_turns_session ON speaking_turns (session_id, seq);
 
+-- 自己存下来的场景。
+--
+-- 内置场景写死在 src/shared/speaking.ts 里（那是代码，跟着版本走）；
+-- 这张表放的是你自己写的、或者「随机来一个」抽到觉得好用的那些。
+-- 两者在选场景那一格里并排显示，区别只有「能不能删」。
+--
+-- 内容审核在**存的时候**做一次，之后每次开练不再审 ——
+-- 存进来的文本不会再变，重复审只是白花钱。
+CREATE TABLE IF NOT EXISTS speaking_scenarios (
+    id         INTEGER PRIMARY KEY AUTOINCREMENT,
+    -- 列表里显示的名字
+    label      TEXT    NOT NULL,
+    -- 喂给模型的场景描述（英文效果最好）
+    scenario   TEXT    NOT NULL,
+    created_at TEXT    NOT NULL,
+    updated_at TEXT    NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS idx_speaking_scenarios_time ON speaking_scenarios (updated_at DESC, id DESC);
+
+-- ------------------------------------------------------------
+--  大模型档案
+--
+--  原来只能存一套配置（base_url / api_key / model 三个 settings 键），
+--  想换模型就得把输入框里的字擦掉重填。这张表让你把常用的几套都存下来，
+--  点一下切换。
+--
+--  一行 = 一套**完整的连接方式**，而不只是一个模型名：不同供应商的
+--  地址和 key 都不一样，只存模型名换过去连不上。
+--
+--  alias 是你自己起的名字（「便宜的那个」「写代码用」），model 是接口
+--  真正认的那个字符串（deepseek-chat）。列表上显示 alias，发请求用 model ——
+--  两个都要，缺一个就变成「一堆认不出谁是谁的模型 id」或者「记得名字但发不出请求」。
+--
+--  这套配置是**全站共用**的：口语练习和右下角的 AI 悬浮球用同一个当前模型。
+-- ------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS llm_models (
+    id         INTEGER PRIMARY KEY AUTOINCREMENT,
+    -- 自己起的别名，列表上显示的就是它
+    alias      TEXT    NOT NULL,
+    -- 接口真正认的模型名，发请求时用
+    model      TEXT    NOT NULL,
+    base_url   TEXT    NOT NULL,
+    -- 明文只在这里和发请求时存在，接口一律只回打码后的样子
+    api_key    TEXT    NOT NULL DEFAULT '',
+    created_at TEXT    NOT NULL,
+    updated_at TEXT    NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS idx_llm_models_order ON llm_models (id ASC);
+
 -- 随机场景的去重历史，只留最近若干条
 CREATE TABLE IF NOT EXISTS speaking_scenario_history (
     id         INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -252,3 +304,101 @@ CREATE TABLE IF NOT EXISTS assistant_shortcuts (
     open_in_new_tab INTEGER NOT NULL DEFAULT 1,
     created_at      TEXT    NOT NULL
 );
+
+-- ------------------------------------------------------------
+--  算法题库（OJ）
+--
+--  从独立的 ai_oj 桌面应用搬进来的一期功能：AI 出题 → 多种子造测试数据
+--  → 本地 Python 判题。三张表都带 oj_ 前缀 —— 库里已经有 plans / cards
+--  这些属于记忆卡的表，不加前缀过两个月就分不清 submissions 是谁的。
+--
+--  AI 的接口地址 / key / 模型名**不在这儿**：那是全站共用的「大模型档案」
+--  （llm_models 表）。属于 OJ 自己的设置只有 Python 路径与生成并发数，
+--  两个值放在通用的 settings 表里（oj_python_path / oj_gen_concurrency）。
+-- ------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS oj_problems (
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+
+    -- 'algo' | 'web'。目前只出 algo。
+    -- 留着这一列是给原应用二期的「Web 前端题」占位：那一期还没搬过来，
+    -- 将来补上就是加表加路由，已有数据一行都不用动。
+    type            TEXT    NOT NULL DEFAULT 'algo',
+
+    title           TEXT    NOT NULL,
+    difficulty      TEXT    NOT NULL DEFAULT '中等',
+    -- JSON 数组。标签过滤走 tags LIKE '%"二分查找"%' ——
+    -- 序列化后的 JSON 自带引号，这么匹配足够精确，不必再拆一张标签表。
+    tags            TEXT    NOT NULL DEFAULT '[]',
+
+    -- 题面 Markdown，**不含样例**：样例由前端从 is_sample 的测试点渲染，
+    -- 这样题面和真正被判的数据永远对得上，不会出现「题面写的样例跑不过」。
+    statement_md    TEXT    NOT NULL,
+
+    -- AI 给的标准解。它是这道题唯一的 oracle：每个测试点的期望输出
+    -- 都是拿它跑出来的，所以必须连同题目一起存着。
+    solution_code   TEXT    NOT NULL DEFAULT '',
+    solution_lang   TEXT    NOT NULL DEFAULT 'python',
+
+    time_limit_ms   INTEGER NOT NULL DEFAULT 2000,
+    memory_limit_mb INTEGER NOT NULL DEFAULT 256,
+    is_favorite     INTEGER NOT NULL DEFAULT 0,
+
+    -- generating | ready | partial | failed
+    -- partial = 有测试点但有计划失败了；failed = 一个点都没生成出来。
+    -- 这两个状态要分开：partial 的题还能做，failed 的不能。
+    status          TEXT    NOT NULL DEFAULT 'ready',
+
+    gen_prompt      TEXT    NOT NULL DEFAULT '',
+    -- JSON 数组：哪个计划失败了、为什么，以及缺 large/boundary 这类覆盖告警
+    gen_warnings    TEXT    NOT NULL DEFAULT '[]',
+
+    created_at      TEXT    NOT NULL,
+    updated_at      TEXT    NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS idx_oj_problems_list ON oj_problems (id DESC);
+
+CREATE TABLE IF NOT EXISTS oj_test_cases (
+    id             INTEGER PRIMARY KEY AUTOINCREMENT,
+    problem_id     INTEGER NOT NULL REFERENCES oj_problems (id) ON DELETE CASCADE,
+    -- 展示顺序，从 1 开始；样例排在最前面
+    idx            INTEGER NOT NULL,
+    -- sample | boundary | small | large | special
+    kind           TEXT    NOT NULL,
+    plan_name      TEXT    NOT NULL DEFAULT '',
+    plan_desc      TEXT    NOT NULL DEFAULT '',
+    is_sample      INTEGER NOT NULL DEFAULT 0,
+
+    input          TEXT    NOT NULL,
+    output         TEXT    NOT NULL,
+    -- 造出这个点的那份 gen.py。存着是为了能回答「这组数据哪来的」，
+    -- 也方便发现题目有问题时照着改。
+    generator_code TEXT    NOT NULL DEFAULT '',
+
+    -- 派生列。列表页只显示体积和前 200 字，不必把几 MB 的正文拉下来。
+    input_bytes    INTEGER NOT NULL DEFAULT 0,
+    output_bytes   INTEGER NOT NULL DEFAULT 0
+);
+
+CREATE INDEX IF NOT EXISTS idx_oj_test_cases_problem ON oj_test_cases (problem_id, idx);
+
+CREATE TABLE IF NOT EXISTS oj_submissions (
+    id           INTEGER PRIMARY KEY AUTOINCREMENT,
+    problem_id   INTEGER NOT NULL REFERENCES oj_problems (id) ON DELETE CASCADE,
+    language     TEXT    NOT NULL,
+    code         TEXT    NOT NULL,
+
+    -- AC | WA | TLE | RE | CE | SE | JUDGING | PENDING
+    verdict      TEXT    NOT NULL DEFAULT 'PENDING',
+    -- 0~100，按通过的测试点比例算
+    score        INTEGER NOT NULL DEFAULT 0,
+    -- 所有测试点里最大的那个耗时
+    time_ms      INTEGER,
+    -- JSON OjCaseResult[]：逐点的判定、耗时与错误摘要
+    case_results TEXT    NOT NULL DEFAULT '[]',
+
+    created_at   TEXT    NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS idx_oj_submissions_problem ON oj_submissions (problem_id, id DESC);

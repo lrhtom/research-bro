@@ -1,5 +1,5 @@
 /* ============================================================
-   外链列表（格式转换 / 论文检查 / 编程比赛三页共用；
+   外链列表（格式转换 / 论文检查 / 编程比赛 / 免费素材 / AI 资讯五页共用；
    网课页的分类列表在 courses.css）
 
    跟首页的工具列表同一套骨架，区别只在多一行标注 —— 每一页最该先看清的
@@ -97,6 +97,26 @@
     .link-icon, .link-go { display: none; }
 }
 
+/* ---------------- 免费素材页专用 ---------------- */
+
+/* 用之前必须知道的那条限制（itch 跳转、只能单张下、授权要自己筛…）。
+   跟编程比赛的 .contest-paused 长得像但用的是中性色不是警告色：
+   那一条说的是「这个比赛没了」，这一条说的是「能用，但这么用」——
+   同样标成橙色会让人以为这些站有问题，而它们全都是过了门槛才列进来的。 */
+.asset-caveat {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    padding: 6px 10px;
+    font-size: var(--fs-xs);
+    line-height: 1.7;
+    color: var(--ink-2);
+    background: var(--paper-2);
+    border-left: 2px solid var(--rule);
+    border-radius: var(--r-sm);
+}
+.asset-caveat i { margin-top: 4px; font-size: 9px; color: var(--ink-4); }
+
 /* ---------------- 编程比赛页专用 ---------------- */
 
 /* 开赛节奏 / 语言 / 参赛门槛：三件事都是「点之前想知道」，
@@ -125,13 +145,17 @@
 }
 .contest-paused i { margin-top: 4px; font-size: 9px; }
 
-/* 一个比赛两个官方入口（力扣的国际站 / 中国站）。
-   这种卡整块不再可点，靠下面这两个按钮各自跳 —— 见 ContestsPage 的说明。
+/* ---------------- 编程比赛页专用（到此为止） ---------------- */
+
+/* 一条外链有多个平级入口时用这一组（编程比赛的力扣国际站 / 中国站，
+   AI 资讯的日报 / 周报 / 模型榜 / 热点榜）。
+   这种卡整块不再可点，靠卡内的按钮各自跳 —— 两个目的地却只有一个点击区的话，
+   点下去到底去哪儿全靠猜；而且 <a> 里再套 <a> 本身就不是合法的 HTML。
    .is-multi 只是把整卡链接的悬停反馈去掉，布局仍走 .link-row 那一套。 */
 .link-row.is-multi { cursor: default; }
 .link-row.is-multi:hover { border-color: var(--rule); box-shadow: var(--shadow-1); }
 
-.contest-entries {
+.link-entries {
     grid-column: 2;
     display: flex;
     flex-wrap: wrap;
@@ -139,7 +163,7 @@
     margin-top: var(--sp-1);
 }
 
-.contest-entry {
+.link-entry {
     display: inline-flex;
     align-items: baseline;
     gap: var(--sp-2);
@@ -152,14 +176,14 @@
     transition: border-color var(--dur) var(--ease), background var(--dur) var(--ease);
 }
 
-.contest-entry:hover { border-color: var(--accent); background: var(--accent-tint); }
-.contest-entry b { font-size: var(--fs-sm); }
-.contest-entry em { font-style: normal; font-size: var(--fs-xs); color: var(--ink-3); }
-.contest-entry i { font-size: 9px; color: var(--ink-4); }
-.contest-entry:hover em,
-.contest-entry:hover i { color: var(--accent-ink); }
+.link-entry:hover { border-color: var(--accent); background: var(--accent-tint); }
+.link-entry b { font-size: var(--fs-sm); }
+.link-entry em { font-style: normal; font-size: var(--fs-xs); color: var(--ink-3); }
+.link-entry i { font-size: 9px; color: var(--ink-4); }
+.link-entry:hover em,
+.link-entry:hover i { color: var(--accent-ink); }
 
 @media (max-width: 720px) {
     /* 窄屏下 .link-row 塌成单列，入口按钮跟着回到第一列 */
-    .contest-entries { grid-column: 1; }
+    .link-entries { grid-column: 1; }
 }

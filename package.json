@@ -24,11 +24,15 @@
     "seed:replace": "tsx scripts/seed-decks.ts --replace"
   },
   "dependencies": {
+    "@codemirror/lang-python": "^6.2.1",
     "@fortawesome/fontawesome-free": "^6.7.2",
+    "@uiw/react-codemirror": "^4.25.11",
     "better-sqlite3": "^11.10.0",
     "dompurify": "^3.2.6",
     "express": "^5.1.0",
     "html2canvas": "^1.4.1",
+    "jsonrepair": "^3.15.0",
+    "katex": "^0.18.4",
     "marked": "^15.0.12",
     "mermaid": "^11.16.1",
     "node-html-parser": "^7.0.1",

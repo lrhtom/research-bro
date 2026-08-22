@@ -6,12 +6,14 @@
 // 上一版是一列长卡片、编辑时就地展开 —— 卡多了之后要一直上下滚，
 // 而且展开会把下面的行全推走，改完再找回原来的位置很烦。
 //
-// 右边三个页签分工明确：
-//   · 预览 —— 背面按 Markdown 渲染，跟学习时看到的一模一样（默认落在这里）
-//   · 详情 —— 调度数据（状态、到期、稳定度、复习/遗忘次数），只读
+// 右边两个页签：
+//   · 详情 —— 自上而下三段：卡片预览（背面按 Markdown 渲染，跟学习时一模一样）、
+//             调度数据（状态、到期、稳定度、复习/遗忘次数）、遗忘曲线与手动调整
 //   · 编辑 —— 改正反面
-// 「预览」单独一档而不是塞进编辑里：编辑器自己右半边已经有实时预览，
-// 但那一栏窄，图和表格看不全；单开一页是给「我就想看看这张卡长什么样」用的。
+// 预览原来是独立一档，后来并进详情最上面：这两件事本来就连着看 ——
+// 判断「这张卡要不要调曲线」得先看清它长什么样，分成两档就得来回切。
+// 编辑器自己右半边虽然也有实时预览，但那一栏窄，图和表格看不全，
+// 所以详情里这一份仍然留着。
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
@@ -19,33 +21,36 @@ import AppShell from '@/components/AppShell';
 import { FLASHCARD_SECTIONS } from '@/lib/nav';
 import ImportPanel from '@/components/cards/ImportPanel';
 import CardEditor from '@/components/cards/CardEditor';
+import ForgettingCurve from '@/components/cards/ForgettingCurve';
 import Markdown from '@/components/cards/Markdown';
 import { Skeleton } from '@/components/Loading';
 import {
-    apiCreateCard, apiDeleteCard, apiListCards, apiResetCard, apiToggleCardFavorite,
+    apiCreateCard, apiDeleteCard, apiListCards, apiToggleCardFavorite,
     apiUpdateCard, apiUpdatePlan,
 } from '@/lib/api';
 import { dateText, STATE_LABELS, untilText } from '@/lib/format';
 import { cancelSpeech, speakAuto, speechSynthesisSupported } from '@/lib/speech';
 import type { Card, Plan, PlanStats } from '../../shared/types';
 
-/** 右边那块的三个页签 */
-type Tab = 'detail' | 'edit' | 'preview';
+/** 右边那块的两个页签 */
+type Tab = 'detail' | 'edit';
 
 const TABS: Array<{ key: Tab; label: string; icon: string }> = [
     { key: 'detail', label: '详情', icon: 'fa-circle-info' },
     { key: 'edit', label: '编辑', icon: 'fa-pen' },
-    { key: 'preview', label: '预览', icon: 'fa-eye' },
 ];
 
 /**
- * 落地页签：预览。
+ * 落地页签：详情。
  *
- * 点开一张卡最想先看到的是「这张卡到底长什么样」，不是它的调度数据 ——
- * 稳定度和复习次数是排查用的，不是日常要看的。
+ * 「预览」原来是独立一档，现在并进详情里、摆在最上面 —— 因为这两件事
+ * 本来就是连着看的：先看清这张卡长什么样，再往下看它排到什么时候、
+ * 记忆掉到哪儿了。分成两档的时候，判断「这张卡要不要调」得来回切页签，
+ * 而调度数据脱离卡片内容单独看也没什么意义。
+ *
  * 换卡、存完、取消编辑之后都回到这里，所以抽成一个常量，只改一处。
  */
-const DEFAULT_TAB: Tab = 'preview';
+const DEFAULT_TAB: Tab = 'detail';
 
 export default function PlanDetailPage() {
     const { planId } = useParams();
@@ -174,11 +179,6 @@ export default function PlanDetailPage() {
         }
     }
 
-    async function resetCard(c: Card) {
-        if (!window.confirm('把这张卡的学习进度清零、重新当新卡吗？\n（卡片内容与历史记录都保留）')) return;
-        try { await apiResetCard(c.id); await reload(); }
-        catch (e) { setError(e instanceof Error ? e.message : '重置失败'); }
-    }
 
     /** 收藏：先改界面再发请求，失败原样退回 —— 点一颗星要等一个来回才亮，手感很差 */
     async function toggleFavorite(c: Card) {
@@ -389,12 +389,6 @@ export default function PlanDetailPage() {
                                             <i className={(selected.favorite ? 'fas' : 'far') + ' fa-star'} />
                                         </button>
                                         <button
-                                            type="button" className="fc-icon-btn" title="进度清零"
-                                            onClick={() => void resetCard(selected)}
-                                        >
-                                            <i className="fas fa-rotate-left" />
-                                        </button>
-                                        <button
                                             type="button" className="fc-icon-btn fc-danger" title="删除"
                                             onClick={() => void removeCard(selected)}
                                         >
@@ -418,8 +412,21 @@ export default function PlanDetailPage() {
                                     ))}
                                 </div>
 
+                                {/* 预览摆在最上面：先看清这张卡长什么样，
+                                    再往下看调度数据和曲线 */}
                                 {tab === 'detail' && (
-                                    <dl className="fc-detail">
+                                    <div className="fc-preview">
+                                        <p className="u-label">正面</p>
+                                        <p className="fc-preview-front">{selected.front}</p>
+                                        <p className="u-label">背面</p>
+                                        {selected.back
+                                            ? <Markdown source={selected.back} className="fc-markdown" />
+                                            : <p className="fc-muted">这张卡没有背面内容。</p>}
+                                    </div>
+                                )}
+
+                                {tab === 'detail' && (
+                                    <dl className="fc-detail fc-detail-below">
                                         <div>
                                             <dt>状态</dt>
                                             <dd><span className={'fc-state fc-state-' + selected.state}>{STATE_LABELS[selected.state]}</span></dd>
@@ -456,6 +463,23 @@ export default function PlanDetailPage() {
                                     </dl>
                                 )}
 
+                                {/* 曲线跟在那堆数字后面：稳定度、难度、到期这些就是它的坐标，
+                                    放一起才互相解释得通。key 用卡片 id —— 换卡要整块重来，
+                                    不能让上一张的曲线残留着等新数据回来 */}
+                                {tab === 'detail' && (
+                                    <ForgettingCurve
+                                        key={selected.id}
+                                        card={selected}
+                                        onCardChanged={(next) => {
+                                            setCards((prev) => (prev ?? []).map(
+                                                (c) => (c.id === next.id ? next : c),
+                                            ));
+                                            // 卡片状态变了，计划的状态分布跟着变，统计要重取
+                                            void reload();
+                                        }}
+                                    />
+                                )}
+
                                 {tab === 'edit' && (
                                     <CardEditor
                                         key={selected.id}
@@ -466,16 +490,6 @@ export default function PlanDetailPage() {
                                     />
                                 )}
 
-                                {tab === 'preview' && (
-                                    <div className="fc-preview">
-                                        <p className="u-label">正面</p>
-                                        <p className="fc-preview-front">{selected.front}</p>
-                                        <p className="u-label">背面</p>
-                                        {selected.back
-                                            ? <Markdown source={selected.back} className="fc-markdown" />
-                                            : <p className="fc-muted">这张卡没有背面内容。</p>}
-                                    </div>
-                                )}
                             </>
                         )}
                     </section>

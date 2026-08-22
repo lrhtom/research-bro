@@ -97,6 +97,16 @@ export const tools: Tool[] = [
         keywords: '英语 口语 练习 speaking 对话 角色扮演 场景 雅思 ielts 听力 口音 accent 语音识别 role-play 英国 生活',
     },
     {
+        title: '算法题库',
+        subtitle: 'AI Problem Bank & Judge',
+        desc: '说一句想练什么，AI 现出一道题：题面、Python 标准解，外加十来个「测试数据计划」自动铺开成几十上百个测试点 —— 每个点的期望输出都是拿标准解真跑一遍算出来的。写完提交，在这台电脑上开子进程逐点跑你的代码，判 AC / WA / TLE / RE 并按通过比例给分。判题是纯机器判定，跟 AI 觉得你写得好不好没关系。',
+        icon: 'fa-code',
+        href: '/tools/oj',
+        accent: 'indigo',
+        badges: ['AI 出题', '本地判题', '几百个测试点'],
+        keywords: 'oj online judge 判题 评测 算法 刷题 题库 出题 生成 ai 命题 acm icpc 竞赛 leetcode 力扣 洛谷 codeforces python 测试点 testcase 数据 生成器 ac wa tle re 提交 submission 标准解 时间复杂度 卡常 动态规划 图论 二分 贪心',
+    },
+    {
         title: '知识可视化',
         subtitle: 'Knowledge Visualizations',
         desc: '把那些「名词会背、图画不出」的知识点一步步画出来，覆盖计算机网络、操作系统、数据库、缓存并发、系统设计、AI 大模型与算法七大类，参数可调、单步可点。',
@@ -125,6 +135,26 @@ export const tools: Tool[] = [
         accent: 'amber',
         badges: ['免登录看赛程', '参赛免费', '算法 + 前端'],
         keywords: '编程 比赛 竞赛 打比赛 周赛 算法 acm icpc oi codeforces cf atcoder abc arc agc 力扣 leetcode 双周赛 国际站 中国站 codechef starters 牛客 nowcoder 小白月赛 多校 yukicoder 日本 kaggle 数据 机器学习 machine learning 数据科学 ai codepen 前端 挑战 contest challenge 刷题',
+    },
+    {
+        title: 'AI 资讯',
+        subtitle: 'AI News Digest',
+        desc: '每天跟进 AI 圈发生了什么。跟站里其他外链页不一样 —— 那些是目录，你要用的时候进去挑一个；这一页是每天去一次的固定目的地，所以宁缺毋滥，够格的才收：得有人替你筛过、每条标得出信源、而且真的天天更新。',
+        icon: 'fa-newspaper',
+        href: '/tools/ai-news',
+        accent: 'blue',
+        badges: ['每日更新', '每条标信源', '免登录'],
+        keywords: 'ai 资讯 新闻 日报 快讯 每日 daily news 大模型 llm 动态 追踪 跟进 前沿 aihot 卡兹克 周报 月报 热点 模型榜 排行榜 leaderboard openai anthropic claude gemini qwen deepseek grok 信息源 订阅 rss',
+    },
+    {
+        title: '免费素材',
+        subtitle: 'Free Asset Libraries',
+        desc: '做 3D、做游戏、做视频要用的免费素材站：模型、材质贴图与 HDRI、音效与音乐三类，外加一个「喂张图生成 3D 网格」的兜底。收录标准比站里其他外链更严 —— 只收不要求署名、且允许随项目一起分发的。素材是要打包进成品发出去的，这两条一旦踩了，麻烦出在交付之后。绝大多数还免注册，唯一那条要账号的已在页面上标出来。',
+        icon: 'fa-cubes',
+        href: '/tools/assets',
+        accent: 'indigo',
+        badges: ['免署名', '可随项目分发', '授权已核实'],
+        keywords: '素材 免费 资源 3d 模型 model 材质 纹理 贴图 texture pbr hdri 环境贴图 天空盒 音效 音乐 sfx bgm 图生3d 图片转3d 2d转3d image to 3d 生成 trellis glb 授权 版权 商用 cc0 cc-by 公共领域 免版税 royalty free blender unity unreal godot three.js 游戏 game asset 建模 渲染 polyhaven kenney quaternius kaykit ambientcg 3dtextures texture ninja pixabay mixkit freesound',
     },
     {
         title: '格式转换',
@@ -168,10 +198,12 @@ export function toolsUnder(parentHref: string): Tool[] {
 // 只能把人送到列表页让他自己点。
 
 export const subRoutes: SubRoute[] = [
-    { href: '/tools/flashcards/stats', title: '记忆卡 · 学习统计', desc: '复习热力图、到期曲线、各计划进度' },
     { href: '/tools/speaking/history', title: '英语口语 · 练习记录', desc: '历次口语练习的对话与总结报告' },
+    { href: '/tools/oj/generate', title: '算法题库 · AI 出题', desc: '填提示词与算法标签，让 AI 现出一道带完整测试数据的算法题' },
+    { href: '/tools/oj/submissions', title: '算法题库 · 提交记录', desc: '历次判题的逐测试点结果与当时提交的代码' },
+    { href: '/tools/oj/settings', title: '算法题库 · 设置', desc: '判题用的 Python 路径、出题并发数；AI 模型走全站共用的那一套' },
     // 不在 /tools 底下，但助手同样要能把人送过去
-    { href: '/me', title: '个人中心', desc: '改用户名与签名、看站内足迹、收自己的外站主页链接；没有登录注册' },
+    { href: '/me', title: '个人中心 · 学习统计', desc: '学习活动热力图（按时长着色的一年）、每日学习量与留存率、未来负载、记忆强度、老忘的卡；另有改用户名签名、站内足迹、外站主页链接。没有登录注册' },
 ];
 
 // ---------- 可视化演示（演示本体在 public/viz/）----------

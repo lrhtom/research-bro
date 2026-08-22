@@ -2,12 +2,17 @@
 
 import type {
     AssistantShortcut, AssistantStep, AssistantTodo,
-    Card, Note, Plan, PlanWithStats, Rating, SessionResult, SpeakingReport, SpeakingSession,
-    SpeakingSessionFull, SpeakingSessionSummary, SpeakingTurn, StatsOverview, StudyState,
-    TableFull, TableSummary,
+    Card, CardCurve, Note, Plan, PlanWithStats, Rating, SessionResult, SpeakingReport,
+    SpeakingSession, SpeakingSessionFull, SpeakingSessionSummary, SpeakingTurn, StatsOverview,
+    StudyState, TableFull, TableSummary,
 } from '../../shared/types';
 import type { Modifiers } from '../../shared/speaking';
 import type { ImportedDeck } from '../../shared/card-import';
+import type {
+    OjGenJobSnapshot, OjGenerateParams, OjJudgeSubmitParams, OjLanguageInfo, OjProblem,
+    OjProblemListItem, OjProblemQuery, OjSettings, OjSubmission, OjSubmissionQuery,
+    OjTestCase, OjTestCaseMeta,
+} from '../../shared/oj';
 
 async function json<T>(res: Response): Promise<T> {
     if (!res.ok) {
@@ -195,6 +200,23 @@ export async function apiResetCard(cardId: number): Promise<Card> {
     return (await post<{ card: Card }>(`/api/cards/${cardId}/reset`, {})).card;
 }
 
+/** 取一张卡的遗忘曲线与四档预览。曲线全在服务端算，前端只负责画。 */
+export async function apiCardCurve(cardId: number): Promise<CardCurve> {
+    return (await json<{ curve: CardCurve }>(await fetch(`/api/cards/${cardId}/curve`))).curve;
+}
+
+/**
+ * 在管理页手动评一档，拨动这张卡的遗忘曲线。
+ *
+ * 注意它跟 apiRate 不是一回事：这个**不计入今日进度与统计**，
+ * 只改这张卡自己的排期。正常复习请走学习页。
+ */
+export async function apiAdjustCard(cardId: number, rating: Rating): Promise<{
+    card: Card; curve: CardCurve;
+}> {
+    return post<{ card: Card; curve: CardCurve }>(`/api/cards/${cardId}/adjust`, { rating });
+}
+
 /** 切换收藏。收藏的卡片在管理页排最前，但不影响学习时的出卡顺序。 */
 export async function apiToggleCardFavorite(cardId: number): Promise<Card> {
     return (await post<{ card: Card }>(`/api/cards/${cardId}/favorite`, {})).card;
@@ -256,27 +278,126 @@ export interface LlmConfigView {
     keyHint: string;
     /** key 来自环境变量，页面上改不动 */
     fromEnv: boolean;
+    /** 当前这套档案的别名与 id；走环境变量兜底时没有档案，两个都是空 */
+    alias?: string;
+    activeId?: number;
     presets: ReadonlyArray<{ key: string; label: string; baseUrl: string; model: string }>;
+    models: LlmModel[];
+}
+
+/**
+ * 一套存下来的模型档案。
+ *
+ * `alias` 是自己起的名字（列表上显示的就是它），`model` 是接口真正认的
+ * 那个字符串 —— 两个都要：只留模型名认不出谁是谁，只留别名发不出请求。
+ */
+export interface LlmModel {
+    id: number;
+    alias: string;
+    model: string;
+    baseUrl: string;
+    /** 打码后的 key；明文永远不会下发 */
+    keyHint: string;
+    hasKey: boolean;
+    active: boolean;
+}
+
+interface ModelsReply {
+    models: LlmModel[];
+    status: Omit<LlmConfigView, 'presets' | 'models'>;
 }
 
 export async function apiSpeakingStatus(): Promise<LlmConfigView> {
     return json(await fetch('/api/speaking/status'));
 }
 
-/** 不传 apiKey 就是「不动原来那把」，只改地址或模型 */
-export async function apiSaveLlmConfig(patch: {
-    baseUrl?: string; model?: string; apiKey?: string;
-}): Promise<Omit<LlmConfigView, 'presets'>> {
-    const res = await fetch('/api/speaking/config', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(patch),
-    });
-    return json(res);
+export function apiListLlmModels(): Promise<ModelsReply> {
+    return fetch('/api/speaking/models').then(json<ModelsReply>);
+}
+
+export function apiCreateLlmModel(body: {
+    alias: string; model: string; baseUrl: string; apiKey?: string;
+}): Promise<ModelsReply> {
+    return post('/api/speaking/models', body);
+}
+
+/** 不传 apiKey 就是「不动原来那把」—— 页面不回显明文，得允许只改别名 */
+export function apiUpdateLlmModel(id: number, body: {
+    alias?: string; model?: string; baseUrl?: string; apiKey?: string;
+}): Promise<ModelsReply> {
+    return patch(`/api/speaking/models/${id}`, body);
+}
+
+export async function apiDeleteLlmModel(id: number): Promise<ModelsReply> {
+    return json(await fetch(`/api/speaking/models/${id}`, { method: 'DELETE' }));
+}
+
+export function apiActivateLlmModel(id: number): Promise<ModelsReply> {
+    return post(`/api/speaking/models/${id}/activate`, {});
+}
+
+/**
+ * 单独测一套模型的结果。
+ *
+ * 分档而不是只给 ok/fail：「key 不对」「被限流」「连不上」要分开说 ——
+ * 三种情况你要做的事完全不一样。
+ */
+export interface LlmTestResult {
+    status: 'ok' | 'auth' | 'ratelimited' | 'unconfigured' | 'reqerror' | 'error';
+    http: number | null;
+    sample: string | null;
+    message: string;
+}
+
+/** 测某一套已存下来的，**不切换**当前在用的那个 */
+export function apiTestLlmModel(id: number): Promise<LlmTestResult> {
+    return post(`/api/speaking/models/${id}/test`, {});
+}
+
+/** 测一份还没存下来的配置（添加模型的弹窗里「先测再存」用） */
+export function apiTestLlmConfig(body: {
+    baseUrl: string; apiKey: string; model: string;
+}): Promise<LlmTestResult> {
+    return post('/api/speaking/models/test-config', body);
 }
 
 export function apiTestLlm(): Promise<{ ok: true; model: string; sample: string }> {
     return post('/api/speaking/config/test', {});
+}
+
+// ---------- 我的场景 ----------
+
+export interface SavedScenario {
+    id: number;
+    label: string;
+    scenario: string;
+    updatedAt: string;
+}
+
+export async function apiListScenarios(): Promise<SavedScenario[]> {
+    return (await json<{ scenarios: SavedScenario[] }>(
+        await fetch('/api/speaking/scenarios'),
+    )).scenarios;
+}
+
+/** 存的时候过一遍内容审核，没过会抛错 —— 之后每次开练就不用再审了 */
+export function apiSaveScenario(
+    body: { label: string; scenario: string },
+): Promise<{ scenario: SavedScenario; scenarios: SavedScenario[] }> {
+    return post('/api/speaking/scenarios', body);
+}
+
+export async function apiUpdateScenario(
+    id: number,
+    body: { label?: string; scenario?: string },
+): Promise<SavedScenario[]> {
+    return (await patch<{ scenarios: SavedScenario[] }>(`/api/speaking/scenarios/${id}`, body)).scenarios;
+}
+
+export async function apiDeleteScenario(id: number): Promise<SavedScenario[]> {
+    return (await json<{ scenarios: SavedScenario[] }>(
+        await fetch(`/api/speaking/scenarios/${id}`, { method: 'DELETE' }),
+    )).scenarios;
 }
 
 export function apiCheckScenario(scenario: string): Promise<{ valid: boolean; reason: string }> {
@@ -561,4 +682,95 @@ export async function apiAssistantChat(
         }
     }
     return { error };
+}
+
+// ---------- 算法题库（OJ） ----------
+//
+// 出题和判题都是长任务：这两个接口只负责**发起**，立刻返回一个 id，
+// 进度全部走 /api/oj/events 那条 SSE（见 lib/oj-stream.ts）。
+
+export async function apiOjSettings(): Promise<{
+    settings: OjSettings;
+    llm: LlmConfigView;
+    languages: OjLanguageInfo[];
+}> {
+    return json(await fetch('/api/oj/settings'));
+}
+
+export async function apiOjSaveSettings(p: Partial<OjSettings>): Promise<OjSettings> {
+    return (await patch<{ settings: OjSettings }>('/api/oj/settings', p)).settings;
+}
+
+export function apiOjTestPython(): Promise<{ ok: boolean; message: string }> {
+    return post('/api/oj/settings/test-python', {});
+}
+
+export async function apiOjProblems(q: OjProblemQuery = {}): Promise<{
+    items: OjProblemListItem[]; total: number;
+}> {
+    const sp = new URLSearchParams();
+    if (q.search) sp.set('search', q.search);
+    if (q.tag) sp.set('tag', q.tag);
+    if (q.favoriteOnly) sp.set('favoriteOnly', '1');
+    if (q.page) sp.set('page', String(q.page));
+    if (q.pageSize) sp.set('pageSize', String(q.pageSize));
+    return json(await fetch(`/api/oj/problems?${sp.toString()}`));
+}
+
+export async function apiOjTags(): Promise<Array<{ tag: string; count: number }>> {
+    return (await json<{ tags: Array<{ tag: string; count: number }> }>(
+        await fetch('/api/oj/problems/tags'),
+    )).tags;
+}
+
+export async function apiOjProblem(id: number): Promise<{ problem: OjProblem; samples: OjTestCase[] }> {
+    return json(await fetch(`/api/oj/problems/${id}`));
+}
+
+export async function apiOjDeleteProblem(id: number): Promise<void> {
+    await json<{ ok: true }>(await fetch(`/api/oj/problems/${id}`, { method: 'DELETE' }));
+}
+
+export async function apiOjToggleFavorite(id: number): Promise<boolean> {
+    return (await post<{ favorite: boolean }>(`/api/oj/problems/${id}/favorite`, {})).favorite;
+}
+
+export async function apiOjTestcases(problemId: number): Promise<OjTestCaseMeta[]> {
+    return (await json<{ cases: OjTestCaseMeta[] }>(
+        await fetch(`/api/oj/problems/${problemId}/testcases`),
+    )).cases;
+}
+
+export async function apiOjTestcase(id: number): Promise<OjTestCase> {
+    return (await json<{ case: OjTestCase }>(await fetch(`/api/oj/testcases/${id}`))).case;
+}
+
+export function apiOjGenerate(p: OjGenerateParams): Promise<{ jobId: string }> {
+    return post('/api/oj/generate', p);
+}
+
+export function apiOjCancelGenerate(jobId: string): Promise<{ cancelled: boolean }> {
+    return post(`/api/oj/generate/${encodeURIComponent(jobId)}/cancel`, {});
+}
+
+export async function apiOjJobs(): Promise<OjGenJobSnapshot[]> {
+    return (await json<{ jobs: OjGenJobSnapshot[] }>(await fetch('/api/oj/generate/jobs'))).jobs;
+}
+
+export function apiOjJudge(p: OjJudgeSubmitParams): Promise<{ submissionId: number }> {
+    return post('/api/oj/judge', p);
+}
+
+export async function apiOjSubmissions(q: OjSubmissionQuery = {}): Promise<{
+    items: OjSubmission[]; total: number;
+}> {
+    const sp = new URLSearchParams();
+    if (q.problemId) sp.set('problemId', String(q.problemId));
+    if (q.page) sp.set('page', String(q.page));
+    if (q.pageSize) sp.set('pageSize', String(q.pageSize));
+    return json(await fetch(`/api/oj/submissions?${sp.toString()}`));
+}
+
+export async function apiOjSubmission(id: number): Promise<OjSubmission> {
+    return (await json<{ submission: OjSubmission }>(await fetch(`/api/oj/submissions/${id}`))).submission;
 }

@@ -6,7 +6,7 @@
 
 import { Router } from 'express';
 import {
-    createCard, createPlan, deleteCard, deletePlan, getPlan, importCards,
+    adjustCard, cardCurve, createCard, createPlan, deleteCard, deletePlan, getPlan, importCards,
     listCards, listPlans, planStats, rateCard, resetCard, sessionResult, toggleCardFavorite,
     studyState, StudyError, timeZone, toggleFavorite, updateCard, updatePlan,
 } from './study.js';
@@ -101,6 +101,37 @@ cardsRouter.post('/cards/:cardId/reset', (req, res) => {
     const card = resetCard(Number(req.params.cardId));
     if (!card) { res.status(404).json({ error: '卡片不存在' }); return; }
     res.json({ card });
+});
+
+/**
+ * 单张卡的遗忘曲线 + 四档评分预览。
+ *
+ * 曲线在服务端算 —— 跟调度同一条规矩：全站只有 src/server/fsrs.ts 懂 FSRS。
+ * 把公式搬到前端的话，界面上画的那条线和真正的排期就有了两个来源，
+ * 迟早对不上，而且对不上的时候看不出来。
+ */
+cardsRouter.get('/cards/:cardId/curve', (req, res) => {
+    const curve = cardCurve(Number(req.params.cardId));
+    if (!curve) { res.status(404).json({ error: '卡片不存在' }); return; }
+    res.json({ curve });
+});
+
+/**
+ * 在管理页面手动评一档，把这张卡的曲线拨到想要的位置。
+ *
+ * 跟 /plans/:id/review **不是**同一件事：这里不写 reviews 流水，
+ * 所以不会算进今日进度、四个桶和热力图（理由见 study.ts 的 adjustCard）。
+ * 要正常复习请走学习页。
+ */
+cardsRouter.post('/cards/:cardId/adjust', (req, res) => {
+    const { rating } = (req.body ?? {}) as { rating?: unknown };
+    if (!isValidRating(rating)) {
+        res.status(400).json({ error: '评分只能是 1..4' });
+        return;
+    }
+    const card = adjustCard(Number(req.params.cardId), rating);
+    if (!card) { res.status(404).json({ error: '卡片不存在' }); return; }
+    res.json({ card, curve: cardCurve(card.id) });
 });
 
 /**

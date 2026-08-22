@@ -35,12 +35,17 @@ import { calendarDay, dayBounds, recentDays, startOfDay, startOfPrevDay } from '
 import { timeZone } from './study.js';
 import type {
     CalendarCell, CardTotals, DailyVolume, ForecastBucket, Leech,
-    Retention, StatsOverview, StrengthBucket,
+    Retention, ScheduledBucket, StatsOverview, StrengthBucket,
 } from '../shared/types.js';
 
-/** 活动日历的跨度：26 周 */
-const CALENDAR_WEEKS = 26;
-const CALENDAR_DAYS = CALENDAR_WEEKS * 7;
+/**
+ * 活动日历的跨度：一整年（今天往前数 364 天，连今天共 365 格）。
+ *
+ * 原来是 26 周。改成一年是因为热力图现在摆在个人中心当「这一年学了多少」看，
+ * 半年的图讲不了这件事；而且格子按月分组画，一年正好是十二块，
+ * 视觉上有节奏，26 周会切在半个月上。
+ */
+const CALENDAR_DAYS = 365;
 /** 每日柱状图与留存 / 时长的窗口 */
 const WINDOW_DAYS = 30;
 /** 负载预测往后看多少天 */
@@ -266,23 +271,70 @@ function studiedMs(plan: PlanFilter, from: string, to: string): number {
  * 缺的那些日子必须以「0 次」的形式出现在格子里，
  * 直接跳过会让中间停学的两周在图上凭空消失。
  */
+/**
+ * 到期日分布：从今天起第 d 天有几张卡到期，一直铺到最远那一张。
+ *
+ * 跟上面的 forecast 是两件事，别合并：
+ *   · forecast 只看 30 天，用来回答「这周会不会被压垮」，逾期单独一根柱子
+ *   · 这一份铺满整个跨度（可能到几百天），用来画排期分布和存活曲线，
+ *     回答的是「这副牌的记忆结构长什么样」
+ *
+ * 天偏移用 julianday 相减再 floor —— 不能用 CAST(... AS INTEGER)，
+ * 它是朝零截断的，-0.5 会变成 0，于是逾期的卡会被算进「今天」。
+ *
+ * 新卡不算：它们没有到期日可言，由每日上限控制何时露面（跟 forecast 一致）。
+ */
+function scheduled(plan: PlanFilter, now: Date, tz: string): ScheduledBucket[] {
+    // 今天的起点。用日历日边界而不是此刻，否则「第 0 天」会随着你什么时候打开页面而滑动
+    const t0 = dayBounds(1, now, tz)[0].toISOString();
+
+    const rows = db().prepare(
+        `SELECT CAST(floor(julianday(due) - julianday(@t0)) AS INTEGER) AS d,
+                COUNT(*) AS n
+         FROM cards
+         WHERE state != 'new' AND (@plan IS NULL OR plan_id = @plan)
+         GROUP BY d
+         ORDER BY d`,
+    ).all({ t0, plan }) as Array<{ d: number; n: number }>;
+
+    // 逾期的（d < 0）全部并进第 0 天：它们现在就该复习，画在「今天」这一根上
+    // 才是实情 —— 单独摊在负轴上会让图从一堆历史里开始，看不出眼前的负担
+    const byDay = new Map<number, number>();
+    rows.forEach((r) => {
+        const d = Math.max(0, r.d);
+        byDay.set(d, (byDay.get(d) ?? 0) + r.n);
+    });
+
+    return [...byDay.entries()]
+        .sort((a, b) => a[0] - b[0])
+        .map(([days, count]) => ({ days, count }));
+}
+
 function calendar(plan: PlanFilter, days: string[]): CalendarCell[] {
     const rows = db().prepare(
         `SELECT review_day AS day,
                 COUNT(*) AS taps,
-                COUNT(DISTINCT CASE WHEN state_before = 'new' THEN card_id END) AS new_cards
+                COUNT(DISTINCT CASE WHEN state_before = 'new' THEN card_id END) AS new_cards,
+                COUNT(DISTINCT card_id) AS cards,
+                COALESCE(SUM(duration_ms), 0) AS ms
          FROM reviews
          WHERE review_day >= @from AND review_day <= @to
            AND (@plan IS NULL OR plan_id = @plan)
          GROUP BY review_day`,
     ).all({ plan, from: days[0], to: days[days.length - 1] }) as Array<{
-        day: string; taps: number; new_cards: number;
+        day: string; taps: number; new_cards: number; cards: number; ms: number;
     }>;
 
     const byDay = new Map(rows.map((r) => [r.day, r]));
     return days.map((day) => {
         const hit = byDay.get(day);
-        return { day, taps: hit?.taps ?? 0, newCards: hit?.new_cards ?? 0 };
+        return {
+            day,
+            taps: hit?.taps ?? 0,
+            newCards: hit?.new_cards ?? 0,
+            cards: hit?.cards ?? 0,
+            durationMs: hit?.ms ?? 0,
+        };
     });
 }
 
@@ -343,6 +395,9 @@ export function statsOverview(
     const windowStart = windowDays[0];
 
     const t = today(plan, day);
+    // 日历算一次就好：年度总时长和「累计学习天数」都是从它上面数出来的，
+    // 再查一遍库只会多一次全表扫，还可能跟格子对不上
+    const cal = calendar(plan, calendarDays);
     const plans = db().prepare(
         'SELECT id, name FROM plans ORDER BY favorite DESC, sort_order ASC, id ASC',
     ).all() as Array<{ id: number; name: string }>;
@@ -363,9 +418,14 @@ export function statsOverview(
         retention30: retention(plan, windowStart, day),
         durationMs30: studiedMs(plan, windowStart, day),
 
-        calendar: calendar(plan, calendarDays),
+        calendar: cal,
+        calendarStart: calendarDays[0],
+        yearDurationMs: cal.reduce((a, c) => a + c.durationMs, 0),
+        activeDays: cal.filter((c) => c.taps > 0).length,
+
         daily: daily(plan, windowDays),
         forecast: forecast(plan, now, tz),
+        scheduled: scheduled(plan, now, tz),
         strength: strength(plan),
         leeches: leeches(plan),
 

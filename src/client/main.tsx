@@ -21,6 +21,8 @@ import './styles/flashcards.css';
 import './styles/speaking.css';
 import './styles/profile.css';
 import './styles/notes.css';
+import './styles/oj.css';
+import './styles/ai-model.css';
 // 悬浮球排最后：它浮在所有页面之上，样式也该压在所有页面之后
 import './styles/assistant.css';
 

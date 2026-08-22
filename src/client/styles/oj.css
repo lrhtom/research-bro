@@ -1,0 +1,814 @@
+/* ============================================================
+   算法题库（OJ）
+
+   从独立的 ai_oj 桌面应用搬过来的那一块。**外观整个重画过**：
+   原来是深色单主题（#0b0e14 底 + 靛蓝强调），工具箱是暖白单亮色 +
+   一支青绿，两套放一起会像从别处贴了一块进来。
+
+   遵守全站那两条规矩：
+     · 不写 body / html 选择器 —— 页面级样式全挂在自己的类上
+     · 不写工具类 —— 语义类名，样式落在这份文件里
+
+   判定色（AC / WA / TLE / RE…）是这一块唯一自带的一组颜色。它们不能
+   随便用主题里的语义色顶替：判定是一组**互斥且需要一眼区分**的状态，
+   六种颜色必须彼此拉开，而主题里只有 ok / warn / danger 三档。
+   ============================================================ */
+
+.oj-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    line-height: 1.7;
+    white-space: nowrap;
+}
+
+/* ---------- 判定 ---------- */
+
+.oj-verdict {
+    font-family: var(--font-mono);
+    letter-spacing: 0.02em;
+}
+.oj-verdict em {
+    font-style: normal;
+    font-weight: 500;
+    opacity: 0.75;
+    font-family: var(--font);
+}
+
+.oj-verdict.v-ac      { color: #047857; background: rgba(16, 185, 129, 0.12); }
+.oj-verdict.v-wa      { color: #be123c; background: rgba(225, 29, 72, 0.10); }
+.oj-verdict.v-tle     { color: #b45309; background: rgba(249, 115, 22, 0.14); }
+.oj-verdict.v-re      { color: #c2410c; background: rgba(234, 88, 12, 0.12); }
+.oj-verdict.v-ce      { color: #6d28d9; background: rgba(124, 58, 237, 0.10); }
+.oj-verdict.v-se      { color: var(--ink-3); background: var(--paper-2); }
+.oj-verdict.v-judging { color: #0369a1; background: rgba(14, 165, 233, 0.12); }
+.oj-verdict.v-pending { color: var(--ink-3); background: var(--paper-2); }
+
+/* ---------- 难度 / 类型 / 状态 ---------- */
+
+.oj-diff.d-easy { color: #047857; background: rgba(16, 185, 129, 0.10); }
+.oj-diff.d-mid  { color: #b45309; background: rgba(249, 115, 22, 0.12); }
+.oj-diff.d-hard { color: #be123c; background: rgba(225, 29, 72, 0.10); }
+
+.oj-kind {
+    color: var(--ink-2);
+    background: var(--paper-2);
+    font-weight: 500;
+}
+.oj-kind.k-sample   { color: var(--accent-ink); background: var(--accent-tint-2); }
+.oj-kind.k-large    { color: #6d28d9; background: rgba(124, 58, 237, 0.09); }
+.oj-kind.k-boundary { color: #b45309; background: rgba(249, 115, 22, 0.10); }
+
+.oj-sample-tag {
+    margin-left: 4px;
+    color: var(--accent-ink);
+    background: var(--accent-tint-2);
+}
+
+.oj-status.s-gen     { color: #0369a1; background: rgba(14, 165, 233, 0.12); }
+.oj-status.s-partial { color: #b45309; background: rgba(249, 115, 22, 0.12); }
+.oj-status.s-failed  { color: #be123c; background: rgba(225, 29, 72, 0.10); }
+
+/* ============================================================
+   题库列表
+   ============================================================ */
+
+.oj-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-3);
+    align-items: center;
+    margin-bottom: var(--sp-5);
+}
+
+.oj-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: 1 1 260px;
+}
+.oj-search > i:first-child {
+    position: absolute;
+    left: 12px;
+    color: var(--ink-4);
+    font-size: var(--fs-sm);
+    pointer-events: none;
+}
+.oj-search input {
+    width: 100%;
+    padding: 9px 34px;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+.oj-search input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: var(--focus-ring);
+}
+.oj-search button {
+    position: absolute;
+    right: 8px;
+    border: none;
+    background: none;
+    color: var(--ink-4);
+    cursor: pointer;
+    padding: 4px;
+}
+.oj-search button:hover { color: var(--ink-2); }
+
+.oj-select {
+    padding: 9px 12px;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    cursor: pointer;
+}
+.oj-select:focus { outline: none; border-color: var(--accent); box-shadow: var(--focus-ring); }
+
+.oj-list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--sp-3); }
+
+.oj-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--sp-3);
+    padding: var(--sp-4);
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    transition: box-shadow var(--transition-normal), transform var(--transition-normal);
+}
+.oj-item:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-1px); }
+/* 生成中的题压暗一档：它现在点不进去，别让它看着跟能做的题一样 */
+.oj-item.is-busy { opacity: 0.72; }
+
+.oj-star {
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: var(--ink-4);
+    font-size: var(--fs-md);
+    padding: 2px 0 0;
+    transition: color var(--transition-fast), transform var(--transition-fast);
+}
+.oj-star[aria-pressed='true'] { color: #f59e0b; }
+.oj-star:hover { transform: scale(1.15); }
+
+.oj-item-main { flex: 1; min-width: 0; display: grid; gap: 6px; }
+
+.oj-item-titles { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2); }
+
+.oj-item-title {
+    font-size: var(--fs-md);
+    font-weight: 600;
+    color: var(--ink);
+    text-decoration: none;
+}
+.oj-item-title:hover { color: var(--accent-ink); text-decoration: underline; }
+.oj-item-title.is-busy { color: var(--ink-3); cursor: default; }
+
+.oj-solved { color: var(--ok); font-size: var(--fs-sm); }
+
+.oj-item-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+
+.oj-tag {
+    padding: 1px 7px;
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-pill);
+    background: var(--paper-2);
+    color: var(--ink-2);
+    font-size: var(--fs-xs);
+    cursor: pointer;
+    transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+.oj-tag:hover { color: var(--accent-ink); border-color: var(--accent-tint-2); }
+.oj-tag.on { color: var(--accent-ink); background: var(--accent-tint-2); border-color: var(--accent-tint-2); }
+
+.oj-item-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-4);
+    color: var(--ink-3);
+    font-size: var(--fs-xs);
+}
+.oj-item-meta i { margin-right: 3px; opacity: 0.7; }
+
+.oj-item-ops { display: flex; align-items: center; gap: var(--sp-2); flex-shrink: 0; }
+
+.oj-pager {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-4);
+    margin-top: var(--sp-6);
+    color: var(--ink-3);
+    font-size: var(--fs-sm);
+}
+
+.oj-empty {
+    text-align: center;
+    padding: var(--sp-12) var(--sp-4);
+    color: var(--ink-3);
+}
+.oj-empty > i { font-size: 40px; color: var(--ink-4); opacity: 0.5; }
+.oj-empty h3 { margin: var(--sp-4) 0 var(--sp-2); color: var(--ink); font-size: var(--fs-lg); }
+.oj-empty p { margin: 0 auto var(--sp-5); max-width: 42em; }
+
+/* ============================================================
+   题目详情：左右分栏
+   ============================================================ */
+
+.oj-split {
+    display: grid;
+    /* 左边宽一点：题面是要读的，代码是要写的，读的那一侧更吃宽度 */
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: var(--sp-5);
+    align-items: start;
+}
+
+/* 窄屏叠成上下两块。分栏在窄屏上会把两边都挤到没法读 */
+@media (max-width: 1100px) {
+    .oj-split { grid-template-columns: minmax(0, 1fr); }
+}
+
+.oj-pane {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: var(--sp-5);
+    min-width: 0;
+}
+
+/* 两侧各自滚动：写代码时要能随时回头看数据范围，
+   整页一起滚的话每看一眼都要滚一趟再滚回来 */
+.oj-pane-body {
+    max-height: calc(100vh - 300px);
+    overflow-y: auto;
+    /* 给滚动条留出空隙，别贴着正文 */
+    padding-right: var(--sp-2);
+}
+@media (max-width: 1100px) {
+    .oj-pane-body { max-height: none; overflow-y: visible; }
+}
+
+.oj-prob-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-2);
+    padding-bottom: var(--sp-3);
+    border-bottom: 1px solid var(--hairline);
+}
+
+.oj-limit {
+    color: var(--ink-3);
+    font-size: var(--fs-xs);
+}
+.oj-limit i { margin-right: 3px; opacity: 0.7; }
+
+.oj-warnings {
+    margin: var(--sp-3) 0;
+    padding: var(--sp-3);
+    border-radius: var(--radius-md);
+    background: var(--warn-tint);
+    color: var(--warn);
+    font-size: var(--fs-sm);
+}
+.oj-warnings summary { cursor: pointer; font-weight: 600; }
+.oj-warnings summary i { margin-right: 6px; }
+.oj-warnings ul { margin: var(--sp-2) 0 0; padding-left: 1.4em; }
+.oj-warnings li { margin: 3px 0; }
+
+/* ---------- 页内 tab ---------- */
+
+.oj-tabs {
+    display: flex;
+    gap: 2px;
+    margin: var(--sp-4) 0;
+    border-bottom: 1px solid var(--hairline);
+}
+
+.oj-tab {
+    padding: 8px 14px;
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: none;
+    color: var(--ink-3);
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    cursor: pointer;
+    transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+.oj-tab:hover { color: var(--ink); }
+.oj-tab.on { color: var(--accent-ink); border-bottom-color: var(--accent); font-weight: 600; }
+.oj-tab i { margin-right: 5px; font-size: 0.9em; }
+
+/* ============================================================
+   题面（Markdown + KaTeX）
+   ============================================================ */
+
+.oj-statement { color: var(--ink); line-height: 1.75; }
+.oj-statement.is-loading { color: var(--ink-3); padding: var(--sp-6) 0; }
+
+.oj-statement h1,
+.oj-statement h2,
+.oj-statement h3 {
+    margin: var(--sp-6) 0 var(--sp-3);
+    font-size: var(--fs-md);
+    font-weight: 600;
+    color: var(--ink);
+    padding-bottom: var(--sp-1);
+    border-bottom: 1px solid var(--hairline);
+}
+.oj-statement h1:first-child,
+.oj-statement h2:first-child { margin-top: 0; }
+
+.oj-statement p { margin: var(--sp-3) 0; }
+.oj-statement ul,
+.oj-statement ol { margin: var(--sp-3) 0; padding-left: 1.6em; }
+.oj-statement li { margin: 4px 0; }
+
+.oj-statement code {
+    padding: 1px 5px;
+    border-radius: var(--radius-sm);
+    background: var(--paper-2);
+    font-size: 0.92em;
+}
+.oj-statement pre {
+    margin: var(--sp-3) 0;
+    padding: var(--sp-3);
+    border-radius: var(--radius-md);
+    background: var(--paper-2);
+    overflow-x: auto;
+}
+.oj-statement pre code { padding: 0; background: none; }
+
+.oj-statement blockquote {
+    margin: var(--sp-3) 0;
+    padding: var(--sp-2) var(--sp-4);
+    border-left: 3px solid var(--accent-tint-2);
+    color: var(--ink-2);
+}
+
+.oj-statement table { border-collapse: collapse; margin: var(--sp-3) 0; }
+.oj-statement th,
+.oj-statement td { padding: 6px 12px; border: 1px solid var(--rule); }
+.oj-statement th { background: var(--surface-2); font-weight: 600; }
+
+/* 行间公式横向可滚：长推导在窄栏里会顶破布局 */
+.oj-math-block {
+    margin: var(--sp-4) 0;
+    overflow-x: auto;
+    text-align: center;
+}
+
+/* ============================================================
+   样例
+   ============================================================ */
+
+.oj-samples { display: grid; gap: var(--sp-4); }
+
+.oj-sample {
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+.oj-sample-head {
+    padding: 6px var(--sp-3);
+    background: var(--surface-2);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--ink-2);
+}
+
+.oj-sample-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--hairline);
+}
+@media (max-width: 720px) {
+    .oj-sample-cols { grid-template-columns: 1fr; }
+}
+
+.oj-sample-col { background: var(--surface); padding: var(--sp-3); min-width: 0; }
+
+.oj-sample-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-2);
+    margin-bottom: 6px;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--ink-3);
+}
+
+.oj-sample-col pre {
+    margin: 0;
+    padding: var(--sp-2) var(--sp-3);
+    border-radius: var(--radius-sm);
+    background: var(--paper-2);
+    font-size: var(--fs-sm);
+    /* 样例可能很宽也可能很长，两个方向都给滚动，别撑破卡片 */
+    max-height: 260px;
+    overflow: auto;
+    white-space: pre;
+}
+
+.oj-copy { padding: 2px 8px; font-size: var(--fs-xs); }
+
+.oj-no-sample { display: block; }
+
+/* ============================================================
+   测试数据表
+   ============================================================ */
+
+.oj-table-wrap { overflow-x: auto; margin: var(--sp-3) 0; }
+
+.oj-table { width: 100%; border-collapse: collapse; font-size: var(--fs-sm); }
+.oj-table th {
+    position: sticky;
+    top: 0;
+    padding: 8px 10px;
+    background: var(--surface-2);
+    text-align: left;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--ink-3);
+    white-space: nowrap;
+}
+.oj-table td {
+    padding: 7px 10px;
+    border-top: 1px solid var(--hairline);
+    vertical-align: top;
+}
+
+.oj-tc-row { cursor: pointer; transition: background var(--transition-fast); }
+.oj-tc-row:hover { background: var(--paper-2); }
+.oj-tc-row.on { background: var(--accent-tint); }
+
+.oj-tc-plan { color: var(--ink-2); max-width: 16em; }
+
+.oj-tc-preview {
+    display: block;
+    max-width: 22em;
+    /* 预览就是一眼扫过去，超出的截掉 —— 完整数据点开看 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--ink-3);
+    font-size: var(--fs-xs);
+}
+
+.oj-tc-bytes { color: var(--ink-3); font-size: var(--fs-xs); white-space: nowrap; }
+
+.oj-tc-detail {
+    margin-top: var(--sp-4);
+    padding: var(--sp-4);
+    border-radius: var(--radius-md);
+    background: var(--paper-2);
+}
+.oj-tc-full {
+    margin: 0;
+    padding: var(--sp-3);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    font-size: var(--fs-sm);
+    max-height: 340px;
+    overflow: auto;
+    white-space: pre;
+}
+
+/* ============================================================
+   作答与判题
+   ============================================================ */
+
+.oj-judge-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-2);
+    margin-bottom: var(--sp-3);
+}
+.oj-submit { margin-left: auto; }
+
+.oj-editor {
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+.oj-editor-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-2);
+    color: var(--ink-3);
+    font-size: var(--fs-sm);
+    background: var(--surface-2);
+}
+
+.oj-draft-note { margin-top: var(--sp-2); font-size: var(--fs-xs); }
+
+.oj-result {
+    margin-top: var(--sp-4);
+    padding: var(--sp-4);
+    border-radius: var(--radius-md);
+    background: var(--paper-2);
+}
+
+.oj-result-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-3);
+    margin-bottom: var(--sp-3);
+    color: var(--ink-2);
+    font-size: var(--fs-sm);
+}
+.oj-result-score { font-size: var(--fs-lg); font-weight: 700; color: var(--data); }
+.oj-result-progress { color: var(--ink-3); font-size: var(--fs-xs); }
+
+/* ---------- 逐点结果网格 ---------- */
+
+.oj-case-grid {
+    display: grid;
+    /* 小方块自动铺满，一屏能塞下上百个 —— 这正是要的：
+       一眼看出「过了多少」和「第一个没过的在哪」 */
+    grid-template-columns: repeat(auto-fill, minmax(34px, 1fr));
+    gap: 4px;
+}
+
+.oj-case-cell {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    cursor: pointer;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+.oj-case-cell:hover:not(:disabled) { transform: scale(1.12); box-shadow: var(--shadow-sm); }
+.oj-case-cell.on { box-shadow: 0 0 0 2px var(--accent); }
+.oj-case-cell:disabled { cursor: default; }
+
+.oj-case-cell.v-ac      { color: #047857; background: rgba(16, 185, 129, 0.18); }
+.oj-case-cell.v-wa      { color: #fff;    background: #e11d48; }
+.oj-case-cell.v-tle     { color: #7c2d12; background: #fbbf24; }
+.oj-case-cell.v-re      { color: #fff;    background: #ea580c; }
+.oj-case-cell.v-ce      { color: #fff;    background: #7c3aed; }
+.oj-case-cell.v-se      { color: var(--ink-2); background: var(--rule-strong); }
+.oj-case-cell.v-pending { color: var(--ink-4); background: var(--paper-2); border-color: var(--hairline); }
+
+.oj-case-detail {
+    margin-top: var(--sp-3);
+    padding: var(--sp-3);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    border-left: 3px solid var(--rule-strong);
+}
+.oj-case-detail.v-ac  { border-left-color: var(--ok); }
+.oj-case-detail.v-wa  { border-left-color: var(--danger); }
+.oj-case-detail.v-tle { border-left-color: var(--warn); }
+.oj-case-detail.v-re  { border-left-color: #ea580c; }
+
+.oj-case-detail-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-2);
+    margin-bottom: var(--sp-2);
+    font-size: var(--fs-sm);
+}
+.oj-case-time { color: var(--ink-3); font-size: var(--fs-xs); }
+.oj-case-detail-head > button:last-child { margin-left: auto; }
+
+.oj-case-msg {
+    margin: 0;
+    font-size: var(--fs-sm);
+    color: var(--ink-2);
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-height: 220px;
+    overflow: auto;
+}
+
+/* ============================================================
+   提交记录
+   ============================================================ */
+
+.oj-sub-list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--sp-2); }
+
+.oj-sub {
+    background: var(--surface);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+}
+
+.oj-sub-row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    padding: var(--sp-3) var(--sp-4);
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: var(--fs-sm);
+    color: var(--ink-2);
+    transition: background var(--transition-fast);
+}
+.oj-sub-row:hover { background: var(--paper-2); }
+
+.oj-sub-score { font-weight: 700; color: var(--data); min-width: 3.5em; }
+.oj-sub-title { flex: 1; min-width: 0; color: var(--ink); font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.oj-sub-lang { color: var(--ink-3); font-size: var(--fs-xs); }
+.oj-sub-time { color: var(--ink-3); font-size: var(--fs-xs); white-space: nowrap; }
+.oj-sub-row > i:last-child { color: var(--ink-4); font-size: var(--fs-xs); }
+
+.oj-sub-body {
+    padding: var(--sp-4);
+    border-top: 1px solid var(--hairline);
+    background: var(--paper-2);
+    display: grid;
+    gap: var(--sp-3);
+}
+.oj-sub-ops { display: flex; gap: var(--sp-2); }
+
+/* ============================================================
+   出题页
+   ============================================================ */
+
+.oj-gen-form,
+.oj-settings { display: grid; gap: var(--sp-5); }
+
+.oj-field { display: grid; gap: 6px; }
+.oj-field > span { font-size: var(--fs-sm); font-weight: 600; color: var(--ink-2); }
+.oj-field > em { font-style: normal; }
+
+.oj-field textarea,
+.oj-field input[type='text'],
+.oj-field input:not([type]) {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    resize: vertical;
+    line-height: 1.6;
+}
+.oj-field textarea:focus,
+.oj-field input:focus { outline: none; border-color: var(--accent); box-shadow: var(--focus-ring); }
+
+.oj-field input[type='range'] { accent-color: var(--accent); }
+
+.oj-tag-picker { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.oj-custom-tag { display: flex; gap: var(--sp-2); margin-top: var(--sp-2); }
+.oj-custom-tag input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+}
+.oj-custom-tag input:focus { outline: none; border-color: var(--accent); box-shadow: var(--focus-ring); }
+
+.oj-gen-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-3);
+}
+
+/* ---------- 阶段步骤条 ---------- */
+
+.oj-steps {
+    list-style: none;
+    margin: 0 0 var(--sp-4);
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+}
+
+.oj-step { display: flex; align-items: center; gap: var(--sp-2); flex: 1; min-width: 0; }
+/* 每一步后面拉一条线连到下一步，最后一步不画 */
+.oj-step:not(:last-child)::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background: var(--rule);
+    border-radius: 1px;
+}
+.oj-step.is-done:not(:last-child)::after { background: var(--accent); }
+
+.oj-step-dot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    border: 2px solid var(--rule);
+    background: var(--surface);
+    color: var(--on-accent);
+    font-size: 10px;
+}
+.oj-step.is-done .oj-step-dot { background: var(--accent); border-color: var(--accent); }
+.oj-step.is-now .oj-step-dot { border-color: var(--accent); color: var(--accent); background: var(--surface); }
+
+.oj-step-label { font-size: var(--fs-xs); color: var(--ink-3); white-space: nowrap; }
+.oj-step.is-now .oj-step-label { color: var(--accent-ink); font-weight: 600; }
+.oj-step.is-done .oj-step-label { color: var(--ink-2); }
+
+.oj-gen-phase {
+    margin: 0 0 var(--sp-5);
+    padding: var(--sp-3) var(--sp-4);
+    border-radius: var(--radius-md);
+    background: var(--accent-tint);
+    color: var(--accent-ink);
+    font-size: var(--fs-sm);
+}
+.oj-gen-phase.is-failed { background: var(--danger-tint); color: var(--danger); }
+
+/* ---------- 计划网格 ---------- */
+
+.oj-plan-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: var(--sp-2);
+}
+
+.oj-plan {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    padding: var(--sp-3);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    box-shadow: var(--shadow-card);
+    border-left: 3px solid var(--rule);
+    min-width: 0;
+}
+.oj-plan.p-ok       { border-left-color: var(--ok); }
+.oj-plan.p-failed   { border-left-color: var(--danger); }
+.oj-plan.p-retrying { border-left-color: var(--warn); }
+.oj-plan.p-requesting,
+.oj-plan.p-running_generator,
+.oj-plan.p-running_solution { border-left-color: var(--accent); }
+
+.oj-plan-icon { width: 18px; text-align: center; color: var(--ink-4); flex-shrink: 0; }
+.oj-plan.p-ok .oj-plan-icon { color: var(--ok); }
+.oj-plan.p-failed .oj-plan-icon { color: var(--danger); }
+.oj-plan.p-retrying .oj-plan-icon { color: var(--warn); }
+.oj-plan.p-requesting .oj-plan-icon,
+.oj-plan.p-running_generator .oj-plan-icon,
+.oj-plan.p-running_solution .oj-plan-icon { color: var(--accent); }
+
+.oj-plan-main { flex: 1; min-width: 0; display: grid; gap: 2px; }
+.oj-plan-name {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--ink);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.oj-plan-state {
+    font-size: var(--fs-xs);
+    color: var(--ink-3);
+    /* 失败原因可能很长，这里只留一行，完整的在 title 里 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ---------- 日志 ---------- */
+
+.oj-log {
+    max-height: 240px;
+    overflow-y: auto;
+    padding: var(--sp-3);
+    border-radius: var(--radius-md);
+    background: var(--paper-2);
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    line-height: 1.7;
+    color: var(--ink-2);
+}
+.oj-log-line { white-space: pre-wrap; word-break: break-word; }

@@ -18,6 +18,7 @@
 // ============================================================
 
 import { getSetting, setSetting } from './db.js';
+import { activeModel, normUrl, shapeRequestBody } from './llm-models.js';
 
 const DEFAULT_BASE = 'https://api.deepseek.com/v1';
 const DEFAULT_MODEL = 'deepseek-chat';
@@ -55,12 +56,25 @@ interface LlmConfig {
     model: string;
 }
 
-/** settings 表优先，环境变量兜底 */
+/**
+ * 按 **模型档案 → 旧的单套 settings → 环境变量** 的顺序取当前配置。
+ *
+ * 档案表（llm_models）是现在的主路：存好几套、点一下切换。
+ * 后两级留着不是历史包袱，各有各的用处：
+ *   · 旧 settings —— 老库升上来时还没建过档案，第一次读会被自动迁移过去
+ *   · 环境变量  —— 有人特意不想让 key 落库（Docker 注入那种），一套都不建
+ */
 function readConfig(): LlmConfig {
+    const m = activeModel();
+    if (m && m.apiKey) {
+        // 再收拾一次而不是信库里那一份：老库里可能存着带 /chat/completions 的地址
+        // （normUrl 是后来才开始剥它的），环境变量那一路也从没经过 createModel
+        return { baseUrl: normUrl(m.baseUrl), apiKey: m.apiKey, model: m.model };
+    }
     return {
-        baseUrl: (getSetting(K_BASE) || process.env.LLM_BASE_URL || DEFAULT_BASE).replace(/\/+$/, ''),
+        baseUrl: normUrl(m?.baseUrl || getSetting(K_BASE) || process.env.LLM_BASE_URL || DEFAULT_BASE),
         apiKey: getSetting(K_KEY) || process.env.LLM_API_KEY || '',
-        model: getSetting(K_MODEL) || process.env.LLM_MODEL || DEFAULT_MODEL,
+        model: m?.model || getSetting(K_MODEL) || process.env.LLM_MODEL || DEFAULT_MODEL,
     };
 }
 
@@ -89,16 +103,23 @@ export interface LlmPublicConfig {
     keyHint: string;
     /** true = key 来自环境变量而不是页面上填的，页面要提示改不动 */
     fromEnv: boolean;
+    /** 当前这套档案的别名与 id。走环境变量兜底时没有档案，两个都是空。 */
+    alias?: string;
+    activeId?: number;
 }
 
 export function llmStatus(): LlmPublicConfig {
     const c = readConfig();
+    const m = activeModel();
+    const usingProfile = !!m && !!m.apiKey;
     return {
         configured: c.apiKey !== '',
         baseUrl: c.baseUrl,
         model: c.model,
         keyHint: maskKey(c.apiKey),
-        fromEnv: !getSetting(K_KEY) && !!process.env.LLM_API_KEY,
+        // 档案里自带 key 时就不是环境变量那一路了，别再提示「页面上改不动」
+        fromEnv: !usingProfile && !getSetting(K_KEY) && !!process.env.LLM_API_KEY,
+        ...(usingProfile ? { alias: m.alias, activeId: m.id } : {}),
     };
 }
 
@@ -114,7 +135,9 @@ export function saveLlmConfig(patch: {
     model?: string;
 }): LlmPublicConfig {
     if (patch.baseUrl !== undefined) {
-        const url = patch.baseUrl.trim().replace(/\/+$/, '');
+        // 跟档案那一路走同一个收拾函数：照着 OpenAI 文档粘一整条
+        // /v1/chat/completions 进来也认（见 llm-models.ts 的 normUrl）
+        const url = normUrl(patch.baseUrl);
         if (url && !/^https?:\/\//i.test(url)) {
             throw new LlmError('接口地址要以 http:// 或 https:// 开头', 400);
         }
@@ -129,7 +152,7 @@ function requireConfig(): LlmConfig {
     const c = readConfig();
     if (!c.apiKey) {
         throw new LlmError(
-            '还没有配置大模型：在「英语口语练习」页面顶部的「大模型配置」里填上接口地址、API Key 和模型名即可。',
+            '还没有配置大模型：去「个人中心 → AI 配置」加一套（接口地址 + API Key + 模型名）就能用了，全站共用同一套。',
             503,
         );
     }
@@ -137,27 +160,31 @@ function requireConfig(): LlmConfig {
 }
 
 /**
- * 用当前配置打一次最小的调用，验证能不能通。
+ * 用当前配置打一次最小调用，验证能不能通。
  * 返回模型实际回的那点字，便于确认「连上的确实是我想要的那个模型」。
  */
 export async function testLlmConnection(): Promise<{ ok: true; model: string; sample: string }> {
     const c = readConfig();
+    // 给得比「回一个 OK」需要的宽：推理模型（gpt-5.x / o 系列）会先花掉
+    // 一部分额度在内部思考上，额度卡太死会连通了却一个字都不吐
     const sample = await chat(
         [{ role: 'user', content: 'Reply with exactly: OK' }],
-        { temperature: 0, maxTokens: 16 },
+        { temperature: 0, maxTokens: 256 },
     );
     return { ok: true, model: c.model, sample: sample.slice(0, 80) };
 }
 
 async function post(body: unknown, signal?: AbortSignal): Promise<Response> {
     const c = requireConfig();
+    const payload = shapeRequestBody(c.model, { model: c.model, ...(body as object) });
+
     const res = await fetch(`${c.baseUrl}/chat/completions`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${c.apiKey}`,
         },
-        body: JSON.stringify({ model: c.model, ...(body as object) }),
+        body: JSON.stringify(payload),
         signal,
     });
 

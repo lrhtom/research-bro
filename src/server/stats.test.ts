@@ -149,14 +149,112 @@ describe('每日学习量', () => {
         expect(gap.every((d) => d.retention === null)).toBe(true);
     });
 
-    it('活动日历同样按 26 周补满，没有一天被跳过', () => {
+    it('活动日历按整年补满，没有一天被跳过', () => {
         const plan = makePlan(1);
         insertReview({ cardId: listCards(plan.id)[0].id, planId: plan.id, rating: 3, day: TODAY });
 
         const s = statsOverview(plan.id, T0, TZ);
-        expect(s.calendar).toHaveLength(26 * 7);
-        expect(s.calendar.map((c) => c.day)).toEqual(recentDays(26 * 7, T0, TZ));
+        expect(s.calendar).toHaveLength(365);
+        expect(s.calendar.map((c) => c.day)).toEqual(recentDays(365, T0, TZ));
         expect(s.calendar[s.calendar.length - 1]).toMatchObject({ day: TODAY, taps: 1 });
+        // 窗口首尾要跟 calendarStart / day 对得上，热力图才画得出正确的月份分组
+        expect(s.calendarStart).toBe(s.calendar[0].day);
+        expect(s.day).toBe(s.calendar[s.calendar.length - 1].day);
+    });
+
+    it('热力图按时长分档，不是按次数 —— 点得多不等于学得久', () => {
+        const plan = makePlan(2);
+        const [a, b] = listCards(plan.id);
+        // 同一天：两次评分，合计 90 秒
+        insertReview({ cardId: a.id, planId: plan.id, rating: 3, day: TODAY, durationMs: 60_000 });
+        insertReview({ cardId: b.id, planId: plan.id, rating: 3, day: TODAY, durationMs: 30_000 });
+
+        const s = statsOverview(plan.id, T0, TZ);
+        const today = s.calendar[s.calendar.length - 1];
+        expect(today.taps).toBe(2);
+        expect(today.cards).toBe(2);
+        expect(today.durationMs).toBe(90_000);
+
+        // 年度汇总就是日历上那一列加起来，不另查一次库
+        expect(s.yearDurationMs).toBe(90_000);
+        expect(s.activeDays).toBe(1);
+    });
+
+    it('没学习的日子时长是 0，不是缺一格', () => {
+        const plan = makePlan(1);
+        const s = statsOverview(plan.id, T0, TZ);
+        expect(s.calendar).toHaveLength(365);
+        expect(s.calendar.every((c) => c.durationMs === 0 && c.taps === 0)).toBe(true);
+        expect(s.activeDays).toBe(0);
+        expect(s.yearDurationMs).toBe(0);
+    });
+});
+
+describe('到期日分布（复习排期 / 遗忘曲线的数据源）', () => {
+    /** 直接把某张卡的 due 摆到指定时刻，并让它脱离 new 状态 */
+    function schedule(cardId: number, due: Date) {
+        db().prepare("UPDATE cards SET state = 'review', due = ? WHERE id = ?")
+            .run(due.toISOString(), cardId);
+    }
+
+    it('按「从今天起第几天」分桶，同一天的合并计数', () => {
+        const plan = makePlan(4);
+        const cards = listCards(plan.id);
+        schedule(cards[0].id, daysAfter(T0, 3));
+        schedule(cards[1].id, daysAfter(T0, 3));
+        schedule(cards[2].id, daysAfter(T0, 10));
+        schedule(cards[3].id, daysAfter(T0, 10));
+
+        const sc = statsOverview(plan.id, T0, TZ).scheduled;
+        expect(sc).toEqual([{ days: 3, count: 2 }, { days: 10, count: 2 }]);
+    });
+
+    it('逾期的卡并进第 0 天，不会掉到负数那一侧', () => {
+        const plan = makePlan(3);
+        const cards = listCards(plan.id);
+        // 昨天到期、上周到期，都算「现在就该复习」
+        schedule(cards[0].id, daysAfter(T0, -1));
+        schedule(cards[1].id, daysAfter(T0, -7));
+        schedule(cards[2].id, daysAfter(T0, 0));
+
+        const sc = statsOverview(plan.id, T0, TZ).scheduled;
+        expect(sc.every((b) => b.days >= 0)).toBe(true);
+        expect(sc.find((b) => b.days === 0)?.count).toBe(3);
+    });
+
+    /**
+     * 这一条防的是 CAST(... AS INTEGER)。
+     *
+     * CAST 是朝零截断的：一张几小时前刚过期的卡，天偏移是 -0.3，
+     * CAST 会得到 0 —— 看着"正好"落在今天，于是这个 bug 永远不会暴露。
+     * 但一张 -1.3 天的卡 CAST 得到 -1，跟 floor 一致，所以只测整数天也测不出来。
+     * 必须用**不足一天**的逾期来钉住 floor 的语义。
+     */
+    it('不足一天的逾期也算逾期（floor 语义，不是朝零截断）', () => {
+        const plan = makePlan(1);
+        const card = listCards(plan.id)[0];
+        // T0 是北京时间 10:00，往前 3 小时 = 今天 07:00，已经过了但不足一天
+        schedule(card.id, new Date(T0.getTime() - 3 * 3600_000));
+
+        const sc = statsOverview(plan.id, T0, TZ).scheduled;
+        expect(sc).toEqual([{ days: 0, count: 1 }]);
+    });
+
+    it('新卡不进分布 —— 它们没有到期日可言', () => {
+        const plan = makePlan(3);
+        expect(statsOverview(plan.id, T0, TZ).scheduled).toEqual([]);
+    });
+
+    it('第 0 天以今天的日历日边界起算，不随打开页面的时刻滑动', () => {
+        const plan = makePlan(1);
+        const card = listCards(plan.id)[0];
+        schedule(card.id, daysAfter(T0, 5));
+
+        // 同一天的早上和深夜看，应该都是「第 5 天」
+        const morning = new Date('2026-08-08T00:30:00.000Z');   // 北京 08:30
+        const night = new Date('2026-08-08T15:30:00.000Z');     // 北京 23:30
+        expect(statsOverview(plan.id, morning, TZ).scheduled[0].days)
+            .toBe(statsOverview(plan.id, night, TZ).scheduled[0].days);
     });
 });
 

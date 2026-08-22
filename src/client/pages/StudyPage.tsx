@@ -12,7 +12,7 @@ import ProgressBar from '@/components/cards/ProgressBar';
 import Markdown from '@/components/cards/Markdown';
 import Loading from '@/components/Loading';
 import { untilText, STATE_LABELS } from '@/lib/format';
-import { apiRate, apiStudyState } from '@/lib/api';
+import { apiRate, apiResetCard, apiStudyState } from '@/lib/api';
 import {
     cancelSpeech, listEnglishVoices, looksEnglish, onVoicesReady,
     speakOnce, speechSynthesisSupported,
@@ -98,6 +98,48 @@ export default function StudyPage() {
             setBusy(false);
         }
     }, [busy, id, navigate, state]);
+
+    /**
+     * 重学：把这张卡的进度清零，重新当新卡。
+     *
+     * 给的是「这张我压根没学会过，四档里没有一档对得上」这种情况 ——
+     * 评「重来」只是把间隔缩短，稳定度和难度还带着之前那一路的历史；
+     * 重学是把这张卡的记忆模型整个推倒，从零开始。
+     *
+     * 三件事要交代清楚：
+     *   1. **不写 reviews 流水**（走的是 /cards/:id/reset，跟管理页同一个接口），
+     *      所以今日进度和统计都不受影响 —— 推倒重来不是一次复习
+     *   2. 清完必须重取队列：这张卡从「复习卡」变成了「新卡」，
+     *      在队列里的位置整个变了，接着用旧的 state 会拿它当复习卡继续排
+     *   3. 它会不会当场再出现，取决于今天的新卡额度还剩不剩 ——
+     *      额度用完的话它今天就不再露面了，这一点写进确认框里
+     */
+    const relearn = useCallback(async () => {
+        if (!state?.card || busy) return;
+        const raw = state.card.front;
+        const label = raw.length > 30 ? `${raw.slice(0, 30)}…` : raw;
+        // 用模板字符串直接写真换行 —— confirm 里要分行，
+        // 拼 '\n' 反而更容易在编辑时被写坏
+        const ok = window.confirm(
+            `把「${label}」的进度清零、重新当新卡？
+
+· 稳定度、难度、复习次数全部归零（历史流水保留）
+· 不计入今日进度与统计
+· 之后按新卡排队；今天新卡额度用完的话，它今天不再出现`,
+        );
+        if (!ok) return;
+
+        setBusy(true);
+        try {
+            await apiResetCard(state.card.id);
+            // 队列变了，整份重取 —— 不能只把当前这张换掉
+            await load();
+        } catch (e) {
+            setError(e instanceof Error ? e.message : '重学失败');
+        } finally {
+            setBusy(false);
+        }
+    }, [busy, load, state]);
 
     const front = state?.card?.front ?? '';
     const speakable = canSpeak && speakOn && looksEnglish(front);
@@ -236,21 +278,40 @@ export default function StudyPage() {
                 </article>
 
                 {revealed && (
-                    <div className="fc-ratings">
-                        {RATING_ORDER.map((r) => (
-                            <button
-                                key={r}
-                                type="button"
-                                className={'fc-rate fc-rate-' + r}
-                                disabled={busy}
-                                onClick={() => void rate(r)}
-                            >
-                                <b>{RATING_LABELS[r]}</b>
-                                <small>{state.intervals ? untilText(state.intervals[r]) : ''}</small>
-                                <kbd>{r}</kbd>
-                            </button>
-                        ))}
-                    </div>
+                    <>
+                        <div className="fc-ratings">
+                            {RATING_ORDER.map((r) => (
+                                <button
+                                    key={r}
+                                    type="button"
+                                    className={'fc-rate fc-rate-' + r}
+                                    disabled={busy}
+                                    onClick={() => void rate(r)}
+                                >
+                                    <b>{RATING_LABELS[r]}</b>
+                                    <small>{state.intervals ? untilText(state.intervals[r]) : ''}</small>
+                                    <kbd>{r}</kbd>
+                                </button>
+                            ))}
+                        </div>
+
+                        {/* 重学摆在四档**外面**，不进 .fc-ratings ——
+                            那四档是互斥且穷尽的一组，塞第五个按钮进去会让人以为
+                            它也是一档评分（它不是：它不产生流水，也不计入今日进度）。
+                            只在翻开答案后出现：没看见答案之前，判断不了自己是不是真忘干净了。
+                            也不给键盘快捷键 —— 1~4 旁边再放一个键，手快时很容易误触，
+                            而这个操作会把一张卡的记忆历史清空。 */}
+                        <button
+                            type="button"
+                            className="fc-relearn"
+                            disabled={busy}
+                            onClick={() => void relearn()}
+                            title="进度清零，这张卡重新当新卡"
+                        >
+                            <i className="fas fa-rotate-left" />
+                            重学（进度清零，不计入统计）
+                        </button>
+                    </>
                 )}
 
                 <p className="fc-study-note">

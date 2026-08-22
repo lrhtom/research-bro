@@ -22,9 +22,16 @@ import {
     checkScenarioPrompt, openingPrompt, randomScenarioPrompt, turnPrompt, unusedWordsNudge,
 } from './speaking-prompts.js';
 import {
-    chat, chatNonEmpty, chatStream, extractJson, llmStatus, saveLlmConfig, testLlmConnection,
+    chat, chatNonEmpty, chatStream, extractJson, llmStatus, testLlmConnection,
     shouldRetryLlm, sleepBeforeRetry, LLM_ATTEMPTS, LLM_PRESETS, LlmError,
 } from './llm.js';
+import {
+    createModel, deleteModel, listModels, setActive as setActiveModel,
+    testModelConfig, testStoredModel, updateModel,
+} from './llm-models.js';
+import {
+    createScenario, deleteScenario, listScenarios, updateScenario,
+} from './speaking-scenarios.js';
 import type { ChatMessage } from './llm.js';
 import type { SpeakingTurn } from '../shared/types.js';
 
@@ -57,20 +64,86 @@ function toMessages(turns: SpeakingTurn[]): ChatMessage[] {
 
 /** 前端进入页面先问一下：没配就在页面上直接引导去配，而不是让每个按钮都 503 */
 speakingRouter.get('/speaking/status', (_req, res) => {
-    res.json({ ...llmStatus(), presets: LLM_PRESETS });
+    res.json({ ...llmStatus(), presets: LLM_PRESETS, models: listModels() });
 });
 
-speakingRouter.put('/speaking/config', (req, res) => {
+// ---------- 模型档案 ----------
+//
+// 存好几套连接方式（别名 + 模型名 + 地址 + key），点一下切换。
+// 别名给人看、模型名给接口看，两个都要 —— 见 llm-models.ts 顶部的说明。
+// 明文 key 只进不出，这几个接口一律只回打码后的样子。
+
+speakingRouter.get('/speaking/models', (_req, res) => {
+    res.json({ models: listModels(), status: llmStatus() });
+});
+
+speakingRouter.post('/speaking/models', (req, res) => {
     const b = (req.body ?? {}) as Record<string, unknown>;
-    res.json(saveLlmConfig({
-        baseUrl: typeof b.baseUrl === 'string' ? b.baseUrl : undefined,
-        model: typeof b.model === 'string' ? b.model : undefined,
-        // 没传 apiKey = 不动原来那把（页面不回显明文，得允许「只改模型」）
-        apiKey: typeof b.apiKey === 'string' ? b.apiKey : undefined,
-    }));
+    const model = createModel({
+        alias: b.alias, model: b.model, baseUrl: b.baseUrl, apiKey: b.apiKey,
+    });
+    res.status(201).json({ model, models: listModels(), status: llmStatus() });
 });
 
-/** 用当前配置打一次最小调用，确认是不是真的能通 */
+speakingRouter.patch('/speaking/models/:id', (req, res) => {
+    const b = (req.body ?? {}) as Record<string, unknown>;
+    // 只把请求里真出现过的键传下去：没传 apiKey = 不动原来那把
+    const patch: Record<string, unknown> = {};
+    for (const k of ['alias', 'model', 'baseUrl', 'apiKey']) if (k in b) patch[k] = b[k];
+
+    const model = updateModel(idOf(req.params.id), patch);
+    if (!model) { res.status(404).json({ error: '这套模型配置不存在' }); return; }
+    res.json({ model, models: listModels(), status: llmStatus() });
+});
+
+speakingRouter.delete('/speaking/models/:id', (req, res) => {
+    if (!deleteModel(idOf(req.params.id))) {
+        res.status(404).json({ error: '这套模型配置不存在' }); return;
+    }
+    res.json({ ok: true, models: listModels(), status: llmStatus() });
+});
+
+/** 切换当前使用的那一套。口语练习和 AI 悬浮球共用它。 */
+speakingRouter.post('/speaking/models/:id/activate', (req, res) => {
+    if (!setActiveModel(idOf(req.params.id))) {
+        res.status(404).json({ error: '这套模型配置不存在' }); return;
+    }
+    res.json({ ok: true, models: listModels(), status: llmStatus() });
+});
+
+/**
+ * 单独测一套（**不切换**当前在用的那个）。
+ *
+ * 想知道「哪一套还能用」不该逼你先切过去、测完再切回来 ——
+ * 切换是有副作用的：口语练习、AI 助手、AI 出题会立刻跟着换。
+ *
+ * 测试失败是一条**结果**不是接口错误，所以一律 200 + status 字段，
+ * 前端照常渲染那一行的状态点。
+ */
+speakingRouter.post('/speaking/models/:id/test', async (req, res, next) => {
+    try {
+        res.json(await testStoredModel(idOf(req.params.id)));
+    } catch (e) { next(e); }
+});
+
+/**
+ * 测一份**还没存下来**的配置。
+ *
+ * 添加模型的弹窗里要能先测再存 —— 不然只能「存了再测，不行再改」，
+ * 而错的那一套已经躺在列表里了。
+ */
+speakingRouter.post('/speaking/models/test-config', async (req, res, next) => {
+    try {
+        const b = (req.body ?? {}) as Record<string, unknown>;
+        res.json(await testModelConfig({
+            baseUrl: String(b.baseUrl ?? ''),
+            apiKey: String(b.apiKey ?? ''),
+            model: String(b.model ?? ''),
+        }));
+    } catch (e) { next(e); }
+});
+
+/** 用当前选中的那套档案打一次最小调用，确认是不是真的能通 */
 speakingRouter.post('/speaking/config/test', async (_req, res, next) => {
     try {
         res.json(await testLlmConnection());
@@ -79,28 +152,88 @@ speakingRouter.post('/speaking/config/test', async (_req, res, next) => {
 
 // ---------- 场景 ----------
 
-/** 自己写的场景先过一遍内容审核 */
+/**
+ * 自己写的场景过一遍内容审核。
+ *
+ * 开始练习前审一次，存进「我的场景」时也审一次 —— 抽出来共用，
+ * 免得两条路的判定标准不一样。
+ */
+async function moderateScenario(scenario: string): Promise<{ valid: boolean; reason: string }> {
+    if (!scenario) return { valid: false, reason: '场景描述不能为空' };
+    if (scenario.length > 2000) return { valid: false, reason: '场景描述太长了（上限 2000 字）' };
+
+    const text = await chat([
+        { role: 'system', content: checkScenarioPrompt() },
+        { role: 'user', content: scenario },
+    ], { temperature: 0.1, maxTokens: 200 });
+
+    const parsed = extractJson<{ valid?: unknown; reason?: unknown }>(text);
+    if (parsed) return { valid: Boolean(parsed.valid), reason: String(parsed.reason ?? '') };
+
+    // 模型没给出规规矩矩的 JSON：宁可放行也不要卡住用户，
+    // 但明显的拒绝词还是拦一下
+    const bad = /\bfalse\b|nsfw|illegal|inappropriate|hate speech/i.test(text);
+    return { valid: !bad, reason: bad ? '这个场景不适合用来练习，换一个吧' : '' };
+}
+
 speakingRouter.post('/speaking/check-scenario', async (req, res, next) => {
     try {
-        const scenario = String((req.body ?? {}).scenario ?? '').trim();
-        if (!scenario) { res.json({ valid: false, reason: '场景描述不能为空' }); return; }
-        if (scenario.length > 2000) { res.json({ valid: false, reason: '场景描述太长了（上限 2000 字）' }); return; }
+        res.json(await moderateScenario(String((req.body ?? {}).scenario ?? '').trim()));
+    } catch (e) { next(e); }
+});
 
-        const text = await chat([
-            { role: 'system', content: checkScenarioPrompt() },
-            { role: 'user', content: scenario },
-        ], { temperature: 0.1, maxTokens: 200 });
+// ---------- 我的场景 ----------
+//
+// 内置场景在 shared/speaking.ts 里写死；这里是自己存的那些。
+// 审核只在存的时候做一次：存进来之后文本不会变，每次开练重审是白花钱。
 
-        const parsed = extractJson<{ valid?: unknown; reason?: unknown }>(text);
-        if (parsed) {
-            res.json({ valid: Boolean(parsed.valid), reason: String(parsed.reason ?? '') });
+speakingRouter.get('/speaking/scenarios', (_req, res) => {
+    res.json({ scenarios: listScenarios() });
+});
+
+speakingRouter.post('/speaking/scenarios', async (req, res, next) => {
+    try {
+        const b = (req.body ?? {}) as Record<string, unknown>;
+        const scenario = String(b.scenario ?? '').trim();
+
+        const verdict = await moderateScenario(scenario);
+        if (!verdict.valid) {
+            res.status(422).json({ error: verdict.reason || '这个场景不适合用来练习，换一个吧' });
             return;
         }
-        // 模型没给出规规矩矩的 JSON：宁可放行也不要卡住用户，
-        // 但明显的拒绝词还是拦一下
-        const bad = /\bfalse\b|nsfw|illegal|inappropriate|hate speech/i.test(text);
-        res.json({ valid: !bad, reason: bad ? '这个场景不适合用来练习，换一个吧' : '' });
+
+        res.status(201).json({
+            scenario: createScenario({ label: b.label, scenario }),
+            scenarios: listScenarios(),
+        });
     } catch (e) { next(e); }
+});
+
+speakingRouter.patch('/speaking/scenarios/:id', async (req, res, next) => {
+    try {
+        const b = (req.body ?? {}) as Record<string, unknown>;
+        // 正文变了就要重审 —— 改名不用
+        if ('scenario' in b) {
+            const verdict = await moderateScenario(String(b.scenario ?? '').trim());
+            if (!verdict.valid) {
+                res.status(422).json({ error: verdict.reason || '这个场景不适合用来练习，换一个吧' });
+                return;
+            }
+        }
+        const patch: Record<string, unknown> = {};
+        for (const k of ['label', 'scenario']) if (k in b) patch[k] = b[k];
+
+        const saved = updateScenario(idOf(req.params.id), patch);
+        if (!saved) { res.status(404).json({ error: '这个场景不存在' }); return; }
+        res.json({ scenario: saved, scenarios: listScenarios() });
+    } catch (e) { next(e); }
+});
+
+speakingRouter.delete('/speaking/scenarios/:id', (req, res) => {
+    if (!deleteScenario(idOf(req.params.id))) {
+        res.status(404).json({ error: '这个场景不存在' }); return;
+    }
+    res.json({ ok: true, scenarios: listScenarios() });
 });
 
 /** 随便来一个场景，避开最近用过的 */

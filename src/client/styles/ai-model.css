@@ -1,0 +1,391 @@
+/* ============================================================
+   AI 模型：下拉栏 / 配置面板 / 添加弹窗
+
+   布局照搬 aIELTS 的那一块（下拉栏 + 管理列表 + 添加弹窗），
+   配色和形状换成工具箱这一套：暖白纸、发丝线、一支青绿。
+   全部 am- 前缀（ai-model），跟别的样式表互不打扰。
+   ============================================================ */
+
+/* ---------- 下拉栏 ---------- */
+
+.am-select {
+    padding: 9px 12px;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    color: var(--ink);
+    font-size: var(--fs-sm);
+    cursor: pointer;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    max-width: 100%;
+}
+.am-select:hover:not(:disabled) { border-color: var(--accent); }
+.am-select:focus { outline: none; border-color: var(--accent); box-shadow: var(--focus-ring); }
+.am-select:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.am-select-wide { width: 100%; max-width: 420px; }
+
+/* 紧凑版：塞在工具栏里的那个药丸。
+   要跟别的按钮挤在一行，所以必须自己封顶宽度 —— 模型别名可以很长，
+   不封的话 select 会按最长那一项撑开，把同一行的东西全顶走。 */
+.am-select-compact {
+    padding: 4px 10px;
+    height: 30px;
+    max-width: 190px;
+    border-radius: var(--radius-pill);
+    font-size: var(--fs-xs);
+    color: var(--ink-2);
+    /* 撑不下的名字截断，而不是撑破那一行 */
+    text-overflow: ellipsis;
+}
+
+/* ---------- 页面上那一小块「选模型」 ---------- */
+
+.am-pick {
+    display: grid;
+    gap: var(--sp-2);
+    padding: var(--sp-4);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    box-shadow: var(--shadow-card);
+    /* 左边一条青绿，跟页面上别的卡片区分开：这是「设置」不是「内容」 */
+    border-left: 3px solid var(--accent);
+}
+/* 没配好的时候换成警示色 —— 这时候页面上所有 AI 功能都点不动，
+   得让人一眼看见问题出在这儿 */
+.am-pick.is-missing { border-left-color: var(--warn); }
+
+.am-pick-label {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--ink-2);
+}
+.am-pick.is-missing .am-pick-label { color: var(--warn); }
+
+.am-pick .am-select { max-width: 420px; }
+
+.am-pick-note {
+    font-style: normal;
+    font-size: var(--fs-xs);
+    color: var(--ink-3);
+}
+
+/* ---------- 配置面板 ---------- */
+
+.am-panel { display: grid; gap: var(--sp-3); }
+
+.am-panel-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--sp-4);
+    flex-wrap: wrap;
+}
+
+.am-sub-head {
+    margin-top: var(--sp-5);
+    padding-top: var(--sp-4);
+    border-top: 1px solid var(--hairline);
+}
+
+.am-panel-title {
+    margin: 0 0 4px;
+    font-size: var(--fs-lg);
+    font-weight: 600;
+    color: var(--ink);
+}
+.am-panel-title i { color: var(--accent); font-size: 0.85em; margin-right: 6px; }
+.am-sub-title { font-size: var(--fs-md); }
+
+.am-panel-desc {
+    margin: 0;
+    max-width: 62ch;
+    font-size: var(--fs-sm);
+    color: var(--ink-3);
+    line-height: 1.65;
+}
+.am-panel-desc code {
+    padding: 1px 5px;
+    border-radius: var(--radius-sm);
+    background: var(--paper-2);
+    font-size: 0.92em;
+}
+
+.am-add-btn {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border: 1px dashed var(--accent);
+    border-radius: var(--radius-md);
+    background: var(--accent-tint);
+    color: var(--accent-ink);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background var(--transition-fast);
+}
+.am-add-btn:hover { background: var(--accent-tint-2); }
+
+.am-empty {
+    padding: var(--sp-5);
+    border-radius: var(--radius-md);
+    background: var(--paper-2);
+    color: var(--ink-3);
+    font-size: var(--fs-sm);
+    text-align: center;
+}
+
+/* ---------- 列表 ---------- */
+
+.am-list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--sp-2); }
+
+.am-row {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-4);
+    padding: var(--sp-3) var(--sp-4);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    flex-wrap: wrap;
+}
+.am-row.on { border-color: var(--accent-tint-2); background: var(--accent-tint); }
+
+.am-row-info { flex: 1; min-width: 220px; display: grid; gap: 3px; }
+
+.am-row-name {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+    font-size: var(--fs-md);
+    font-weight: 600;
+    color: var(--ink);
+}
+
+.am-tag {
+    padding: 1px 7px;
+    border-radius: var(--radius-pill);
+    background: var(--accent-tint-2);
+    color: var(--accent-ink);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+}
+.am-tag.warn { background: var(--warn-tint); color: var(--warn); }
+
+.am-row-sub {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-3);
+    font-size: var(--fs-xs);
+    color: var(--ink-3);
+}
+.am-row-sub code {
+    padding: 1px 6px;
+    border-radius: var(--radius-sm);
+    background: var(--paper-2);
+    color: var(--ink-2);
+}
+.am-row-sub em { font-style: normal; }
+
+.am-row-ops { display: flex; gap: var(--sp-2); flex-wrap: wrap; }
+.am-danger { color: var(--danger); }
+.am-danger:hover:not(:disabled) { border-color: var(--danger); }
+
+/* ---------- 测试结果 ---------- */
+
+.am-result {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: 2px 0 0;
+    font-size: var(--fs-xs);
+    color: var(--ink-2);
+}
+.am-result em { font-style: normal; color: var(--ink-3); }
+
+.am-dot {
+    width: 7px;
+    height: 7px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--ink-4);
+}
+
+/* 六档状态各一个颜色。全绿全红两档不够用 ——
+   「key 不对」「被限流」「连不上」你要做的事完全不一样 */
+.am-result.s-ok            { color: var(--ok); }
+.am-result.s-ok .am-dot    { background: var(--ok); }
+.am-result.s-auth          { color: var(--danger); }
+.am-result.s-auth .am-dot  { background: var(--danger); }
+.am-result.s-ratelimited         { color: var(--warn); }
+.am-result.s-ratelimited .am-dot { background: var(--warn); }
+.am-result.s-unconfigured        { color: var(--ink-3); }
+.am-result.s-reqerror            { color: #c2410c; }
+.am-result.s-reqerror .am-dot    { background: #c2410c; }
+.am-result.s-error               { color: var(--danger); }
+.am-result.s-error .am-dot       { background: var(--danger); }
+
+.am-error {
+    margin: var(--sp-2) 0 0;
+    padding: var(--sp-2) var(--sp-3);
+    border-radius: var(--radius-sm);
+    background: var(--danger-tint);
+    color: var(--danger);
+    font-size: var(--fs-sm);
+}
+.am-error i { margin-right: 5px; }
+
+/* ---------- 添加 / 修改弹窗 ---------- */
+
+.am-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--sp-5);
+    background: rgba(28, 25, 23, 0.42);
+    backdrop-filter: blur(2px);
+    animation: am-fade 0.15s var(--ease-out);
+}
+
+@keyframes am-fade { from { opacity: 0; } to { opacity: 1; } }
+
+.am-modal {
+    width: 100%;
+    max-width: 480px;
+    max-height: 88vh;
+    overflow-y: auto;
+    padding: var(--sp-5);
+    display: grid;
+    gap: var(--sp-4);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    box-shadow: var(--shadow-xl);
+    animation: am-rise 0.18s var(--ease-out);
+}
+
+/* 位移只有 6px —— 全站动效的上限，见 theme.css */
+@keyframes am-rise {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: none; }
+}
+
+.am-modal-head { display: flex; align-items: center; gap: var(--sp-2); }
+.am-modal-head h3 { flex: 1; margin: 0; font-size: var(--fs-lg); font-weight: 600; }
+
+.am-help-btn,
+.am-close {
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--ink-3);
+    cursor: pointer;
+    transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+.am-help-btn:hover,
+.am-help-btn.on,
+.am-close:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ---------- 弹窗里的示例面板 ---------- */
+
+.am-help {
+    padding: var(--sp-3);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-md);
+    background: var(--paper-2);
+}
+
+.am-help-intro {
+    margin: 0 0 var(--sp-3);
+    font-size: var(--fs-xs);
+    line-height: 1.7;
+    color: var(--ink-2);
+}
+.am-help-intro code {
+    padding: 1px 5px;
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+}
+
+.am-help-list { display: grid; gap: var(--sp-2); }
+
+.am-help-item {
+    padding: var(--sp-2) var(--sp-3);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+}
+
+.am-help-item-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-2);
+    margin-bottom: 5px;
+    font-size: var(--fs-sm);
+}
+
+.am-help-fill {
+    padding: 3px 12px;
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-sm);
+    background: var(--accent-tint);
+    color: var(--accent-ink);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background var(--transition-fast);
+}
+.am-help-fill:hover { background: var(--accent-tint-2); }
+
+.am-help-kv {
+    display: flex;
+    gap: var(--sp-2);
+    align-items: baseline;
+    font-size: var(--fs-xs);
+    line-height: 1.8;
+}
+.am-help-kv > span { flex-shrink: 0; min-width: 5.2em; color: var(--ink-3); }
+.am-help-kv > code {
+    min-width: 0;
+    color: var(--ink-2);
+    /* 地址挺长，撑破弹窗比截断难看得多 */
+    overflow-wrap: anywhere;
+}
+
+/* ---------- 弹窗里的表单 ---------- */
+
+.am-field { display: grid; gap: 5px; }
+.am-field > span { font-size: var(--fs-sm); font-weight: 600; color: var(--ink-2); }
+
+.am-field input {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+}
+.am-field input:focus { outline: none; border-color: var(--accent); box-shadow: var(--focus-ring); }
+
+.am-hint { font-style: normal; font-size: var(--fs-xs); color: var(--ink-3); line-height: 1.6; }
+
+.am-modal-actions { display: flex; align-items: center; gap: var(--sp-2); flex-wrap: wrap; }
+.am-spacer { flex: 1; }
+
+@media (max-width: 560px) {
+    .am-modal { padding: var(--sp-4); }
+    .am-row-ops { width: 100%; }
+}

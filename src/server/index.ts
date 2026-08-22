@@ -15,10 +15,13 @@ import { cardsRouter } from './routes-cards.js';
 import { speakingRouter } from './routes-speaking.js';
 import { assistantRouter } from './routes-assistant.js';
 import { notesRouter } from './routes-notes.js';
+import { OjError, ojRouter } from './routes-oj.js';
 import { StudyError } from './study.js';
 import { SpeakingError } from './speaking.js';
 import { AssistantError } from './assistant.js';
 import { LlmError } from './llm.js';
+import { LlmModelError } from './llm-models.js';
+import { ScenarioError } from './speaking-scenarios.js';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '..', '..');
@@ -41,6 +44,7 @@ export function createApp(): express.Express {
     app.use('/api', speakingRouter);
     app.use('/api', assistantRouter);
     app.use('/api', notesRouter);
+    app.use('/api', ojRouter);
 
     // 只有在跑编译产物时才托管前端。
     //
@@ -97,7 +101,9 @@ export function createApp(): express.Express {
     // 统一错误出口：带状态码的自定义错误照实透出去，其余一律 500
     app.use((err: unknown, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
         if (err instanceof StudyError || err instanceof SpeakingError
-            || err instanceof AssistantError || err instanceof LlmError) {
+            || err instanceof AssistantError || err instanceof LlmError
+            || err instanceof LlmModelError || err instanceof ScenarioError
+            || err instanceof OjError) {
             res.status(err.status).json({ error: err.message });
             return;
         }

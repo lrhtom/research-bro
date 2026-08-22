@@ -33,6 +33,7 @@ import {
     apiUpdateShortcut, apiUpdateTodo,
     type AssistantPageContext,
 } from '@/lib/api';
+import AiModelSelect from '@/components/ai/AiModelSelect';
 import { renderMarkdown } from '@/lib/markdown';
 import { Recognizer, speechRecognitionSupported, speechSynthesisSupported } from '@/lib/speech';
 import type { AssistantShortcut, AssistantStep, AssistantTodo } from '../../shared/types';
@@ -778,10 +779,10 @@ export default function AssistantBall() {
                         <p className="ab-warn">
                             <i className="fas fa-circle-exclamation" />
                             还没配大模型 —— 去
-                            <button type="button" onClick={() => { navigate('/tools/speaking'); setOpen(false); }}>
-                                英语口语练习
+                            <button type="button" onClick={() => { navigate('/me'); setOpen(false); }}>
+                                个人中心 · AI 配置
                             </button>
-                            页面顶部填上接口地址、API Key 和模型名，这里就能用了。
+                            加一套（接口地址 + API Key + 模型名），这里就能用了。
                         </p>
                     )}
 
@@ -797,6 +798,11 @@ export default function AssistantBall() {
                                 >
                                     <i className="fas fa-screwdriver-wrench" /> 站内操作
                                 </button>
+                                {/* 换模型就在手边。管理（加/改/删）在个人中心的「AI 配置」里 */}
+                                <AiModelSelect
+                                    variant="compact"
+                                    onChange={() => setLlmReady(true)}
+                                />
                                 <button
                                     type="button"
                                     className={`ab-chip${profileOpen ? ' is-on' : ''}`}

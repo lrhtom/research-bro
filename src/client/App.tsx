@@ -8,13 +8,19 @@ import VisualizationsPage from './pages/VisualizationsPage';
 import CoursesPage from './pages/CoursesPage';
 import ConvertersPage from './pages/ConvertersPage';
 import ContestsPage from './pages/ContestsPage';
+import AssetsPage from './pages/AssetsPage';
+import AiNewsPage from './pages/AiNewsPage';
 import PaperCheckPage from './pages/PaperCheckPage';
 import NotesPage from './pages/NotesPage';
+import OjProblemsPage from './pages/OjProblemsPage';
+import OjProblemPage from './pages/OjProblemPage';
+import OjGeneratePage from './pages/OjGeneratePage';
+import OjSubmissionsPage from './pages/OjSubmissionsPage';
+import OjSettingsPage from './pages/OjSettingsPage';
 import PlansPage from './pages/PlansPage';
 import PlanDetailPage from './pages/PlanDetailPage';
 import StudyPage from './pages/StudyPage';
 import ResultPage from './pages/ResultPage';
-import StatsPage from './pages/StatsPage';
 import SpeakingSetupPage from './pages/SpeakingSetupPage';
 import SpeakingRoomPage from './pages/SpeakingRoomPage';
 import SpeakingReportPage from './pages/SpeakingReportPage';
@@ -50,14 +56,26 @@ export default function App() {
                 <Route path="/tools/visualizations" element={<VisualizationsPage />} />
                 <Route path="/tools/courses" element={<CoursesPage />} />
                 <Route path="/tools/contests" element={<ContestsPage />} />
+                <Route path="/tools/ai-news" element={<AiNewsPage />} />
+                <Route path="/tools/assets" element={<AssetsPage />} />
                 <Route path="/tools/converters" element={<ConvertersPage />} />
                 <Route path="/tools/paper-check" element={<PaperCheckPage />} />
                 <Route path="/tools/notes" element={<NotesPage />} />
 
+                {/* 算法题库。固定段全部写在 :problemId 之前，
+                    否则 generate / submissions / settings 会被当成题目 id */}
+                <Route path="/tools/oj" element={<OjProblemsPage />} />
+                <Route path="/tools/oj/generate" element={<OjGeneratePage />} />
+                <Route path="/tools/oj/submissions" element={<OjSubmissionsPage />} />
+                <Route path="/tools/oj/settings" element={<OjSettingsPage />} />
+                <Route path="/tools/oj/:problemId" element={<OjProblemPage />} />
+
                 <Route path="/tools/flashcards" element={<PlansPage />} />
-                {/* 固定段要写在 :planId 之前 —— React Router 自己也会按「静态段优先」
-                    排序，但摆在前面能让读代码的人一眼看出 /stats 不是某个计划的 id */}
-                <Route path="/tools/flashcards/stats" element={<StatsPage />} />
+                {/* 学习统计整块搬进了个人中心。旧路由留着重定向 ——
+                    书签、站内搜索索引、以及 AI 助手的站内地图都还指着它，
+                    直接删掉会变成一个 404，而这条路由曾经是真实存在的。
+                    固定段仍要写在 :planId 之前，否则 stats 会被当成计划 id */}
+                <Route path="/tools/flashcards/stats" element={<Navigate to="/me" replace />} />
                 <Route path="/tools/flashcards/:planId" element={<PlanDetailPage />} />
                 <Route path="/tools/flashcards/:planId/study" element={<StudyPage />} />
                 <Route path="/tools/flashcards/:planId/result" element={<ResultPage />} />

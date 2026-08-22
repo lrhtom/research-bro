@@ -134,7 +134,155 @@
 }
 .sp-preset-custom { border-style: dashed; }
 
+/* 自己存的场景：跟内置的长得一样，只多一个右上角的删除按钮。
+   用 div + role=button 而不是 <button>，因为里面还嵌了一个按钮 ——
+   button 套 button 是非法 HTML，浏览器会把内层那个甩到外面去 */
+.sp-preset-saved { position: relative; }
+.sp-preset-saved > i { color: var(--accent-tint-2, var(--primary)); }
+
+.sp-preset-del {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 22px;
+    height: 22px;
+    display: grid;
+    place-items: center;
+    font-size: 16px;
+    line-height: 1;
+    color: var(--text-muted);
+    background: none;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.14s, background 0.14s, color 0.14s;
+}
+.sp-preset-saved:hover .sp-preset-del,
+.sp-preset-del:focus-visible { opacity: 1; }
+.sp-preset-del:hover { color: #fff; background: var(--danger-color, #e5484d); }
+
+.sp-saved-view { margin: 12px 4px 0; }
+.sp-saved-view p { margin: 0 0 8px; font-size: 12.5px; }
+
+.sp-saved-text {
+    margin: 0;
+    padding: 12px 14px;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 12.5px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    word-break: break-word;
+    color: var(--text-secondary);
+    background: var(--paper-2);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+}
+
 .sp-custom { margin: 14px 4px 0; }
+
+.sp-custom-ops {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    flex: 1 1 100%;
+    font-size: 12.5px;
+}
+
+/* ---------------- 模型档案列表 ---------------- */
+
+.sp-model-list {
+    list-style: none;
+    margin: 0 0 14px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sp-model {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+}
+
+.sp-model.on {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--accent-tint);
+}
+
+.sp-model-pick {
+    flex: 0 0 auto;
+    width: 26px;
+    height: 26px;
+    display: grid;
+    place-items: center;
+    font-size: 14px;
+    color: var(--text-muted);
+    background: none;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.sp-model-pick:hover:not(:disabled) { color: var(--primary); background: var(--paper-2); }
+.sp-model.on .sp-model-pick { color: var(--primary); cursor: default; }
+
+.sp-model-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+
+.sp-model-alias {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.sp-model-badge {
+    padding: 1px 7px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--primary);
+    background: var(--accent-tint);
+    border-radius: 999px;
+}
+.sp-model-badge.warn { color: #b4540a; background: #fdf0e3; }
+
+/* 模型名用等宽：它是要原样复制去别处填的字符串，不是给人读的名字 */
+.sp-model-sub {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 10px;
+    font-size: 12px;
+    color: var(--text-muted);
+    min-width: 0;
+}
+.sp-model-sub code {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    color: var(--text-secondary);
+}
+.sp-model-sub em { font-style: normal; overflow-wrap: anywhere; }
+
+.sp-model-ops { flex: 0 0 auto; display: flex; gap: 6px; }
+
+.sp-model-form {
+    padding: 14px;
+    background: var(--paper-2);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+}
+.sp-model-form .sp-llm-actions { margin-top: 14px; }
+
+@media (max-width: 640px) {
+    .sp-model { flex-wrap: wrap; }
+    .sp-model-ops { width: 100%; justify-content: flex-end; }
+}
 
 .sp-textarea {
     font: inherit;

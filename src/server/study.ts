@@ -10,10 +10,12 @@
 
 import { db, getSetting, nowIso } from './db.js';
 import { calendarDay, endOfDay, normalizeTimeZone } from './time.js';
-import { emptyCard, previewIntervals, schedule, type SchedulerCard } from './fsrs.js';
+import {
+    emptyCard, previewIntervals, retentionAt, sampleCurve, schedule, type SchedulerCard,
+} from './fsrs.js';
 import type {
-    Bucket, Buckets, Card, CardState, Plan, PlanStats, PlanWithStats,
-    Progress, Rating, RatingTimes, SessionResult, StudyState,
+    Bucket, Buckets, Card, CardCurve, CardState, CurvePoint, Plan, PlanStats, PlanWithStats,
+    Progress, Rating, RatingPreview, RatingTimes, SessionResult, StudyState,
 } from '../shared/types.js';
 
 // ---------- 行类型 ----------
@@ -276,6 +278,98 @@ export function resetCard(id: number, now = new Date()): Card | null {
         fresh.elapsed_days, fresh.scheduled_days, fresh.learning_steps, nowIso(), id,
     );
     return toCard(db().prepare('SELECT * FROM cards WHERE id = ?').get(id) as CardRow);
+}
+
+const DAY_MS = 86_400_000;
+
+/** 四档评分各自排到哪儿。按钮上要显示「良好 · 3 天后」，就靠它。 */
+function ratingPreviews(card: SchedulerCard, now: Date): Record<Rating, RatingPreview> {
+    const times = previewIntervals(card, now);
+    const one = (r: Rating): RatingPreview => ({
+        due: times[r].toISOString(),
+        days: (times[r].getTime() - now.getTime()) / DAY_MS,
+    });
+    return { 1: one(1), 2: one(2), 3: one(3), 4: one(4) };
+}
+
+/**
+ * 单张卡的遗忘曲线 + 四档预览。
+ *
+ * 曲线的原点是**上次复习**而不是现在 —— FSRS 的衰减就是从那一刻起算的，
+ * 拿「现在」当原点会把整条线平移，看着像还没开始忘。
+ *
+ * 新卡（从没复习过）没有曲线：没有衰减起点，硬画一条只会是编的。
+ * 这种情况仍然返回四档预览 —— 那是「如果现在评一下会排到哪」，跟有没有历史无关。
+ */
+export function cardCurve(cardId: number, now = new Date()): CardCurve | null {
+    const row = db().prepare('SELECT * FROM cards WHERE id = ?').get(cardId) as CardRow | undefined;
+    if (!row) return null;
+
+    const sc = toScheduler(row);
+    const due = new Date(row.due);
+    const last = row.last_review ? new Date(row.last_review) : null;
+    const hasCurve = last !== null && sc.stability > 0;
+
+    const elapsed = (d: Date) => (last ? (d.getTime() - last.getTime()) / DAY_MS : 0);
+    const at = (d: Date): CurvePoint => {
+        const e = Math.max(0, elapsed(d));
+        return { d: e, r: hasCurve ? retentionAt(sc.stability, e) : 1 };
+    };
+
+    // 画到「到期之后再多一截」，好让人看见如果拖着不复习会掉到哪儿；
+    // 至少画满一个稳定度，免得间隔极短时曲线挤成一根竖线
+    const dueDays = hasCurve ? Math.max(elapsed(due), 0) : 0;
+    const span = hasCurve ? Math.max(dueDays * 1.6, sc.stability * 1.2, 1) : 1;
+
+    return {
+        cardId,
+        hasCurve,
+        stability: sc.stability,
+        difficulty: sc.difficulty,
+        state: row.state as CardState,
+        lastReview: row.last_review,
+        due: row.due,
+        points: hasCurve ? sampleCurve(sc.stability, span) : [],
+        now: at(now),
+        dueAt: at(due),
+        previews: ratingPreviews(sc, now),
+    };
+}
+
+/**
+ * 在管理界面手动给一张卡评一档，用来把它的遗忘曲线拨到你想要的位置。
+ *
+ * 跟 rateCard 的唯一区别：**不写 reviews 流水**。
+ *
+ * 为什么不写：schema 里写明「reviews 是进度与统计的唯一依据」——
+ * 今日进度的分母、四个桶、热力图、按次统计全从它算。在管理页面拨二十张卡的
+ * 曲线，如果each 都记一条流水，统计就会报「今天学了 20 张」，
+ * 而你一张都没回忆过。那是假数据，比没有统计更糟。
+ *
+ * 代价说清楚：卡片的 reps 会加一（那是 ts-fsrs 自己在 schedule() 里加的，
+ * 我们不回改 —— 库算出来的状态要原样存回去，这是本项目对 FSRS 的一贯态度），
+ * 于是 cards.reps 会比 reviews 的条数多。两者本来就在回答不同的问题：
+ * reps 是「这张卡被调度过几次」，reviews 是「真的复习过几次」。
+ */
+export function adjustCard(cardId: number, rating: Rating, now = new Date()): Card | null {
+    const row = db().prepare('SELECT * FROM cards WHERE id = ?').get(cardId) as CardRow | undefined;
+    if (!row) return null;
+
+    const next = schedule(toScheduler(row), rating, now);
+
+    db().prepare(
+        `UPDATE cards SET state = ?, stability = ?, difficulty = ?, due = ?, last_review = ?,
+                          reps = ?, lapses = ?, elapsed_days = ?, scheduled_days = ?,
+                          learning_steps = ?, updated_at = ?
+         WHERE id = ?`,
+    ).run(
+        next.state, next.stability, next.difficulty, next.due.toISOString(),
+        (next.last_review ?? now).toISOString(),
+        next.reps, next.lapses, next.elapsed_days, next.scheduled_days,
+        next.learning_steps, nowIso(), cardId,
+    );
+
+    return toCard(db().prepare('SELECT * FROM cards WHERE id = ?').get(cardId) as CardRow);
 }
 
 /** 批量导入。返回真正插进去的张数。 */

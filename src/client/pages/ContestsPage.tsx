@@ -136,11 +136,11 @@ function ContestRow({ c }: { c: Contest }) {
             <div className="link-row is-multi">
                 {body}
 
-                <div className="contest-entries">
+                <div className="link-entries">
                     {c.entries.map((e) => (
                         <a
                             key={e.href}
-                            className="contest-entry"
+                            className="link-entry"
                             href={e.href}
                             target="_blank"
                             rel="noopener noreferrer"

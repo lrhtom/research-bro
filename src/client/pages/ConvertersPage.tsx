@@ -11,12 +11,23 @@ export default function ConvertersPage() {
     const local = converters.filter((c) => c.badges.some((b) => b.includes('本地')));
     const remote = converters.filter((c) => !c.badges.some((b) => b.includes('本地')));
 
+    // 各条的核验日期并不相同，所以这里报**最早**的那一个。
+    //
+    // 原来写的是 converters[0].verified，一句「(2026-08-01 核验)」盖住全表 ——
+    // 那在只有一批同时核过的条目时是对的，往后每加一条日期不同的就变成假话，
+    // 而且是那种没人会发现的假话。报最早那天则无论以后加多少条都仍然成立：
+    // 表里每一条都是在这天或这天之后核过的。
+    const oldestVerified = converters.reduce(
+        (min, c) => (c.verified < min ? c.verified : min),
+        converters[0]?.verified ?? '',
+    );
+
     return (
         <AppShell title="格式转换" subtitle="Format Converters · 免注册的在线转换工具">
             <p className="u-aside">
                 <i className="fas fa-triangle-exclamation" />
                 全部是<b>第三方在线服务</b>，本站只做整理与跳转，<b>不经手你的任何文件</b>。
-                每条都确认过免注册、免费、不限次数（{converters.length > 0 && converters[0].verified} 核验）。
+                每条都确认过免注册、免费、不限次数（最早 {oldestVerified} 核验）。
                 下面按<b>文件去哪儿</b>分成两组 —— 这是这一页最该先看清的一件事。
             </p>
 

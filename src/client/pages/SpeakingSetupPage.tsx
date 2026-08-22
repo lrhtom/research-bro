@@ -11,10 +11,11 @@ import { useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AppShell from '@/components/AppShell';
 import { SPEAKING_SECTIONS } from '@/lib/nav';
-import LlmConfigPanel from '@/components/speaking/LlmConfigPanel';
+import AiModelSelect from '@/components/ai/AiModelSelect';
 import {
-    apiCheckScenario, apiCreateSpeakingSession, apiRandomScenario, apiSpeakingStatus,
-    type LlmConfigView,
+    apiCheckScenario, apiCreateSpeakingSession, apiDeleteScenario, apiListScenarios,
+    apiRandomScenario, apiSaveScenario, apiSpeakingStatus,
+    type LlmConfigView, type SavedScenario,
 } from '@/lib/api';
 import {
     INTERFERENCE_KEYS, INTERFERENCE_LABELS, INTERFERENCE_SUBOPTIONS, SCENARIO_PRESETS,
@@ -31,19 +32,26 @@ export default function SpeakingSetupPage() {
     const [mods, setMods] = useState<Modifiers>({});
     const [wordsRaw, setWordsRaw] = useState('');
 
-    const [busy, setBusy] = useState<'' | 'check' | 'random' | 'start'>('');
+    const [busy, setBusy] = useState<'' | 'check' | 'random' | 'start' | 'save'>('');
     const [error, setError] = useState<string | null>(null);
     const [notice, setNotice] = useState<string | null>(null);
     const [llm, setLlm] = useState<LlmConfigView | null>(null);
+    /** 自己存下来的场景。内置的那些在 SCENARIO_PRESETS 里，是代码不是数据。 */
+    const [saved, setSaved] = useState<SavedScenario[]>([]);
 
     useEffect(() => {
         document.title = '英语口语练习 · 工具箱';
         apiSpeakingStatus().then(setLlm).catch(() => setLlm({
-            configured: false, baseUrl: '', model: '', keyHint: '', fromEnv: false, presets: [],
+            configured: false, baseUrl: '', model: '', keyHint: '', fromEnv: false,
+            presets: [], models: [],
         }));
+        apiListScenarios().then(setSaved).catch(() => { /* 存过的场景拉不到不影响用内置的 */ });
     }, []);
 
     const isCustom = preset === '__custom__';
+    // 选中的是自己存的那一条时，preset 长这样：saved:12
+    const savedId = preset.startsWith('saved:') ? Number(preset.slice(6)) : null;
+    const savedPick = savedId ? saved.find((s) => s.id === savedId) ?? null : null;
     const words = parseTargetWords(wordsRaw);
 
     /** 开关：没开 → 开（空子选项）；已开 → 关 */
@@ -78,14 +86,44 @@ export default function SpeakingSetupPage() {
         } finally { setBusy(''); }
     }
 
+    /** 把当前写的场景存进「我的场景」。存的时候审一次，以后开练就不用再审了。 */
+    async function saveScenario() {
+        const scenario = custom.trim();
+        if (!scenario) { setError('先把场景描述写出来'); return; }
+        setBusy('save'); setError(null); setNotice(null);
+        try {
+            const r = await apiSaveScenario({
+                label: customLabel.trim() || scenario.slice(0, 20),
+                scenario,
+            });
+            setSaved(r.scenarios);
+            setPreset('saved:' + r.scenario.id);       // 存完直接选中它
+            setCustom(''); setCustomLabel('');
+            setNotice(`已存为「${r.scenario.label}」，以后在上面直接点就能用。`);
+        } catch (e) {
+            setError(e instanceof Error ? e.message : '存不下来');
+        } finally { setBusy(''); }
+    }
+
+    async function removeScenario(s: SavedScenario) {
+        if (!window.confirm(`删除场景「${s.label}」吗？`)) return;
+        try {
+            setSaved(await apiDeleteScenario(s.id));
+            if (savedId === s.id) setPreset(SCENARIO_PRESETS[0].key);
+        } catch (e) {
+            setError(e instanceof Error ? e.message : '删不掉');
+        }
+    }
+
     async function start() {
         setError(null); setNotice(null);
         const chosen = SCENARIO_PRESETS.find((p) => p.key === preset);
-        const scenario = isCustom ? custom.trim() : chosen?.scenario ?? '';
+        const scenario = isCustom ? custom.trim() : savedPick ? savedPick.scenario : chosen?.scenario ?? '';
         if (!scenario) { setError('先选一个场景，或者自己写一个'); return; }
 
         try {
-            // 自己写的场景要先过一遍内容审核；预设是我们自己写的，不用审
+            // 只有「现写现用」的才要审：内置场景是我们自己写的，
+            // 存下来的那些在存的时候已经审过一次，文本之后没再变
             if (isCustom) {
                 setBusy('check');
                 const v = await apiCheckScenario(scenario);
@@ -95,8 +133,11 @@ export default function SpeakingSetupPage() {
             setBusy('start');
             const session = await apiCreateSpeakingSession({
                 scenario,
-                label: isCustom ? (customLabel || custom.slice(0, 20)) : (chosen?.label ?? ''),
-                preset: isCustom ? '' : preset,
+                label: isCustom
+                    ? (customLabel || custom.slice(0, 20))
+                    : savedPick ? savedPick.label : (chosen?.label ?? ''),
+                // preset 只记内置场景的 key；自己写的和自己存的都留空
+                preset: isCustom || savedPick ? '' : preset,
                 modifiers: mods,
                 targetWords: wordsRaw,
             });
@@ -125,13 +166,9 @@ export default function SpeakingSetupPage() {
                     <b>全程不录音、不上传任何音频</b>；不方便说话时打字也一样能完整练完。
                 </p>
 
-                {llm && (
-                    <LlmConfigPanel
-                        config={llm}
-                        onSaved={setLlm}
-                        defaultOpen={!llm.configured}
-                    />
-                )}
+                {/* 只摆一个下拉栏。加/改/删模型在个人中心的「AI 配置」里，全站就那一处 ——
+                    管理界面一年用不了几次，不该在每个用到 AI 的页面上都占一大块 */}
+                <AiModelSelect onChange={() => { void apiSpeakingStatus().then(setLlm).catch(() => { /* 拿不到就保持原样 */ }); }} />
 
                 {error && <p className="fc-error"><i className="fas fa-circle-xmark" /> {error}</p>}
                 {notice && <p className="fc-ok"><i className="fas fa-circle-check" /> {notice}</p>}
@@ -162,6 +199,33 @@ export default function SpeakingSetupPage() {
                             <span>{p.desc}</span>
                         </button>
                     ))}
+                    {/* 自己存下来的，跟内置的并排。区别只有右上角那个删除按钮 */}
+                    {saved.map((s) => (
+                        <div
+                            key={s.id}
+                            className={'sp-preset sp-preset-saved' + (savedId === s.id ? ' on' : '')}
+                            role="button"
+                            tabIndex={0}
+                            onClick={() => setPreset('saved:' + s.id)}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setPreset('saved:' + s.id); }
+                            }}
+                        >
+                            <i className="fas fa-bookmark" />
+                            <b>{s.label}</b>
+                            <span>{s.scenario.slice(0, 52)}{s.scenario.length > 52 ? '…' : ''}</span>
+                            <button
+                                type="button"
+                                className="sp-preset-del"
+                                title="删掉这个场景"
+                                aria-label={`删掉场景 ${s.label}`}
+                                onClick={(e) => { e.stopPropagation(); void removeScenario(s); }}
+                            >
+                                ×
+                            </button>
+                        </div>
+                    ))}
+
                     <button
                         type="button"
                         className={'sp-preset sp-preset-custom' + (isCustom ? ' on' : '')}
@@ -172,6 +236,16 @@ export default function SpeakingSetupPage() {
                         <span>描述你要练的处境，开始前会先过一遍内容审核</span>
                     </button>
                 </div>
+
+                {savedPick && (
+                    <div className="sp-saved-view">
+                        <p className="fc-muted">
+                            <i className="fas fa-bookmark" /> 存过的场景 ——
+                            存的时候已经审核过，<b>开练时不再审一遍</b>。
+                        </p>
+                        <pre className="sp-saved-text">{savedPick.scenario}</pre>
+                    </div>
+                )}
 
                 {isCustom && (
                     <div className="fc-form sp-custom">
@@ -197,6 +271,21 @@ export default function SpeakingSetupPage() {
                             写清楚<b>你是谁、对方是谁、你要办成什么事</b>，AI 才知道该怎么为难你。
                             只写「聊聊天气」这种，练不出什么东西。
                         </p>
+                        <div className="sp-custom-ops">
+                            <button
+                                type="button"
+                                className="fc-btn"
+                                onClick={() => void saveScenario()}
+                                disabled={busy !== '' || !custom.trim() || !llm?.configured}
+                                title="存下来以后直接点就能用，不用每次重写"
+                            >
+                                <i className={busy === 'save' ? 'fas fa-spinner fa-spin' : 'fas fa-bookmark'} />
+                                {busy === 'save' ? ' 审核中…' : ' 存到我的场景'}
+                            </button>
+                            <span className="fc-muted">
+                                不存也能直接开练；存下来的好处是<b>以后不用再等审核</b>。
+                            </span>
+                        </div>
                     </div>
                 )}
 

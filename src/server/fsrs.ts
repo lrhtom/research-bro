@@ -22,6 +22,7 @@
 
 import {
     createEmptyCard,
+    forgetting_curve,
     fsrs,
     generatorParameters,
     Rating as FsrsRating,
@@ -31,11 +32,14 @@ import {
 } from 'ts-fsrs';
 import type { CardState, Rating } from '../shared/types.js';
 
-const scheduler = fsrs(generatorParameters({
+// 参数单独拎出来：遗忘曲线要用到里面的权重 w，不能只留在 fsrs() 的调用里
+const params = generatorParameters({
     enable_fuzz: false,
     learning_steps: ['1m'],
     relearning_steps: ['10m'],
-}));
+});
+
+const scheduler = fsrs(params);
 
 /** 调度器眼里的一张卡。字段与数据库 cards 表一一对应。 */
 export interface SchedulerCard {
@@ -131,4 +135,34 @@ export function previewIntervals(card: SchedulerCard, now: Date): Record<Rating,
 
 export function isValidRating(v: unknown): v is Rating {
     return v === 1 || v === 2 || v === 3 || v === 4;
+}
+
+// ---------- 遗忘曲线 ----------
+//
+// 曲线也走库的 forgetting_curve()，不自己写幂函数 —— 跟调度同一条规矩：
+// 公式一概不碰。自己实现的话，哪天 ts-fsrs 升级换了衰减模型（FSRS-5 → 6
+// 的 decay 就变过），画出来的曲线会跟真正的排期悄悄对不上，
+// 而这种偏差在界面上看不出来。
+
+/**
+ * 距上次复习 elapsedDays 天时，这张卡还记得住的概率（0..1）。
+ *
+ * 注意基准是**上次复习**，不是现在：FSRS 的记忆模型就是从上次复习那一刻
+ * 开始衰减的，拿「现在」当原点会把曲线整条平移。
+ */
+export function retentionAt(stability: number, elapsedDays: number): number {
+    if (!(stability > 0)) return 0;
+    return forgetting_curve(params.w, Math.max(0, elapsedDays), stability);
+}
+
+/** 采样一条遗忘曲线，返回 [{d: 天, r: 0..1}]。d 同样以上次复习为原点。 */
+export function sampleCurve(stability: number, spanDays: number, samples = 48):
+Array<{ d: number; r: number }> {
+    const out: Array<{ d: number; r: number }> = [];
+    const span = Math.max(1, spanDays);
+    for (let i = 0; i <= samples; i += 1) {
+        const d = (span * i) / samples;
+        out.push({ d, r: retentionAt(stability, d) });
+    }
+    return out;
 }

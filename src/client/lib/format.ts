@@ -38,3 +38,24 @@ export const STATE_LABELS: Record<string, string> = {
     review: '复习',
     relearning: '重新学习',
 };
+
+// ---------- 算法题库（OJ）用到的两个 ----------
+
+/** 体积：512 B / 12.3 KB / 4.1 MB。测试点大小、输入输出体积都用它。 */
+export function bytesText(n: number): string {
+    if (!Number.isFinite(n) || n < 0) return '—';
+    if (n < 1024) return `${n} B`;
+    if (n < 1024 * 1024) return `${(n / 1024).toFixed(1)} KB`;
+    return `${(n / 1024 / 1024).toFixed(1)} MB`;
+}
+
+/**
+ * 判题耗时：87 ms / 1.24 s。
+ *
+ * 跟上面的 durationText 分开：那个是给「学了 3 分 12 秒」用的，最小单位是秒；
+ * 判题这边一整道题也就几百毫秒，取整到秒全成了「0 秒」。
+ */
+export function msText(ms: number | null | undefined): string {
+    if (ms === null || ms === undefined || !Number.isFinite(ms)) return '—';
+    return ms < 1000 ? `${Math.round(ms)} ms` : `${(ms / 1000).toFixed(2)} s`;
+}

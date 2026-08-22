@@ -260,9 +260,15 @@
     line-height: 1.6;
 }
 
+/* 这几条是**裸元素**规则，只靠 .ab-root 圈住范围 —— 所以任何被塞进面板里的
+   共享组件都会被它接管。选模型那个下拉栏（.am-select，样式在 ai-model.css）
+   就撞过一次：width:100% 把它撑到 347px 顶掉了同一行的其它按钮，
+   圆角也从药丸变回了 6px。
+   排除它比在 ai-model.css 那边加权重好 —— 这条规则是这个文件的，
+   谁定义的谁负责划清边界，否则以后每加一个共享组件都要去那边追加一次 !important。 */
 .ab-root textarea,
 .ab-root input[type='text'],
-.ab-root select {
+.ab-root select:not(.am-select) {
     width: 100%;
     padding: 7px 9px;
     border: 1px solid var(--rule);
@@ -277,7 +283,7 @@
 
 .ab-root textarea:focus,
 .ab-root input[type='text']:focus,
-.ab-root select:focus {
+.ab-root select:not(.am-select):focus {
     outline: none;
     border-color: var(--accent);
     box-shadow: var(--focus-ring);

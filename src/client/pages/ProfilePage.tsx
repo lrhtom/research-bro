@@ -13,6 +13,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import AppShell from '@/components/AppShell';
+import StudyAnalytics from '@/components/cards/StudyAnalytics';
+import AiConfigPanel from '@/components/ai/AiConfigPanel';
 import Avatar from '@/components/Avatar';
 import { Skeleton } from '@/components/Loading';
 import {
@@ -38,37 +40,130 @@ interface Stat {
     icon: string;
 }
 
+/** 页内小侧边栏的几个去处。名字按本站实际有的东西起，不照抄参考稿里的 Backpack / Admin。 */
+type MeView = 'overview' | 'stats' | 'ai' | 'links';
+
+const ME_VIEWS: Array<{ key: MeView; label: string; icon: string }> = [
+    { key: 'overview', label: '概览', icon: 'fa-table-cells-large' },
+    { key: 'stats', label: '学习统计', icon: 'fa-chart-line' },
+    // AI 配置放在个人中心而不是某个工具底下：它是**全站共用**的一份，
+    // 挂在口语练习或 AI 出题任何一个底下，都会让人以为它只管那一个
+    { key: 'ai', label: 'AI 配置', icon: 'fa-robot' },
+    { key: 'links', label: '我的主页', icon: 'fa-link' },
+];
+
 export default function ProfilePage() {
     useEffect(() => { document.title = '个人中心 · 工具箱'; }, []);
 
     const profile = useProfile();
+    const [view, setView] = useState<MeView>('overview');
 
     return (
-        <AppShell title="个人中心" subtitle="Profile · 名字、足迹与我的主页">
-            <p className="u-aside">
-                <i className="fas fa-circle-info" />
-                这个站<b>没有账号系统，也不需要登录注册</b> ——
-                下面改的东西都只写进本机 SQLite 的 settings 表，换台电脑就没有了。
-                名字随时能改，它只影响侧栏和这一页的显示。
-            </p>
+        <AppShell title="个人中心" subtitle="Profile · 名字、足迹、学习统计与我的主页">
+            {/*
+              页内小侧边栏 + 右侧内容。
+              这一层跟 AppShell 那个全站滑出式侧栏是两回事：那个管「站里有哪些工具」，
+              这个只管「个人中心内部去哪一块」。所以它常驻、不滑出，也不放任何站级链接。
 
-            <IdentityCard name={profile.name} tagline={profile.tagline} avatar={profile.avatar} />
+              为什么是**切换视图**而不是锚点滚动：学习统计那一块很长（热力图 + 四张图 +
+              一张表），跟「概览」「我的主页」堆在一条垂直线上的话，想改个外链要滚过整份统计。
+              切换之后每一块都从顶上开始。
+            */}
+            <div className="me-layout">
+                <aside className="me-side">
+                    <div className="me-side-id">
+                        <Avatar name={profile.name} avatar={profile.avatar} className="me-side-avatar" />
+                        <b className="me-side-name">{profile.name}</b>
+                        {/* 参考稿这里是邮箱。本站没有账号，签名是唯一等价的一行 */}
+                        {profile.tagline && <span className="me-side-tag">{profile.tagline}</span>}
+                    </div>
 
-            <div className="u-head">
-                <h2><i className="fas fa-shoe-prints" /> 站内足迹</h2>
+                    <nav className="me-side-nav" aria-label="个人中心导航">
+                        {ME_VIEWS.map((v) => (
+                            <button
+                                key={v.key}
+                                type="button"
+                                className={'me-side-item' + (view === v.key ? ' is-active' : '')}
+                                aria-current={view === v.key ? 'page' : undefined}
+                                onClick={() => setView(v.key)}
+                            >
+                                <i className={'fas ' + v.icon} />
+                                <span>{v.label}</span>
+                            </button>
+                        ))}
+                    </nav>
+
+                    <Link className="me-side-back" to="/">
+                        <i className="fas fa-arrow-left" /> 返回首页
+                    </Link>
+                </aside>
+
+                <div className="me-main">
+                    {view === 'overview' && (
+                        <>
+                            <p className="u-aside">
+                                <i className="fas fa-circle-info" />
+                                这个站<b>没有账号系统，也不需要登录注册</b> ——
+                                下面改的东西都只写进本机 SQLite 的 settings 表，换台电脑就没有了。
+                                名字随时能改，它只影响侧栏和这一页的显示。
+                            </p>
+
+                            <IdentityCard
+                                name={profile.name}
+                                tagline={profile.tagline}
+                                avatar={profile.avatar}
+                            />
+
+                            <div className="u-head">
+                                <h2><i className="fas fa-shoe-prints" /> 站内足迹</h2>
+                            </div>
+                            <p className="u-note">现算的，不是缓存。点任意一格进对应的工具。</p>
+                            <Footprint />
+                        </>
+                    )}
+
+                    {/* 学习统计整块从 /tools/flashcards/stats 搬到了这里 ——
+                        「你在这个站里攒下了什么」本来就是个人中心要回答的问题。
+                        它自带计划选择器和自己的加载态，这一页不管它的数据。 */}
+                    {view === 'stats' && (
+                        <>
+                            <p className="u-aside">
+                                <i className="fas fa-circle-info" />
+                                记忆卡的复习数据，<b>这个站里唯一会持续累积的东西</b> ——
+                                别的工具用完即走，只有它一天天长出来。
+                            </p>
+                            <StudyAnalytics />
+                        </>
+                    )}
+
+                    {view === 'ai' && (
+                        <>
+                            <p className="u-aside">
+                                <i className="fas fa-circle-info" />
+                                站里所有会调 AI 的地方 —— 口语练习、AI 出题、右下角那颗助手球 ——
+                                用的都是<b>这里选中的这一套</b>。别的页面上只有一个下拉栏供你换，
+                                <b>加、改、删只在这一处</b>。
+                                配置存在本机 <code>data/app.db</code>，<b>不上传任何地方</b>。
+                            </p>
+                            <AiConfigPanel />
+                        </>
+                    )}
+
+                    {view === 'links' && (
+                        <>
+                            <div className="u-head">
+                                <h2><i className="fas fa-link" /> 我的主页</h2>
+                                <span className="count u-num">{profile.links.length} 条</span>
+                            </div>
+                            <p className="u-note">
+                                自己在外站的主页收在这儿 —— 比如 Codeforces、力扣、GitHub 的个人页。
+                                <b>本站不去对方站点查任何东西</b>，只是把你填的地址存下来做个跳板。
+                            </p>
+                            <LinkManager links={profile.links} />
+                        </>
+                    )}
+                </div>
             </div>
-            <p className="u-note">现算的，不是缓存。点任意一格进对应的工具。</p>
-            <Footprint />
-
-            <div className="u-head">
-                <h2><i className="fas fa-link" /> 我的主页</h2>
-                <span className="count u-num">{profile.links.length} 条</span>
-            </div>
-            <p className="u-note">
-                自己在外站的主页收在这儿 —— 比如 Codeforces、力扣、GitHub 的个人页。
-                <b>本站不去对方站点查任何东西</b>，只是把你填的地址存下来做个跳板。
-            </p>
-            <LinkManager links={profile.links} />
         </AppShell>
     );
 }
@@ -349,7 +444,7 @@ function Footprint() {
                     unit: '张', hint: cardsDue === 0 ? '今天的都学完了' : '各计划今日队列里还剩的',
                 },
                 {
-                    label: '连续学习', icon: 'fa-fire', to: '/tools/flashcards/stats',
+                    label: '连续学习', icon: 'fa-fire', to: '/tools/flashcards',
                     value: overview.status === 'fulfilled' ? overview.value.streakDays : null,
                     unit: '天', hint: '中间断一天就归零',
                 },
